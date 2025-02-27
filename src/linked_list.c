@@ -3,14 +3,14 @@
 
 #include "headers/linked_list.h"
 
-int linked_list_init(struct linked_list *ll) {
+bool linked_list_init(struct linked_list *ll) {
   ll->next = NULL;
   ll->prev = NULL;
   ll->value = NULL;
-  return 0;
+  return true;
 }
 
-static struct linked_list* find_pos(struct linked_list *ll, size_t target_pos) {
+static inline struct linked_list* find_pos(struct linked_list *ll, size_t target_pos) {
   if (ll == NULL) return NULL;
   struct linked_list *cur = ll;
   size_t idx = 0;
@@ -27,7 +27,7 @@ static struct linked_list* find_pos(struct linked_list *ll, size_t target_pos) {
   return cur;
 }
 
-static struct linked_list* find_end(struct linked_list *ll) {
+static inline struct linked_list* find_end(struct linked_list *ll) {
   if (ll == NULL) return NULL;
   struct linked_list *cur = ll;
   while (cur->next != NULL) {
@@ -46,11 +46,11 @@ static inline size_t find_len(struct linked_list *ll) {
   return result;
 }
 
-int linked_list_insert(struct linked_list *ll, size_t pos, void* value) {
+bool linked_list_insert(struct linked_list *ll, size_t pos, void* value) {
   struct linked_list *obj = find_pos(ll, pos);
-  if (obj == NULL) return 1;
+  if (obj == NULL) return false;
   struct linked_list *tmp = (struct linked_list*)malloc(sizeof(struct linked_list));
-  if (tmp == NULL) return 1;
+  if (tmp == NULL) return false;
   linked_list_init(tmp);
   tmp->prev = obj;
   tmp->value = value;
@@ -59,19 +59,19 @@ int linked_list_insert(struct linked_list *ll, size_t pos, void* value) {
     tmp->next = obj->next;
   }
   obj->next = tmp;
-  return 0;
+  return true;
 }
 
-int linked_list_append(struct linked_list *ll, void* value) {
+bool linked_list_append(struct linked_list *ll, void* value) {
   struct linked_list *obj = find_end(ll);
-  if (obj == NULL) return 1;
+  if (obj == NULL) return false;
   struct linked_list *tmp = (struct linked_list*)malloc(sizeof(struct linked_list));
-  if (tmp == NULL) return 1;
+  if (tmp == NULL) return false;
   linked_list_init(tmp);
   tmp->prev = obj;
   tmp->value = value;
   obj->next = tmp;
-  return 0;
+  return true;
 }
 
 struct linked_list* linked_list_get_pos(struct linked_list *ll, size_t pos) {
@@ -86,17 +86,16 @@ size_t linked_list_get_len(struct linked_list *ll) {
   return find_len(ll);
 }
 
-int linked_list_delete(struct linked_list *ll, size_t pos) {
+bool linked_list_delete(struct linked_list *ll, size_t pos) {
   struct linked_list *obj = find_pos(ll, pos);
-  if (obj == NULL) return 1;
+  if (obj == NULL) return false;
   obj->prev->next = obj->next;
   obj->next->prev = obj->prev;
   linked_list_free(obj);
-  return 0;
+  return true;
 }
 
-int linked_list_delete_node(struct linked_list *ll) {
-  if (ll == NULL) return 1;
+bool linked_list_delete_node(struct linked_list *ll) {
   if (ll->prev != NULL) {
     ll->prev->next = ll->next;
   }
@@ -104,7 +103,7 @@ int linked_list_delete_node(struct linked_list *ll) {
     ll->next->prev = ll->prev;
   }
   linked_list_free(ll);
-  return 0;
+  return true;
 }
 
 void linked_list_free(struct linked_list *ll) {
