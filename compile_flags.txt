@@ -1,0 +1,9 @@
+-I.
+-I./deps/utf8-zig/headers
+-Wall
+-Wextra
+-std=c11
+-L./deps/utf8-zig/zig-out/lib
+-l:libutf8-zig.a
+-lm
+-lpthread
