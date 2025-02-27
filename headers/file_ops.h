@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool copyFile(FILE *src, FILE *dst);
+bool copy_file(FILE *src, FILE *dst);
 
 #endif
