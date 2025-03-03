@@ -17,6 +17,7 @@ struct unicode_str_t *unicode_str_create() {
 static inline size_t find_valid_position(byte_array *arr, size_t at) {
   size_t byte_idx = 0;
   for (size_t i = 0; i < at; ++i) {
+    if (i >= arr->len) return 0;
     enum octet_type oct = get_oct_type(arr->byte_data[byte_idx]);
     size_t skip = octet_type_count(oct);
     byte_idx += skip;
@@ -154,16 +155,17 @@ size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,
     return 0;
   }
   const size_t new_len = str->bytes.len + len;
-  // TODO get valid offset by iterating over utf8 code points
+  const size_t valid_offset = find_valid_position(&str->bytes, offset);
+  if (valid_offset == 0 && offset != 0) return 0;
   resize(&str->bytes, new_len);
-  for (size_t i = str->bytes.len; i > offset; --i) {
+  for (size_t i = str->bytes.len; i >= valid_offset; --i) {
     const size_t cur_idx = i - 1;
     str->bytes.byte_data[cur_idx + len] = str->bytes.byte_data[cur_idx];
   }
   size_t cur_len = len;
   size_t size = 0;
   bool currently_invalid = false;
-  for (size_t byte_idx = offset, other_idx = 0; other_idx < len;) {
+  for (size_t byte_idx = valid_offset, other_idx = 0; other_idx < len;) {
     struct code_point result = utf8_next(other, cur_len, other_idx);
     if (result.type == OCT_INVALID) {
       if (!currently_invalid) {
@@ -196,7 +198,7 @@ size_t unicode_str_remove_range(struct unicode_str_t *str, size_t offset,
   if (offset > str->bytes.len) return 0;
   size_t byte_idx = find_valid_position(&str->bytes, offset);
   size_t final_idx = find_valid_position(&str->bytes, offset+len);
-  if (byte_idx == 0 || final_idx == 0) return 0;
+  if ((byte_idx == 0 && offset != 0) || final_idx == 0) return 0;
   size_t diff = (final_idx - byte_idx);
   const size_t new_len = str->bytes.len - diff;
   if (final_idx == str->bytes.len) {
@@ -233,6 +235,8 @@ bool unicode_str_get_range(struct unicode_str_t *str, size_t index, size_t len,
                            const uint8_t **out) {
   const size_t idx = find_valid_position(&str->bytes, index);
   const size_t end_idx = find_valid_position(&str->bytes, index+ len);
+  if (idx == 0 && index != 0) return false;
+  if (end_idx == 0) return false;
   const size_t size = (end_idx - idx);
   uint8_t *result = malloc(sizeof(uint8_t)*size);
   memcpy(result, &str->bytes.byte_data[idx], size);
