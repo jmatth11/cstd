@@ -42,7 +42,7 @@ bool unicode_str_codepoint_at(struct unicode_str_t *str, size_t index,
                               code_point_t *out) __THROWNL __nonnull((1));
 
 bool unicode_str_get_range(struct unicode_str_t *str, size_t index, size_t len,
-                           const uint8_t **out) __THROWNL __nonnull((1));
+                           uint8_t **out) __THROWNL __nonnull((1));
 
 void unicode_str_destroy(struct unicode_str_t *str) __THROWNL __nonnull((1));
 

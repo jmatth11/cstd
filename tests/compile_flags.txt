@@ -1,0 +1,7 @@
+-std=c11
+-Wall
+-g
+-I../headers
+-I../deps/utf8-zig/headers
+-L../lib/
+-lcustom_std

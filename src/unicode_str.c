@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "headers/unicode_str.h"
 #include "utf8.h"
 #include <string.h>
@@ -51,7 +52,7 @@ static inline void resize_less(byte_array *str, size_t len) {
 
 static inline bool insert_range(const uint8_t *data, byte_array *arr,
                                 size_t offset, size_t len) {
-  for (size_t i = offset; i < len; ++i) {
+  for (size_t i = offset; i < (offset + len); ++i) {
     if (!byte_array_insert(arr, data[i]))
       return false;
   }
@@ -61,7 +62,8 @@ static inline bool insert_range(const uint8_t *data, byte_array *arr,
 static inline bool insert_range_at(const uint8_t *data, byte_array *arr,
                                 size_t offset, size_t len, size_t at) {
   size_t at_offset = 0;
-  for (size_t i = offset; i < len; ++i) {
+  for (size_t i = offset; i < (offset + len); ++i) {
+    if ((at+at_offset) > arr->len) return false;
     arr->byte_data[at + at_offset] = data[i];
     ++at_offset;
   }
@@ -117,6 +119,7 @@ bool unicode_str_get(struct unicode_str_t *str, const byte_array **out) {
 size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
                         size_t len) {
   if (!utf8_verify_str(other, len)) {
+    printf("failed verify\n");
     return 0;
   }
   size_t cur_len = len;
@@ -136,6 +139,7 @@ size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
       currently_invalid = true;
       // push past invalid char
       cur_idx += 1;
+      continue;
     }
     currently_invalid = false;
     size_t byte_size = octet_type_count(result.type);
@@ -151,12 +155,15 @@ size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
 size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,
                            size_t len, size_t offset) {
   if (offset > str->bytes.len) return 0;
+  // TODO maybe remove and just let replacement characters in
   if (!utf8_verify_str(other, len)) {
     return 0;
   }
   const size_t new_len = str->bytes.len + len;
   const size_t valid_offset = find_valid_position(&str->bytes, offset);
-  if (valid_offset == 0 && offset != 0) return 0;
+  if (valid_offset == 0 && offset != 0) {
+    return 0;
+  }
   resize(&str->bytes, new_len);
   for (size_t i = str->bytes.len; i >= valid_offset; --i) {
     const size_t cur_idx = i - 1;
@@ -180,16 +187,24 @@ size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,
       currently_invalid = true;
       // push past invalid char
       other_idx += 1;
+      continue;
     }
     currently_invalid = false;
     size_t byte_size = octet_type_count(result.type);
-    if (!insert_range_at(other, &str->bytes, other_idx, byte_size, byte_idx)) {
+    if (!insert_range_at(
+      other,
+      &str->bytes,
+      other_idx,
+      byte_size,
+      byte_idx)) {
+      printf("insert_range_at failed\n");
       return size;
     }
     other_idx += byte_size;
     byte_idx += byte_size;
     size += byte_size;
   }
+  str->bytes.len += size;
   return size;
 }
 
@@ -211,6 +226,7 @@ size_t unicode_str_remove_range(struct unicode_str_t *str, size_t offset,
   }
   str->bytes.len = new_len;
   resize_less(&str->bytes, str->bytes.len);
+  str->bytes.byte_data[new_len] = '\0';
   return diff;
 }
 
@@ -225,21 +241,22 @@ size_t unicode_str_byte_len(struct unicode_str_t *str) {
 bool unicode_str_codepoint_at(struct unicode_str_t *str, size_t index,
                               code_point_t *out) {
   const size_t idx = find_valid_position(&str->bytes, index);
-  if (idx == 0) return false;
+  if (idx == 0 && index != 0) return false;
   struct code_point point = utf8_next(str->bytes.byte_data, str->bytes.len, idx);
   *out = point.val;
   return point.type != OCT_INVALID;
 }
 
 bool unicode_str_get_range(struct unicode_str_t *str, size_t index, size_t len,
-                           const uint8_t **out) {
+                           uint8_t **out) {
   const size_t idx = find_valid_position(&str->bytes, index);
   const size_t end_idx = find_valid_position(&str->bytes, index+ len);
   if (idx == 0 && index != 0) return false;
   if (end_idx == 0) return false;
   const size_t size = (end_idx - idx);
-  uint8_t *result = malloc(sizeof(uint8_t)*size);
+  uint8_t *result = malloc(sizeof(uint8_t)*size + 1);
   memcpy(result, &str->bytes.byte_data[idx], size);
+  result[size] = '\0';
   *out = result;
   return true;
 }

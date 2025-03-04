@@ -30,7 +30,7 @@ static bool hash_map_add_new_entry(map_entry_array *row, const char *key, void* 
   struct hash_map_entry_t *entry = malloc(sizeof(struct hash_map_entry_t));
   size_t key_len = strlen(key);
   entry->key = malloc(sizeof(char) * (key_len+1));
-  strncpy(entry->key, key, key_len);
+  strncpy(entry->key, key, key_len + 1);
   entry->key[key_len] = '\0';
   entry->value = value;;
   if (!map_entry_array_insert(row, entry)) {
@@ -64,7 +64,11 @@ struct hash_map_t * hash_map_create(size_t N) {
 
 void hash_map_destroy(struct hash_map_t *hm, bool free_value) {
   for (size_t i = 0; i < hm->entries.cap; ++i) {
-    map_entry_array map_entry;
+    map_entry_array map_entry = {
+      .len = 0,
+      .cap = 0,
+      .map_entry_data = NULL,
+    };
     map_array_get(&hm->entries, i, &map_entry);
     if (map_entry.len > 0) {
       for (size_t entry_idx = 0; entry_idx < map_entry.len; ++entry_idx) {
