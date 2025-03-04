@@ -17,6 +17,7 @@ all: deps archive
 .PHONY: install_deps
 install_deps:
 	$(shell ./install_deps.sh)
+	@echo "deps installed."
 
 .PHONY: archive
 archive: $(OBJECTS)
@@ -47,13 +48,13 @@ clean:
 	@rm -f $(BIN)/* 2> /dev/null
 
 .PHONY: deps
-deps:
+deps: install_deps
 	@for i in $(DEPS); do\
 		cd $${i} && $(MAKE) && cd -;\
 	done
 
 .PHONY: deps_debug
-deps_debug:
+deps_debug: install_deps
 	@for i in $(DEPS); do\
 		cd $${i} && ($(MAKE) debug || $(MAKE)) && cd -;\
 	done
