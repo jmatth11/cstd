@@ -7,6 +7,18 @@ struct unicode_str_t {
   byte_array bytes;
 };
 
+size_t codepoint_idx_from_byte_idx(const uint8_t *arr, size_t len, size_t index) {
+  size_t codepoint_idx = 0;
+  for (size_t i = 0; i < index;) {
+    if (i >= len) return 0;
+    enum octet_type oct = get_oct_type(arr[i]);
+    size_t skip = octet_type_count(oct);
+    i += skip;
+    ++codepoint_idx;
+  }
+  return codepoint_idx;
+}
+
 struct unicode_str_t *unicode_str_create() {
   struct unicode_str_t *result = malloc(sizeof(struct unicode_str_t));
   if (!byte_array_init(&result->bytes, 2)) {

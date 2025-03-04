@@ -301,6 +301,21 @@ static bool unicode_str_get_range_tests() {
   return true;
 }
 
+static bool codepoint_idx_from_byte_idx_tests() {
+  printf("codepoint_idx_from_byte_idx_tests start\n");
+  byte_array expected = byte_array_from_str("Я был когда-то странной");
+  const size_t test_byte_idx = 8;
+  const size_t expected_codepoint_idx = 5;
+  const size_t result_idx = codepoint_idx_from_byte_idx(expected.byte_data, expected.len, test_byte_idx);
+  if (result_idx != expected_codepoint_idx) {
+    fprintf(stderr, "%s: Code point index was not correct -- expected:%lu got:%lu.\n",
+            suite_name, expected_codepoint_idx, result_idx);
+    return false;
+  }
+  byte_array_free(&expected);
+  return true;
+}
+
 static void unicode_str_tests() {
   if (!unicode_str_create_test()) {
     fprintf(stderr, "unicode string create test failed.\n");
@@ -328,5 +343,8 @@ static void unicode_str_tests() {
   }
   if (!unicode_str_get_range_tests()) {
     fprintf(stderr, "unicode_str_get_range_tests failed.\n");
+  }
+  if (!codepoint_idx_from_byte_idx_tests()) {
+    fprintf(stderr, "codepoint_idx_from_byte_idx_tests failed.\n");
   }
 }
