@@ -16,7 +16,7 @@ all: deps archive
 
 .PHONY: install_deps
 install_deps:
-	$(shell ./install_deps.sh)
+	./install_deps.sh
 	@echo "deps installed."
 
 .PHONY: archive
