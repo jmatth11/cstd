@@ -27,6 +27,16 @@ struct unicode_str_t *unicode_str_create() {
   return result;
 }
 
+static byte_array byte_array_from_str(const char *str, size_t len) {
+  byte_array result;
+  byte_array_init(&result, len);
+  for (size_t i = 0; i < len; ++i) {
+    result.byte_data[i] = (uint8_t)str[i];
+  }
+  result.len = len;
+  return result;
+}
+
 static inline size_t find_valid_position(byte_array *arr, size_t at) {
   size_t byte_idx = 0;
   for (size_t i = 0; i < at; ++i) {
@@ -123,9 +133,26 @@ size_t unicode_str_set(struct unicode_str_t *str, const uint8_t *other,
   return unicode_str_append(str, other, len);
 }
 
+size_t unicode_str_set_char(struct unicode_str_t *str, const char *other,
+                     size_t len) {
+  byte_array arr = byte_array_from_str(other, len);
+  const size_t result = unicode_str_set(str, arr.byte_data, arr.len);
+  byte_array_free(&arr);
+  return result;
+}
+
+
 bool unicode_str_get(struct unicode_str_t *str, const byte_array **out) {
   *out = &str->bytes;
   return true;
+}
+
+size_t unicode_str_append_char(struct unicode_str_t *str, const char *other,
+                        size_t len) {
+  byte_array arr = byte_array_from_str(other, len);
+  const size_t result = unicode_str_append(str, arr.byte_data, arr.len);
+  byte_array_free(&arr);
+  return result;
 }
 
 size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
@@ -162,6 +189,14 @@ size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
     size += byte_size;
   }
   return size;
+}
+
+size_t unicode_str_insert_at_char(struct unicode_str_t *str, const char *other,
+                           size_t len, size_t offset) {
+  byte_array arr = byte_array_from_str(other, len);
+  const size_t result = unicode_str_insert_at(str, arr.byte_data, arr.len, offset);
+  byte_array_free(&arr);
+  return result;
 }
 
 size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,

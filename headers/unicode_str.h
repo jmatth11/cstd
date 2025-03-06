@@ -53,6 +53,17 @@ size_t unicode_str_set(struct unicode_str_t *str, const uint8_t *other,
                      size_t len) __THROWNL __nonnull((1, 2));
 
 /**
+ * Set the unicode string with the given string.
+ * This function validates the incoming string for valid UTF-8 encoding.
+ *
+ * @param[in] str The unicode string.
+ * @param[in] other The incoming string to set.
+ * @param[in] len The length of the incoming string in bytes.
+ * @return The number of bytes written, 0 if no bytes or an error.
+ */
+size_t unicode_str_set_char(struct unicode_str_t *str, const char *other,
+                     size_t len) __THROWNL __nonnull((1,2));
+/**
  * Get the unicode string as a byte_array.
  *
  * @param[in] str The unicode string.
@@ -75,6 +86,17 @@ size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
                         size_t len) __THROWNL __nonnull((1, 2));
 
 /**
+ * Append the given string to the unicode string.
+ * This function validates the incoming string for valid UTF-8 encoding.
+ *
+ * @param[in] str The unicode string.
+ * @param[in] other The incoming string to set.
+ * @param[in] len The length of the incoming string in bytes.
+ * @return The number of bytes written, 0 if no bytes or an error.
+ */
+size_t unicode_str_append_char(struct unicode_str_t *str, const char *other,
+                        size_t len) __THROWNL __nonnull((1,2));
+/**
  * Insert the given string at a specified codepoint offset to the unicode string.
  * This function validates the incoming string for valid UTF-8 encoding.
  *
@@ -87,6 +109,19 @@ size_t unicode_str_append(struct unicode_str_t *str, const uint8_t *other,
 size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,
                            size_t len, size_t offset) __THROWNL
     __nonnull((1, 2));
+
+/**
+ * Insert the given string at a specified codepoint offset to the unicode string.
+ * This function validates the incoming string for valid UTF-8 encoding.
+ *
+ * @param[in] str The unicode string.
+ * @param[in] other The incoming string to set.
+ * @param[in] len The length of the incoming string in bytes.
+ * @param[in] offset The codepoint offset, not the byte offset.
+ * @return The number of bytes written, 0 if no bytes or an error.
+ */
+size_t unicode_str_insert_at_char(struct unicode_str_t *str, const char *other,
+                           size_t len, size_t offset) __THROWNL __nonnull((1,2));
 
 /**
  * Remove a range from the unicode string.
