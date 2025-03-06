@@ -149,6 +149,8 @@ bool unicode_str_get(struct unicode_str_t *str, const byte_array **out) {
 
 size_t unicode_str_append_char(struct unicode_str_t *str, const char *other,
                         size_t len) {
+  // TODO maybe use internal buffer from unicode_str_t and then verify
+  // rather than have copy buffer
   byte_array arr = byte_array_from_str(other, len);
   const size_t result = unicode_str_append(str, arr.byte_data, arr.len);
   byte_array_free(&arr);
