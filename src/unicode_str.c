@@ -7,6 +7,16 @@ struct unicode_str_t {
   byte_array bytes;
 };
 
+static byte_array byte_array_from_str(const char *str, size_t len) {
+  byte_array result;
+  byte_array_init(&result, len);
+  for (size_t i = 0; i < len; ++i) {
+    result.byte_data[i] = (uint8_t)str[i];
+  }
+  result.len = len;
+  return result;
+}
+
 size_t codepoint_idx_from_byte_idx(const uint8_t *arr, size_t len, size_t index) {
   size_t codepoint_idx = 0;
   for (size_t i = 0; i < index;) {
@@ -19,21 +29,18 @@ size_t codepoint_idx_from_byte_idx(const uint8_t *arr, size_t len, size_t index)
   return codepoint_idx;
 }
 
+size_t codepoint_idx_from_byte_idx_char(const char *arr, size_t len, size_t index) {
+  byte_array local_arr = byte_array_from_str(arr, len);
+  const size_t n = codepoint_idx_from_byte_idx(local_arr.byte_data, local_arr.len, index);
+  byte_array_free(&local_arr);
+  return n;
+}
+
 struct unicode_str_t *unicode_str_create() {
   struct unicode_str_t *result = malloc(sizeof(struct unicode_str_t));
   if (!byte_array_init(&result->bytes, 2)) {
     return NULL;
   }
-  return result;
-}
-
-static byte_array byte_array_from_str(const char *str, size_t len) {
-  byte_array result;
-  byte_array_init(&result, len);
-  for (size_t i = 0; i < len; ++i) {
-    result.byte_data[i] = (uint8_t)str[i];
-  }
-  result.len = len;
   return result;
 }
 

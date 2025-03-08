@@ -28,6 +28,16 @@ generate_array_template(byte, uint8_t);
 size_t codepoint_idx_from_byte_idx(const uint8_t *arr, size_t len, size_t index) __THROWNL;
 
 /**
+ * Get the closest codepoint index from the given byte index.
+ *
+ * @param[in] arr The raw UTF-8 encoded string.
+ * @param[in] len The length of the array in bytes.
+ * @param[in] index The byte index.
+ * @return The codepoint position, 0 is also used when an invalid UTF-8 string is encountered.
+ */
+size_t codepoint_idx_from_byte_idx_char(const char *arr, size_t len, size_t index) __THROWNL;
+
+/**
  * Unicode structure for handling utf8-encoded strings.
  */
 struct unicode_str_t;
