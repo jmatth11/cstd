@@ -1,4 +1,4 @@
-CC=gcc
+CC=clang
 CFLAGS=-Wall -O2 -std=c11
 LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libutf8-zig.a -lm -lpthread
 OBJ=obj
@@ -22,7 +22,7 @@ install_deps:
 .PHONY: archive
 archive: $(OBJECTS)
 	@mkdir -p $(BIN)
-	gcc -shared -fPIC -o $(BIN)/$(SHARED) $^ $(LIBS)
+	$(CC) -shared -fPIC -o $(BIN)/$(SHARED) $^ $(LIBS)
 	ar -rcs $(BIN)/$(ARCHIVE) $^
 
 .PHONY: debug
