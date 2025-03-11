@@ -1,9 +1,10 @@
 CC=clang
 CFLAGS=-Wall -O2 -std=c11
 LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libutf8-zig.a -lm -lpthread
+WEB_LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libwebutf8-zig.a -lm
 OBJ=obj
 BIN=lib
-INCLUDES=-I. -I./deps/utf8-zig/headers/
+INCLUDES=-I. -I./deps/utf8-zig/headers/ -I/usr/include/x86_64-linux-gnu
 SOURCES=$(shell find . -name '*.c' -not -path './plugins/*' -not -path './deps/*' -not -path './libs/*' -not -path './tests/*')
 OBJECTS=$(addprefix $(OBJ)/,$(SOURCES:%.c=%.o))
 DEBUG_OBJECTS=$(patsubst %.c, $(OBJ)/%-debug.o, $(SOURCES))
@@ -24,6 +25,10 @@ archive: $(OBJECTS)
 	@mkdir -p $(BIN)
 	$(CC) -shared -fPIC -o $(BIN)/$(SHARED) $^ $(LIBS)
 	ar -rcs $(BIN)/$(ARCHIVE) $^
+
+.PHONY: web
+web: $(SOURCES)
+	$(CC) $(CFLAGS) $(INCLUDES) $(WEB_LIBS) --target=wasm32 -Wl,--export-all -Wl,--no-entry -o libcustom_std.wasm $^
 
 .PHONY: debug
 debug: deps_debug debug_archive
