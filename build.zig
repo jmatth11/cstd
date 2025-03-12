@@ -5,7 +5,6 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{
         .preferred_optimize_mode = .ReleaseFast,
     });
-    const linkage = b.option(std.builtin.LinkMode, "linkage", "Link mode for scribe library") orelse .static;
     const webTarget = b.resolveTargetQuery(.{ .cpu_arch = .wasm32, .os_tag = .freestanding });
     const module = b.addModule("custom_std", .{
         .pic = true,
@@ -41,8 +40,9 @@ pub fn build(b: *std.Build) void {
     module.addObjectFile(b.path("./deps/utf8-zig/zig-out/lib/libwebutf8-zig.a"));
     const lib = b.addLibrary(.{
         .name = "custom_std",
-        .linkage = linkage,
+        .linkage = .static,
         .root_module = module,
+        .use_llvm = true,
     });
     b.installArtifact(lib);
 }
