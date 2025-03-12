@@ -10,7 +10,7 @@ INCLUDES=-I. -I./deps/utf8-zig/headers/ -I/usr/include/x86_64-linux-gnu -I/usr/i
 SOURCES=$(shell find . -name '*.c' -not -path './plugins/*' -not -path './deps/*' -not -path './libs/*' -not -path './tests/*')
 OBJECTS=$(addprefix $(OBJ)/,$(SOURCES:%.c=%.o))
 DEBUG_OBJECTS=$(patsubst %.c, $(OBJ)/%-debug.o, $(SOURCES))
-DEPS=$(shell find . -maxdepth 3 -name Makefile -printf '%h\n' | grep -v 'tests' | grep -v '^.$$')
+DEPS=$(shell find . -maxdepth 3 -name Makefile -printf '%h\n' | grep -v 'tests' | grep -v '^.$$' | grep -v 'wasi')
 SHARED=libcustom_std.so
 ARCHIVE=libcustom_std.a
 
