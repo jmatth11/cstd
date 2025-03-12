@@ -1,10 +1,12 @@
 CC=clang
 CFLAGS=-Wall -O2 -std=c11
+WEB_FLAGS=-DEMSCRIPTEN=1
 LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libutf8-zig.a -lm -lpthread
-WEB_LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libwebutf8-zig.a -lm
+WEB_LIBS=-L./deps/utf8-zig/zig-out/lib/ -lwebutf8-zig
+WASI_LIB=./deps/wasi-libc/build
 OBJ=obj
 BIN=lib
-INCLUDES=-I. -I./deps/utf8-zig/headers/ -I/usr/include/x86_64-linux-gnu
+INCLUDES=-I. -I./deps/utf8-zig/headers/ -I/usr/include/x86_64-linux-gnu -I/usr/include
 SOURCES=$(shell find . -name '*.c' -not -path './plugins/*' -not -path './deps/*' -not -path './libs/*' -not -path './tests/*')
 OBJECTS=$(addprefix $(OBJ)/,$(SOURCES:%.c=%.o))
 DEBUG_OBJECTS=$(patsubst %.c, $(OBJ)/%-debug.o, $(SOURCES))
@@ -28,7 +30,7 @@ archive: $(OBJECTS)
 
 .PHONY: web
 web: $(SOURCES)
-	$(CC) $(CFLAGS) $(INCLUDES) $(WEB_LIBS) --target=wasm32 -Wl,--export-all -Wl,--no-entry -o libcustom_std.wasm $^
+	$(CC) $(WEB_FLAGS) $(INCLUDES) $(WEB_LIBS) --target=wasm32-unknown-wasi --sysroot $(WASI_LIB) -nostartfiles -Wl,--import-memory -Wl,--export-all -Wl,--no-entry -o libcustom_std.wasm $^
 
 .PHONY: debug
 debug: deps_debug debug_archive
