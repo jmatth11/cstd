@@ -32,14 +32,11 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
     module.addIncludePath(b.path("./deps/utf8-zig/headers/"));
     module.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu" });
     module.addIncludePath(.{ .cwd_relative = "/usr/include" });
-    module.addLibraryPath(b.path("./deps/utf8-zig/zig-out/lib/"));
     return module;
 }
 
 pub fn build(b: *std.Build) void {
-    const optimize = b.standardOptimizeOption(.{
-        .preferred_optimize_mode = .ReleaseFast,
-    });
+    const optimize = b.standardOptimizeOption(.{});
     const webTarget = b.resolveTargetQuery(.{ .cpu_arch = .wasm32, .os_tag = .freestanding });
     const webLib = b.addLibrary(.{
         .name = "webcustom_std",
@@ -54,8 +51,6 @@ pub fn build(b: *std.Build) void {
         .name = "custom_std",
         .linkage = linkage,
         .root_module = createModule(b, optimize, nativeTarget),
-        .use_llvm = true,
     });
-    nativeLib.linkLibC();
     b.installArtifact(nativeLib);
 }
