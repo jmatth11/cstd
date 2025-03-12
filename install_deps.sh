@@ -7,6 +7,7 @@ fi
 which wasm-ld > /dev/null
 if [ $? -ne 0 ]; then
   sudo apt-get install -y lld
+  # for 32 bit stub files needed to compile wasm32
   sudo apt-get install libc6-dev-i386
 fi
 
@@ -14,8 +15,12 @@ if [ ! -d ./deps/utf8-zig ]; then
   git clone https://github.com/jmatth11/utf8-zig.git deps/utf8-zig
 fi
 if [ ! -d ./deps/wasi-libc ]; then
+  # this is to have a wasm compliant libc to link against
   git clone https://github.com/CraneStation/wasi-libc.git deps/wasi-libc
   cd deps/wasi-libc
   make install INSTALL_DIR=./build
+  # this failed first time I did it
+  # I needed to make symlinks to llvm-ar-14 -> llvm-ar and llvm-nm-14 -> llvm-nm
+  # then everything was fine
   cd -
 fi
