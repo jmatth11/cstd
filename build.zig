@@ -1,48 +1,61 @@
 const std = @import("std");
 
-pub fn build(b: *std.Build) void {
-    //const target = b.standardTargetOptions(.{});
-    const optimize = b.standardOptimizeOption(.{
-        .preferred_optimize_mode = .ReleaseFast,
-    });
-    const webTarget = b.resolveTargetQuery(.{ .cpu_arch = .wasm32, .os_tag = .freestanding });
+fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.Build.ResolvedTarget) *std.Build.Module {
+    const files: []const []const u8 = &.{
+        "src/base_str.c",
+        "src/crypt.c",
+        "src/file_ops.c",
+        "src/gap_buffer.c",
+        "src/hash_map.c",
+        "src/linked_list.c",
+        "src/log.c",
+        "src/unicode_str.c",
+    };
+    const flags: []const []const u8 = &.{
+        "-Wall",
+        "-O2",
+        "-std=c11",
+        "-lm",
+        "-DEMSCRIPTEN=1",
+    };
     const module = b.addModule("custom_std", .{
         .pic = true,
-        .target = webTarget,
+        .target = target,
         .optimize = optimize,
     });
     module.addCSourceFiles(.{
         .language = .c,
-        .files = &.{
-            "src/base_str.c",
-            "src/crypt.c",
-            "src/file_ops.c",
-            "src/gap_buffer.c",
-            "src/hash_map.c",
-            "src/linked_list.c",
-            "src/log.c",
-            "src/unicode_str.c",
-        },
-        .flags = &.{
-            "-Wall",
-            "-O2",
-            "-std=c11",
-            "-lm",
-            "-DEMSCRIPTEN=1",
-        },
+        .files = files,
+        .flags = flags,
     });
     module.addIncludePath(b.path("."));
     module.addIncludePath(b.path("./deps/utf8-zig/headers/"));
     module.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu" });
     module.addIncludePath(.{ .cwd_relative = "/usr/include" });
-
     module.addLibraryPath(b.path("./deps/utf8-zig/zig-out/lib/"));
-    module.addObjectFile(b.path("./deps/utf8-zig/zig-out/lib/libwebutf8-zig.a"));
-    const lib = b.addLibrary(.{
-        .name = "custom_std",
+    return module;
+}
+
+pub fn build(b: *std.Build) void {
+    const optimize = b.standardOptimizeOption(.{
+        .preferred_optimize_mode = .ReleaseFast,
+    });
+    const webTarget = b.resolveTargetQuery(.{ .cpu_arch = .wasm32, .os_tag = .freestanding });
+    const webLib = b.addLibrary(.{
+        .name = "webcustom_std",
         .linkage = .static,
-        .root_module = module,
+        .root_module = createModule(b, optimize, webTarget),
         .use_llvm = true,
     });
-    b.installArtifact(lib);
+    b.installArtifact(webLib);
+    const linkage = b.option(std.builtin.LinkMode, "linkage", "Link mode for custom_std library") orelse .static;
+    const nativeTarget = b.standardTargetOptions(.{});
+    const nativeLib = b.addLibrary(.{
+        .name = "custom_std",
+        .linkage = linkage,
+        .root_module = createModule(b, optimize, nativeTarget),
+        .use_llvm = true,
+    });
+    nativeLib.linkLibC();
+    b.installArtifact(nativeLib);
 }
