@@ -1,4 +1,5 @@
 #include "headers/gap_buffer.h"
+#include "utf8.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -25,6 +26,19 @@ static bool resize_buffer(struct gap_buffer_t *gb) {
   gb->cursor_end = j;
   return true;
   return true;
+}
+
+size_t gap_buffer_byte_length(struct gap_buffer_t *gb, size_t index) {
+  const size_t gap_len = gap_buffer_get_len(gb);
+  if (index > gap_len) return 0;
+  size_t byte_len = 0;
+  for (size_t i = 0; i < index; ++i) {
+    code_point_t tmp = 0;
+    gap_buffer_get_char(gb, i, &tmp);
+    const enum octet_type oct = octet_type_from_code_point(tmp);
+    byte_len += octet_type_count(oct);
+  }
+  return byte_len;
 }
 
 bool gap_buffer_init(struct gap_buffer_t *gb, size_t buf_size) {
@@ -123,7 +137,7 @@ bool gap_buffer_delete_seq(struct gap_buffer_t *gb, size_t n) {
 }
 
 code_point_t *gap_buffer_get_str(struct gap_buffer_t *gb) {
-  size_t len = gap_buffer_get_len(gb);
+  const size_t len = gap_buffer_get_len(gb);
   if (len == 0) return NULL;
   code_point_t *result = malloc(sizeof(code_point_t)*(len + 1));
   for (size_t i = 0; i < len; ++i) {

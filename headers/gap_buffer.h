@@ -22,6 +22,15 @@ struct gap_buffer_t {
 };
 
 /**
+ * Get the byte length from the given codepoint index into the gap_buffer.
+ *
+ * @param[in] gb The gap buffer.
+ * @param[in] index The codepoint index.
+ * @return The byte length. Zero is returned for 0 index or for error.
+ */
+size_t gap_buffer_byte_length(struct gap_buffer_t *gb, size_t index);
+
+/**
  * Initialize the gap buffer with the given size.
  * @param gb The gap buffer.
  * @param buf_size The size of the initial buffer.
