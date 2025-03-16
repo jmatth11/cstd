@@ -1,6 +1,6 @@
 CC=clang
 CFLAGS=-Wall -O2 -std=c11
-WEB_FLAGS=-DEMSCRIPTEN=1
+WEB_FLAGS=-D__EMSCRIPTEN__=1
 LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libutf8-zig.a -lm -lpthread
 WEB_LIBS=-L./deps/utf8-zig/zig-out/lib/ -lwebutf8-zig
 WASI_LIB=./deps/wasi-libc/build

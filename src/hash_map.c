@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
 #include <pthread.h>
 #endif
 
@@ -22,7 +22,7 @@ generate_array_template(map_entry, struct hash_map_entry_t *)
 
         struct hash_map_t {
   map_array entries;
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_t mutex;
 #endif
 };
@@ -58,7 +58,7 @@ struct hash_map_t *hash_map_create(size_t N) {
     error_log("error hash map init entries.\n");
     return NULL;
   }
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   if (pthread_mutex_init(&hm->mutex, NULL) < 0) {
     hash_map_destroy(hm, false);
     error_log("hash map mutex failed to initialize.\n");
@@ -93,14 +93,14 @@ void hash_map_destroy(struct hash_map_t *hm, bool free_value) {
     }
   }
   map_array_free(&hm->entries);
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_destroy(&hm->mutex);
 #endif
   free(hm);
 }
 
 bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
   int hash = hash_from_str(key);
@@ -108,7 +108,7 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
   size_t key_len = strlen(key);
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
     pthread_mutex_unlock(&hm->mutex);
 #endif
     return false;
@@ -125,14 +125,14 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
       }
     }
   }
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_unlock(&hm->mutex);
 #endif
   return result;
 }
 
 bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
   bool result = true;
@@ -163,14 +163,14 @@ bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {
       result = false;
     }
   }
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_unlock(&hm->mutex);
 #endif
   return result;
 }
 
 bool hash_map_remove(struct hash_map_t *hm, const char *key) {
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
   int hash = hash_from_str(key);
@@ -178,7 +178,7 @@ bool hash_map_remove(struct hash_map_t *hm, const char *key) {
   size_t key_len = strlen(key);
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
     pthread_mutex_unlock(&hm->mutex);
 #endif
     return false;
@@ -200,7 +200,7 @@ bool hash_map_remove(struct hash_map_t *hm, const char *key) {
     result = true;
     map_entry_array_fast_remove(row, remove_idx);
   }
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_unlock(&hm->mutex);
 #endif
   return result;
@@ -208,7 +208,7 @@ bool hash_map_remove(struct hash_map_t *hm, const char *key) {
 
 bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
                              void **out) {
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
   int hash = hash_from_str(key);
@@ -217,7 +217,7 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
     error_log("key does not exist.\n");
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
     pthread_mutex_unlock(&hm->mutex);
 #endif
     return false;
@@ -239,7 +239,7 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
   } else {
     error_log("hash map remove_value idx not found.\n");
   }
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
   pthread_mutex_unlock(&hm->mutex);
 #endif
   return found;

@@ -16,7 +16,7 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
         "-O2",
         "-std=c11",
         "-lm",
-        "-DEMSCRIPTEN=1",
+        "-D__EMSCRIPTEN__=1",
     };
     const module = b.addModule("custom_std", .{
         .pic = true,
