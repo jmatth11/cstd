@@ -253,7 +253,7 @@ size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,
       other_idx,
       byte_size,
       byte_idx)) {
-      printf("insert_range_at failed\n");
+      fprintf(stderr, "insert_range_at failed\n");
       return size;
     }
     other_idx += byte_size;
