@@ -22,6 +22,11 @@ install_deps:
 	./install_deps.sh
 	@echo "deps installed."
 
+.PHONY: install_web_deps
+install_web_deps: deps
+	./install_web_deps.sh
+	@echo "deps installed."
+
 .PHONY: archive
 archive: $(OBJECTS)
 	@mkdir -p $(BIN)
@@ -29,7 +34,7 @@ archive: $(OBJECTS)
 	ar -rcs $(BIN)/$(ARCHIVE) $^
 
 .PHONY: web
-web: $(SOURCES)
+web: install_web_deps $(SOURCES)
 	$(CC) $(WEB_FLAGS) $(INCLUDES) $(WEB_LIBS) --target=wasm32-unknown-wasi --sysroot $(WASI_LIB) -nostartfiles -Wl,--import-memory -Wl,--export-all -Wl,--no-entry -o libcustom_std.wasm $^
 
 .PHONY: debug
