@@ -11,9 +11,10 @@
 #include <pthread.h>
 #endif
 
-struct hash_map_entry_t {
-  char *key;
-  void *value;
+struct hash_map_iterator_t {
+  struct hash_map_t *map;
+  size_t row;
+  size_t col;
 };
 
 generate_array_template(map_entry, struct hash_map_entry_t *)
@@ -26,6 +27,27 @@ generate_array_template(map_entry, struct hash_map_entry_t *)
   pthread_mutex_t mutex;
 #endif
 };
+
+struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) {
+  struct hash_map_entry_t *result = NULL;
+  size_t start_idx = it->row;
+  size_t entry_idx = it->col;
+  for (; start_idx < it->map->entries.len; ++start_idx) {
+    const map_entry_array entries = it->map->entries.map_data[start_idx];
+    if (entries.len > 0) {
+      for (; entry_idx < entries.len; ++entry_idx) {
+        result = entries.map_entry_data[entry_idx];
+        break;
+      }
+      entry_idx = 0;
+    }
+  }
+  ++start_idx;
+  ++entry_idx;
+  it->row = start_idx;
+  it->col = entry_idx;
+  return result;
+}
 
 static inline int mod(int hash, int cap) { return hash % cap; }
 
@@ -243,4 +265,12 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
   pthread_mutex_unlock(&hm->mutex);
 #endif
   return found;
+}
+
+struct hash_map_iterator_t * hash_map_iterator(struct hash_map_t *hm) {
+  struct hash_map_iterator_t *it = malloc(sizeof(struct hash_map_iterator_t));
+  it->map = hm;
+  it->col = 0;
+  it->row = 0;
+  return it;
 }

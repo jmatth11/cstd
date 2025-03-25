@@ -9,6 +9,22 @@ __BEGIN_DECLS
 
 struct hash_map_t;
 
+struct hash_map_entry_t {
+  char *key;
+  void *value;
+};
+
+struct hash_map_iterator_t;
+
+/**
+ * Get the next entry in the iterator.
+ * A NULL return value is used ot signify the end of the iterator.
+ *
+ * @param[in] it The hash map iterator.
+ * @return The next entry in the hash map or NULL when it's reached the end.
+ */
+struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) __nonnull((1));
+
 /**
  * Create a hash map with a given map size.
  *
@@ -64,6 +80,15 @@ bool hash_map_remove(struct hash_map_t*hm, const char *key) __THROWNL __nonnull(
  * @return True for success, false otherwise.
  */
 bool hash_map_remove_and_get(struct hash_map_t* hm, const char *key, void**out) __THROWNL __nonnull((1));
+
+/**
+ * Generate an iterator for the given hash map.
+ * The caller is responsible for freeing the iterator.
+ *
+ * @param[in] hm The hash map.
+ * @return An iterator for the hash map.
+ */
+struct hash_map_iterator_t * hash_map_iterator(struct hash_map_t *hm) __nonnull((1));
 
 __END_DECLS
 
