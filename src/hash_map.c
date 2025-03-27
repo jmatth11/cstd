@@ -34,15 +34,17 @@ struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) 
   size_t entry_idx = it->col;
   for (; start_idx < it->map->entries.len; ++start_idx) {
     const map_entry_array entries = it->map->entries.map_data[start_idx];
+    bool found = false;
     if (entries.len > 0) {
       for (; entry_idx < entries.len; ++entry_idx) {
         result = entries.map_entry_data[entry_idx];
+        found = true;
         break;
       }
+      if (found) break;
       entry_idx = 0;
     }
   }
-  ++start_idx;
   ++entry_idx;
   it->row = start_idx;
   it->col = entry_idx;
