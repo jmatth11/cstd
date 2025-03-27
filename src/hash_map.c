@@ -51,17 +51,16 @@ struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) 
   return result;
 }
 
-static inline int mod(int hash, int cap) { return hash % cap; }
+static inline int mod(size_t hash, size_t cap) { return hash % cap; }
 
 static bool hash_map_add_new_entry(map_entry_array *row, const char *key,
                                    void *value) {
   struct hash_map_entry_t *entry = malloc(sizeof(struct hash_map_entry_t));
   size_t key_len = strlen(key);
-  entry->key = malloc(sizeof(char) * (key_len + 1));
-  strncpy(entry->key, key, key_len + 1);
+  entry->key = malloc((sizeof(char) * key_len) + 1);
+  strncpy(entry->key, key, key_len);
   entry->key[key_len] = '\0';
   entry->value = value;
-  ;
   if (!map_entry_array_insert(row, entry)) {
     error_log("inserting new entry in hash map failed.\n");
     free(entry->key);
@@ -161,9 +160,12 @@ bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {
 #endif
   bool result = true;
   int hash = hash_from_str(key);
-  int idx = mod(hash, hm->entries.cap);
+  size_t idx = mod(hash, hm->entries.cap);
   size_t key_len = strlen(key);
   bool exists = false;
+  if (idx >= hm->entries.cap) {
+    return false;
+  }
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
     if (!map_entry_array_init(row, 10)) {

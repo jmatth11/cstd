@@ -236,9 +236,11 @@ size_t unicode_str_insert_at(struct unicode_str_t *str, const uint8_t *other,
     return 0;
   }
   resize(&str->bytes, new_len);
-  for (size_t i = str->bytes.len; i >= valid_offset; --i) {
-    const size_t cur_idx = i - 1;
-    str->bytes.byte_data[cur_idx + len] = str->bytes.byte_data[cur_idx];
+  if (str->bytes.len > 0) {
+    for (size_t i = str->bytes.len; i >= valid_offset; --i) {
+      const size_t cur_idx = i - 1;
+      str->bytes.byte_data[cur_idx + len] = str->bytes.byte_data[cur_idx];
+    }
   }
   size_t cur_len = len;
   size_t size = 0;
@@ -368,7 +370,7 @@ struct unicode_str_t *unicode_str_to_upper(struct unicode_str_t *str) {
 }
 
 char *unicode_str_to_cstr(struct unicode_str_t *str) {
-  char *result = malloc((sizeof(char)*str->bytes.len) + 1);
+  char *result = malloc((sizeof(char) * str->bytes.len) + 1);
   for (size_t i = 0; i < str->bytes.len; ++i) {
     result[i] = (char)str->bytes.byte_data[i];
   }
