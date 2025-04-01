@@ -96,8 +96,12 @@ size_t linked_list_get_len(struct linked_list_t *ll) {
 bool linked_list_delete(struct linked_list_t *ll, size_t pos) {
   struct linked_list_t *obj = find_pos(ll, pos);
   if (obj == NULL) return false;
-  obj->prev->next = obj->next;
-  obj->next->prev = obj->prev;
+  if (obj->prev != NULL) {
+    obj->prev->next = obj->next;
+  }
+  if (obj->next != NULL) {
+    obj->next->prev = obj->prev;
+  }
   linked_list_free(obj);
   return true;
 }
