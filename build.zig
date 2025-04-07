@@ -12,6 +12,7 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
         "src/unicode_str.c",
         "src/string_ops.c",
         "src/queue.c",
+        "src/magic.c",
     };
     const flags: []const []const u8 = &.{
         "-Wall",
