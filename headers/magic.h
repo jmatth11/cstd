@@ -1,10 +1,16 @@
 #ifndef CSTD_MAGIC_H
 #define CSTD_MAGIC_H
 
-#define macro_var(name) name##__LINE__
-#define defer(start, end) for ( \
-  int macro_var(_i_) = (start, 0); \
-  !macro_var(_i_); \
-  (macro_var(_i_) += 1), end) \
+#include <stdlib.h>
+
+#define DEFER(func) __attribute__((__cleanup__(func)))
+
+static __attribute__((unused)) void __cstd_freep_fn(void **p) {
+  if (*p == NULL) return;
+  free(*p);
+  *p = NULL;
+}
+
+#define AUTO_FREE DEFER(__cstd_freep_fn)
 
 #endif
