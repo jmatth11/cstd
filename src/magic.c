@@ -1,5 +1,6 @@
 #include "headers/magic.h"
 
+#include <stdlib.h>
 
 inline void cstd_freep_fn(void **p) {
   if (*p == NULL) return;

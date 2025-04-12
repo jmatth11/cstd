@@ -26,4 +26,8 @@
 #define __nonnull(params) __attribute__((__nonnull__ params))
 #endif
 
+#ifndef UNUSED
+#define UNUSED __attribute__((unused))
+#endif
+
 #endif

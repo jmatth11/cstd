@@ -34,7 +34,7 @@
  * @return 1 for nominal case, 0 if malloc failed.
  */
 #define init_array_template(name, type)                                        \
-  static inline bool name##_array_init(array_template_type(name) * arr,        \
+  inline bool name##_array_init(array_template_type(name) * arr,        \
                                        size_t N) {                             \
     if (N < 0)                                                                 \
       N = 1;                                                                   \
@@ -54,7 +54,7 @@
  * @param[in] arr The template array to free
  */
 #define free_array_template(name, type)                                        \
-  static inline void name##_array_free(array_template_type(name) * arr) {      \
+  inline void name##_array_free(array_template_type(name) * arr) {      \
     free(arr->array_template_data(name));                                      \
     arr->array_template_data(name) = NULL;                                     \
     arr->len = arr->cap = 0;                                                   \
@@ -69,7 +69,7 @@
  * valid)
  */
 #define insert_array_template(name, type)                                      \
-  static inline bool name##_array_insert(array_template_type(name) * arr,      \
+  inline bool name##_array_insert(array_template_type(name) * arr,      \
                                          type obj) {                           \
     if (arr->len >= arr->cap) {                                                \
       if (arr->cap <= 0)                                                       \
@@ -96,7 +96,7 @@
  * set.
  */
 #define get_array_template(name, type)                                         \
-  static inline void name##_array_get(const array_template_type(name) * arr,   \
+  inline void name##_array_get(const array_template_type(name) * arr,   \
                                       size_t index, type * out) {              \
     if (index < arr->len && index >= 0)                                        \
       *out = arr->array_template_data(name)[index];                            \
@@ -112,7 +112,7 @@
  * @return True on success, false otherwise.
  */
 #define fast_remove_array_template(name, type)                                 \
-  static inline bool name##_array_fast_remove(array_template_type(name) * arr, \
+  inline bool name##_array_fast_remove(array_template_type(name) * arr, \
                                               size_t idx) {                    \
     if (idx >= arr->len || idx < 0)                                            \
       return false;                                                            \
