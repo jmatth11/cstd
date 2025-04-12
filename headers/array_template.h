@@ -1,7 +1,7 @@
 #ifndef ARRAY_TEMPLATE_H
 #define ARRAY_TEMPLATE_H
 
-#include "headers/defs.h"
+#include "defs.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
