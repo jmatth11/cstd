@@ -28,7 +28,8 @@ generate_array_template(map_entry, struct hash_map_entry_t *)
 #endif
 };
 
-struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) {
+struct hash_map_entry_t *
+hash_map_iterator_next(struct hash_map_iterator_t *it) {
   struct hash_map_entry_t *result = NULL;
   size_t start_idx = it->row;
   size_t entry_idx = it->col;
@@ -41,7 +42,8 @@ struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) 
         found = true;
         break;
       }
-      if (found) break;
+      if (found)
+        break;
       entry_idx = 0;
     }
   }
@@ -93,7 +95,9 @@ struct hash_map_t *hash_map_create(size_t N) {
 }
 
 void hash_map_destroy(struct hash_map_t **hm, bool free_value) {
-  if (*hm == NULL) return;
+  if (*hm == NULL) {
+    return;
+  }
   for (size_t i = 0; i < (*hm)->entries.cap; ++i) {
     map_entry_array map_entry = {
         .len = 0,
@@ -273,7 +277,7 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
   return found;
 }
 
-struct hash_map_iterator_t * hash_map_iterator(struct hash_map_t *hm) {
+struct hash_map_iterator_t *hash_map_iterator(struct hash_map_t *hm) {
   struct hash_map_iterator_t *it = malloc(sizeof(struct hash_map_iterator_t));
   it->map = hm;
   it->col = 0;

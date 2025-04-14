@@ -3,11 +3,11 @@
 
 #define DEFER(func) __attribute__((__cleanup__(func)))
 
-inline void cstd_freep_fn(void**);
-inline void cstd_freec_fn(char**);
-inline void cstd_freei_fn(int**);
-inline void cstd_freed_fn(double**);
-inline void cstd_freef_fn(float**);
+extern inline void cstd_freep_fn(void**);
+extern inline void cstd_freec_fn(char**);
+extern inline void cstd_freei_fn(int**);
+extern inline void cstd_freed_fn(double**);
+extern inline void cstd_freef_fn(float**);
 
 #define AUTO_P DEFER(cstd_freep_fn)
 #define AUTO_C DEFER(cstd_freec_fn)

@@ -379,6 +379,9 @@ char *unicode_str_to_cstr(struct unicode_str_t *str) {
 }
 
 void unicode_str_destroy(struct unicode_str_t **str) {
+  if (*str == NULL) {
+    return;
+  }
   byte_array_free(&(*str)->bytes);
   free(*str);
   *str = NULL;
