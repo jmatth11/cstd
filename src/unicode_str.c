@@ -341,11 +341,11 @@ struct unicode_str_t *unicode_str_to_lower(struct unicode_str_t *str) {
   for (size_t i = 0; i < unicode_str_len(str); ++i) {
     code_point_t point = 0;
     if (!unicode_str_codepoint_at(str, i, &point)) {
-      unicode_str_destroy(result);
+      unicode_str_destroy(&result);
       return NULL;
     }
     if (!unicode_str_insert_at_codepoint(result, tolower(point), i)) {
-      unicode_str_destroy(result);
+      unicode_str_destroy(&result);
       return NULL;
     }
   }
@@ -358,11 +358,11 @@ struct unicode_str_t *unicode_str_to_upper(struct unicode_str_t *str) {
   for (size_t i = 0; i < unicode_str_len(str); ++i) {
     code_point_t point = 0;
     if (!unicode_str_codepoint_at(str, i, &point)) {
-      unicode_str_destroy(result);
+      unicode_str_destroy(&result);
       return NULL;
     }
     if (!unicode_str_insert_at_codepoint(result, toupper(point), i)) {
-      unicode_str_destroy(result);
+      unicode_str_destroy(&result);
       return NULL;
     }
   }
@@ -378,6 +378,8 @@ char *unicode_str_to_cstr(struct unicode_str_t *str) {
   return result;
 }
 
-void unicode_str_destroy(struct unicode_str_t *str) {
-  byte_array_free(&str->bytes);
+void unicode_str_destroy(struct unicode_str_t **str) {
+  byte_array_free(&(*str)->bytes);
+  free(*str);
+  *str = NULL;
 }

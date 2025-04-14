@@ -40,7 +40,7 @@ struct hash_map_t * hash_map_create(size_t n) __THROWNL;
  * @param[out] hm The hash map.
  * @param[in] free_value Flag to also free the entries' values as well.
  */
-void hash_map_destroy(struct hash_map_t *hm, bool free_value) __THROWNL __nonnull((1));
+void hash_map_destroy(struct hash_map_t **hm, bool free_value) __THROWNL __nonnull((1));
 
 /**
  * Get an entry's value by the given key if it exists.

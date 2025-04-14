@@ -238,7 +238,7 @@ char *unicode_str_to_cstr(struct unicode_str_t *str) __nonnull((1));
  *
  * @param[out] str The unicode string.
  */
-void unicode_str_destroy(struct unicode_str_t *str) __THROWNL __nonnull((1));
+void unicode_str_destroy(struct unicode_str_t **str) __THROWNL __nonnull((1));
 
 __END_DECLS
 

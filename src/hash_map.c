@@ -83,7 +83,7 @@ struct hash_map_t *hash_map_create(size_t N) {
   }
 #ifndef __EMSCRIPTEN__
   if (pthread_mutex_init(&hm->mutex, NULL) < 0) {
-    hash_map_destroy(hm, false);
+    hash_map_destroy(&hm, false);
     error_log("hash map mutex failed to initialize.\n");
     return NULL;
   }
@@ -92,14 +92,15 @@ struct hash_map_t *hash_map_create(size_t N) {
   return hm;
 }
 
-void hash_map_destroy(struct hash_map_t *hm, bool free_value) {
-  for (size_t i = 0; i < hm->entries.cap; ++i) {
+void hash_map_destroy(struct hash_map_t **hm, bool free_value) {
+  if (*hm == NULL) return;
+  for (size_t i = 0; i < (*hm)->entries.cap; ++i) {
     map_entry_array map_entry = {
         .len = 0,
         .cap = 0,
         .map_entry_data = NULL,
     };
-    map_array_get(&hm->entries, i, &map_entry);
+    map_array_get(&(*hm)->entries, i, &map_entry);
     if (map_entry.len > 0) {
       for (size_t entry_idx = 0; entry_idx < map_entry.len; ++entry_idx) {
         struct hash_map_entry_t *entry = NULL;
@@ -115,11 +116,12 @@ void hash_map_destroy(struct hash_map_t *hm, bool free_value) {
       map_entry_array_free(&map_entry);
     }
   }
-  map_array_free(&hm->entries);
+  map_array_free(&(*hm)->entries);
 #ifndef __EMSCRIPTEN__
-  pthread_mutex_destroy(&hm->mutex);
+  pthread_mutex_destroy(&(*hm)->mutex);
 #endif
-  free(hm);
+  free(*hm);
+  *hm = NULL;
 }
 
 bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
