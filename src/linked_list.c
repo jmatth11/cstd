@@ -3,7 +3,7 @@
 
 #include "headers/linked_list.h"
 
-struct linked_list_t * linked_list_create(void* value) {
+struct linked_list_t *linked_list_create(void *value) {
   struct linked_list_t *result = malloc(sizeof(struct linked_list_t));
   linked_list_init(result);
   result->value = value;
@@ -17,8 +17,10 @@ bool linked_list_init(struct linked_list_t *ll) {
   return true;
 }
 
-static inline struct linked_list_t* find_pos(struct linked_list_t *ll, size_t target_pos) {
-  if (ll == NULL) return NULL;
+static inline struct linked_list_t *find_pos(struct linked_list_t *ll,
+                                             size_t target_pos) {
+  if (ll == NULL)
+    return NULL;
   struct linked_list_t *cur = ll;
   size_t idx = 0;
   while (cur != NULL) {
@@ -34,8 +36,9 @@ static inline struct linked_list_t* find_pos(struct linked_list_t *ll, size_t ta
   return cur;
 }
 
-static inline struct linked_list_t* find_end(struct linked_list_t *ll) {
-  if (ll == NULL) return NULL;
+static inline struct linked_list_t *find_end(struct linked_list_t *ll) {
+  if (ll == NULL)
+    return NULL;
   struct linked_list_t *cur = ll;
   while (cur->next != NULL) {
     cur = cur->next;
@@ -46,18 +49,21 @@ static inline struct linked_list_t* find_end(struct linked_list_t *ll) {
 static inline size_t find_len(struct linked_list_t *ll) {
   struct linked_list_t *cur = ll;
   size_t result = 0;
-  while(cur != NULL) {
+  while (cur != NULL) {
     ++result;
     cur = cur->next;
   }
   return result;
 }
 
-bool linked_list_insert(struct linked_list_t *ll, size_t pos, void* value) {
+bool linked_list_insert(struct linked_list_t *ll, size_t pos, void *value) {
   struct linked_list_t *obj = find_pos(ll, pos);
-  if (obj == NULL) return false;
-  struct linked_list_t *tmp = (struct linked_list_t*)malloc(sizeof(struct linked_list_t));
-  if (tmp == NULL) return false;
+  if (obj == NULL)
+    return false;
+  struct linked_list_t *tmp =
+      (struct linked_list_t *)malloc(sizeof(struct linked_list_t));
+  if (tmp == NULL)
+    return false;
   linked_list_init(tmp);
   tmp->prev = obj;
   tmp->value = value;
@@ -69,11 +75,14 @@ bool linked_list_insert(struct linked_list_t *ll, size_t pos, void* value) {
   return true;
 }
 
-bool linked_list_append(struct linked_list_t *ll, void* value) {
+bool linked_list_append(struct linked_list_t *ll, void *value) {
   struct linked_list_t *obj = find_end(ll);
-  if (obj == NULL) return false;
-  struct linked_list_t *tmp = (struct linked_list_t*)malloc(sizeof(struct linked_list_t));
-  if (tmp == NULL) return false;
+  if (obj == NULL)
+    return false;
+  struct linked_list_t *tmp =
+      (struct linked_list_t *)malloc(sizeof(struct linked_list_t));
+  if (tmp == NULL)
+    return false;
   linked_list_init(tmp);
   tmp->prev = obj;
   tmp->value = value;
@@ -81,21 +90,21 @@ bool linked_list_append(struct linked_list_t *ll, void* value) {
   return true;
 }
 
-struct linked_list_t* linked_list_get_pos(struct linked_list_t *ll, size_t pos) {
+struct linked_list_t *linked_list_get_pos(struct linked_list_t *ll,
+                                          size_t pos) {
   return find_pos(ll, pos);
 }
 
-struct linked_list_t* linked_list_get_end(struct linked_list_t *ll) {
+struct linked_list_t *linked_list_get_end(struct linked_list_t *ll) {
   return find_end(ll);
 }
 
-size_t linked_list_get_len(struct linked_list_t *ll) {
-  return find_len(ll);
-}
+size_t linked_list_get_len(struct linked_list_t *ll) { return find_len(ll); }
 
 bool linked_list_delete(struct linked_list_t *ll, size_t pos) {
   struct linked_list_t *obj = find_pos(ll, pos);
-  if (obj == NULL) return false;
+  if (obj == NULL)
+    return false;
   if (obj->prev != NULL) {
     obj->prev->next = obj->next;
   }
@@ -118,6 +127,9 @@ bool linked_list_delete_node(struct linked_list_t *ll) {
 }
 
 void linked_list_free(struct linked_list_t *ll) {
+  if (ll == NULL) {
+    return;
+  }
   ll->next = NULL;
   ll->prev = NULL;
   ll->value = NULL;
@@ -125,11 +137,13 @@ void linked_list_free(struct linked_list_t *ll) {
 }
 
 void linked_list_free_all(struct linked_list_t *ll) {
+  if (ll == NULL) {
+    return;
+  }
   struct linked_list_t *cur = ll;
-  while(cur != NULL) {
-    struct linked_list_t* n = cur->next;
+  while (cur != NULL) {
+    struct linked_list_t *n = cur->next;
     linked_list_free(cur);
     cur = n;
   }
 }
-
