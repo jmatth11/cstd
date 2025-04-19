@@ -126,8 +126,14 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
 #ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
-  int hash = hash_from_str(key);
-  int idx = mod(hash, hm->entries.cap);
+  size_t hash = hash_from_str(key);
+  size_t idx = mod(hash, hm->entries.cap);
+  if (idx >= hm->entries.cap) {
+#ifndef __EMSCRIPTEN__
+    pthread_mutex_unlock(&hm->mutex);
+#endif
+    return false;
+  }
   size_t key_len = strlen(key);
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
@@ -164,6 +170,9 @@ bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {
   size_t key_len = strlen(key);
   bool exists = false;
   if (idx >= hm->entries.cap) {
+#ifndef __EMSCRIPTEN__
+    pthread_mutex_unlock(&hm->mutex);
+#endif
     return false;
   }
   map_entry_array *row = &hm->entries.map_data[idx];
@@ -199,8 +208,14 @@ bool hash_map_remove(struct hash_map_t *hm, const char *key) {
 #ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
-  int hash = hash_from_str(key);
-  int idx = mod(hash, hm->entries.cap);
+  size_t hash = hash_from_str(key);
+  size_t idx = mod(hash, hm->entries.cap);
+  if (idx >= hm->entries.cap) {
+#ifndef __EMSCRIPTEN__
+    pthread_mutex_unlock(&hm->mutex);
+#endif
+    return false;
+  }
   size_t key_len = strlen(key);
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
@@ -237,8 +252,14 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
 #ifndef __EMSCRIPTEN__
   pthread_mutex_lock(&hm->mutex);
 #endif
-  int hash = hash_from_str(key);
-  int idx = mod(hash, hm->entries.cap);
+  size_t hash = hash_from_str(key);
+  size_t idx = mod(hash, hm->entries.cap);
+  if (idx >= hm->entries.cap) {
+#ifndef __EMSCRIPTEN__
+    pthread_mutex_unlock(&hm->mutex);
+#endif
+    return false;
+  }
   size_t key_len = strlen(key);
   map_entry_array *row = &hm->entries.map_data[idx];
   if (row->map_entry_data == NULL) {
