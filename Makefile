@@ -61,9 +61,7 @@ clean:
 
 .PHONY: deps
 deps: install_deps
-	@for i in $(DEPS); do\
-		cd $${i} && $(MAKE) && cd -;\
-	done
+	$(foreach dir, $(DEPS), $(shell cd $(dir) && $(MAKE)))
 
 .PHONY: deps_debug
 deps_debug: install_deps
