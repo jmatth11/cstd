@@ -1,5 +1,6 @@
 #include "headers/base_str.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifndef C_STR_ARRAY_INC_CONSTANT
@@ -45,6 +46,21 @@ base_str_error get_const_str(const struct base_str_t *data, const char **out) {
   return C_STR_NO_ERROR;
 }
 
+base_str_error copy(const struct base_str_t *data, char **out) {
+  const size_t len = data->_internal->len;
+  char *result = malloc((sizeof(char) * len) + 1);
+  if (result == NULL) {
+    return C_STR_MALLOC_ERROR;
+  }
+  if (strncpy(result, data->_internal->data, len) == NULL) {
+    free(result);
+    return C_STR_MALLOC_ERROR;
+  }
+  result[len] = '\0';
+  *out = result;
+  return C_STR_NO_ERROR;
+}
+
 base_str_error set(struct base_str_t *data, const char *str, size_t len) {
   resize(data->_internal, len);
   if (data->_internal->data == NULL) {
@@ -87,6 +103,7 @@ base_str_error new_base_str(struct base_str_t *data, size_t cap) {
   data->length = length;
   data->get_str = get_str;
   data->get_const_str = get_const_str;
+  data->copy = copy;
   data->_internal->data = tmp;
   data->_internal->len = 0;
   data->_internal->cap = cap;

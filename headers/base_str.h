@@ -70,6 +70,14 @@ typedef struct base_str_t {
      * @returns base_str_error.
      */
     base_str_error (*at)(const struct base_str_t*, const size_t, char*);
+    /**
+     * Generate a copy of the string into the out parameter.
+     * The caller is responsible for freeing the generated string.
+     * @param[in] const struct base_str* The base_str structure.
+     * @param[out] char** The pointer to return out the copied string to.
+     * @returns base_str_error.
+     */
+    base_str_error (*copy)(const struct base_str_t*, char **);
 } base_str;
 
 /**
