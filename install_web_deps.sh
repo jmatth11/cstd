@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# for Makefile use
+
 # function to link specific bin executables to a missing common name
 function link_bin() {
   # find the executables
@@ -8,13 +10,6 @@ function link_bin() {
   single_arg=$(echo $args | cut -d" " -f2)
   sudo ln -s $single_arg "/usr/bin/$1"
 }
-
-which wasm-ld > /dev/null
-if [ $? -ne 0 ]; then
-  sudo apt-get install -y lld
-  # for 32 bit stub files needed to compile wasm32
-  sudo apt-get install -y libc6-dev-i386
-fi
 
 if [ ! -d ./deps/wasi-libc ]; then
   # this is to have a wasm compliant libc to link against
