@@ -155,6 +155,19 @@ size_t unicode_str_set_char(struct unicode_str_t *str, const char *other,
   return result;
 }
 
+size_t unicode_str_set_codepoint(struct unicode_str_t *str, const code_point_t *other,
+                            size_t len) {
+  str->bytes.len = 0;
+  for (size_t i = 0; i<len; ++i) {
+    uint8_t buf[4] = {0,0,0,0};
+    uint8_t n = utf8_write_code_point(buf, 4, 0, other[i]);
+    if (unicode_str_append(str, buf, n) != n) {
+      return i;
+    }
+  }
+  return len;
+}
+
 bool unicode_str_get(struct unicode_str_t *str, const byte_array **out) {
   *out = &str->bytes;
   return true;

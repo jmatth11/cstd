@@ -78,6 +78,17 @@ size_t unicode_str_set(struct unicode_str_t *str, const uint8_t *other,
 size_t unicode_str_set_char(struct unicode_str_t *str, const char *other,
                             size_t len) __THROWNL __nonnull((1, 2));
 /**
+ * Set the unicode string with the given string.
+ * This function validates the incoming string for valid UTF-8 encoding.
+ *
+ * @param[in] str The unicode string.
+ * @param[in] other The incoming string to set.
+ * @param[in] len The length of the incoming string in codepoints.
+ * @return The number of codepoints written, 0 if no codepoints or an error.
+ */
+size_t unicode_str_set_codepoint(struct unicode_str_t *str, const code_point_t *other,
+                            size_t len) __THROWNL __nonnull((1, 2));
+/**
  * Get the unicode string as a byte_array.
  *
  * @param[in] str The unicode string.
