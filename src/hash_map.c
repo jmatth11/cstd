@@ -19,9 +19,9 @@ struct hash_map_iterator_t {
 
 generate_array_template(map_entry, struct hash_map_entry_t *)
 
-    generate_array_template(map, map_entry_array)
+generate_array_template(map, map_entry_array)
 
-        struct hash_map_t {
+struct hash_map_t {
   map_array entries;
 #ifndef __EMSCRIPTEN__
   pthread_mutex_t mutex;
@@ -53,7 +53,7 @@ hash_map_iterator_next(struct hash_map_iterator_t *it) {
   return result;
 }
 
-static inline int mod(size_t hash, size_t cap) { return hash % cap; }
+static inline size_t mod(size_t hash, size_t cap) { return hash % cap; }
 
 static bool hash_map_add_new_entry(map_entry_array *row, const char *key,
                                    void *value) {
@@ -91,6 +91,7 @@ struct hash_map_t *hash_map_create(size_t N) {
   }
 #endif
   hm->entries.len = N;
+  memset(hm->entries.map_data, 0, sizeof(struct map_entry_array)*N);
   return hm;
 }
 
@@ -98,7 +99,7 @@ void hash_map_destroy(struct hash_map_t **hm, bool free_value) {
   if (*hm == NULL) {
     return;
   }
-  for (size_t i = 0; i < (*hm)->entries.cap; ++i) {
+  for (size_t i = 0; i < (*hm)->entries.len; ++i) {
     map_entry_array map_entry = {
         .len = 0,
         .cap = 0,
@@ -110,7 +111,9 @@ void hash_map_destroy(struct hash_map_t **hm, bool free_value) {
         struct hash_map_entry_t *entry = NULL;
         map_entry_array_get(&map_entry, entry_idx, &entry);
         if (entry != NULL) {
-          free(entry->key);
+          if (entry->key != NULL) {
+            free(entry->key);
+          }
           if (free_value && entry->value != NULL) {
             free(entry->value);
           }
@@ -171,7 +174,7 @@ bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {
   pthread_mutex_lock(&hm->mutex);
 #endif
   bool result = true;
-  int hash = hash_from_str(key);
+  size_t hash = hash_from_str(key);
   size_t idx = mod(hash, hm->entries.cap);
   size_t key_len = strlen(key);
   bool exists = false;
