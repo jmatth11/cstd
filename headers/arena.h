@@ -2,6 +2,7 @@
 #define CSTD_ARENA_ALLOCATOR_H
 
 #include <stddef.h>
+#include "defs.h"
 
 /**
  * Simple arena allocator
@@ -24,7 +25,7 @@ struct arena_t* arena_create(size_t size);
  * @param alignment The alignment of the type. @see _Alignof
  * @return The newly allocated object, NULL if an error occurred.
  */
-void* arena_alloc(struct arena_t *ptr, size_t size, size_t alignment);
+void* arena_alloc(struct arena_t *ptr, size_t size, size_t alignment) __nonnull((1));
 
 /**
  * Free the arena allocator.
