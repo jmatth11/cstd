@@ -11,7 +11,7 @@ const char *suite_name = "unicode_str";
 static bool unicode_str_create_test() {
   struct unicode_str_t *local = unicode_str_create();
   bool result = local != NULL;
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   return result;
 }
 
@@ -39,7 +39,7 @@ static bool unicode_str_set_and_get_test() {
             suite_name, test_str.byte_data, out->byte_data);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&test_str);
   return true;
 }
@@ -79,7 +79,7 @@ static bool unicode_str_append_tests() {
             suite_name, expected.byte_data, out->byte_data);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&expected);
   byte_array_free(&postfix);
   byte_array_free(&test_str);
@@ -121,7 +121,7 @@ static bool unicode_str_insert_at_tests() {
             suite_name, expected.byte_data, out->byte_data);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&expected);
   byte_array_free(&infix);
   byte_array_free(&test_str);
@@ -163,7 +163,7 @@ static bool unicode_str_remove_range_tests() {
             suite_name, expected.byte_data, out->byte_data);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&expected);
   byte_array_free(&test_str);
   return true;
@@ -201,7 +201,7 @@ static bool unicode_str_len_tests() {
             suite_name, codepoint_len_result, expected_codepoint_len);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&expected);
   return true;
 }
@@ -237,7 +237,7 @@ static bool unicode_str_byte_len_tests() {
             suite_name, unicode_len_result, expected_unicode_len);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&expected);
   return true;
 }
@@ -265,7 +265,7 @@ static bool unicode_str_codepoint_at_tests() {
             suite_name, rune.val, out);
     return false;
   }
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&expected);
   byte_array_free(&single_unicode_codepoint);
   return true;
@@ -296,7 +296,7 @@ static bool unicode_str_get_range_tests() {
     return false;
   }
   free(out);
-  unicode_str_destroy(local);
+  unicode_str_destroy(&local);
   byte_array_free(&test_str);
   return true;
 }
