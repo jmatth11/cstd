@@ -9,7 +9,7 @@ struct arena_t {
   void *ptr;
 };
 
-struct arena_t* arena_init(size_t size) {
+struct arena_t* arena_create(size_t size) {
   struct arena_t *result = malloc(sizeof(struct arena_t));
   if (result == NULL) {
     return NULL;

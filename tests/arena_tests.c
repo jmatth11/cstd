@@ -7,6 +7,7 @@
 #define ARENA_OFFSET_STR "test!"
 
 static bool test_arena_create() {
+  printf("test_arena_create start\n");
   struct arena_t *tmp = arena_create(5);
   if (tmp == NULL) {
     fprintf(stderr, "arena_create returned NULL.\n");
@@ -17,6 +18,7 @@ static bool test_arena_create() {
 }
 
 static bool test_arena_alloc() {
+  printf("test_arena_alloc start\n");
   struct arena_t *tmp = arena_create(20);
 
   char *tmp_str = arena_alloc(tmp, (sizeof(char)*strlen(ARENA_TEST_STR)) + 1, _Alignof(char));
@@ -39,6 +41,7 @@ static bool test_arena_alloc() {
 }
 
 static bool test_arena_alloc_alignment() {
+  printf("test_arena_alloc_alignment start\n");
   struct arena_t *tmp = arena_create(20);
 
   char *tmp_str = arena_alloc(tmp, sizeof(char)*6, _Alignof(char));
@@ -56,11 +59,23 @@ static bool test_arena_alloc_alignment() {
     return false;
   }
   *num = 5;
-  // TODO fix comparison
-  if ((num % _Alignof(int)) == 0) {
-
+  if (( ((unsigned long)num) % _Alignof(int)) != 0) {
+    fprintf(stderr, "number was not aligned to %zu bytes.\n", _Alignof(int));
+    arena_destroy(&tmp);
+    return false;
   }
-
   arena_destroy(&tmp);
   return true;
+}
+
+static void arena_alloc_tests() {
+  if (!test_arena_create()) {
+    fprintf(stderr, "arena allocator create test failed.\n");
+  }
+  if (!test_arena_alloc()) {
+    fprintf(stderr, "arena allocator alloc test failed.\n");
+  }
+  if (!test_arena_alloc_alignment()) {
+    fprintf(stderr, "arena allocator alloc alignment test failed.\n");
+  }
 }
