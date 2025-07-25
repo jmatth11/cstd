@@ -149,7 +149,8 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
 #ifndef __EMSCRIPTEN__
     pthread_mutex_unlock(&hm->mutex);
 #endif
-    return false;
+    // we return true because it's not an error, it just doesn't exist
+    return true;
   }
   for (size_t i = 0; i < row->len; ++i) {
     struct hash_map_entry_t *entry = NULL;
