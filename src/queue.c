@@ -29,6 +29,10 @@ bool simple_queue_pop(struct simple_queue_t *queue, void **out) {
   return linked_list_delete_node(node);
 }
 
+bool simple_queue_is_empty(struct simple_queue_t *queue) {
+  return queue->head == NULL;
+}
+
 size_t simple_queue_len(struct simple_queue_t *queue) {
   if (queue->head == NULL)
     return 0;

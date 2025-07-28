@@ -37,6 +37,14 @@ bool simple_queue_push(struct simple_queue_t *queue, void* entry) __nonnull((1,2
 bool simple_queue_pop(struct simple_queue_t *queue, void** out) __nonnull((1));
 
 /**
+ * Check if queue is empty.
+ *
+ * @param queue The simple queue.
+ * @return True if empty, false otherwise.
+ */
+bool simple_queue_is_empty(struct simple_queue_t *queue) __nonnull((1));
+
+/**
  * Return the length of the queue.
  *
  * @param[in] queue The simple queue.
