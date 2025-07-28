@@ -49,7 +49,7 @@ void hash_map_destroy(struct hash_map_t **hm, bool free_value) __THROWNL __nonnu
  * @param[in] key The lookup key.
  * @param[out] out The value to populate.
  *    It's populated with all values stored in this key.
- * @return True on success, false for not found or error.
+ * @return True for no errors, false if an error occurred.
  */
 bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) __THROWNL __nonnull((1));
 

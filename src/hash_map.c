@@ -149,16 +149,15 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
 #ifndef __EMSCRIPTEN__
     pthread_mutex_unlock(&hm->mutex);
 #endif
-    return false;
+    // we return true because it's not an error, it just doesn't exist
+    return true;
   }
-  bool result = false;
   for (size_t i = 0; i < row->len; ++i) {
     struct hash_map_entry_t *entry = NULL;
     map_entry_array_get(row, i, &entry);
     if (entry != NULL) {
       if (strncmp(entry->key, key, key_len) == 0) {
         *out = entry->value;
-        result = true;
         break;
       }
     }
@@ -166,7 +165,7 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
 #ifndef __EMSCRIPTEN__
   pthread_mutex_unlock(&hm->mutex);
 #endif
-  return result;
+  return true;
 }
 
 bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {
