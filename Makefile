@@ -22,6 +22,8 @@ endif
 # Release specific flags
 ifeq ($(RELEASE), 1)
 	CFLAGS += -O2
+else
+	CFLAGS += -fsanitize=undefined
 endif
 
 .PHONY: all
