@@ -23,7 +23,7 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
         "-lm",
         emscripten_flag,
     };
-    const module = b.addModule("custom_std", .{
+    const module = b.createModule(.{
         .pic = true,
         .target = target,
         .optimize = optimize,
