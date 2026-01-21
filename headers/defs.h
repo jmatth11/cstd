@@ -19,15 +19,27 @@
 #endif
 
 #ifndef __THROWNL
+#ifndef __EMSCRIPTEN__
 #define __THROWNL __attribute__((__nothrow__))
+#else
+#define __THROWNL
+#endif
 #endif
 
 #ifndef __nonnull
+#ifndef __EMSCRIPTEN__
 #define __nonnull(params) __attribute__((__nonnull__ params))
+#else
+#define __nonnull(params)
+#endif
 #endif
 
 #ifndef UNUSED
+#ifndef __EMSCRIPTEN__
 #define UNUSED __attribute__((unused))
+#else
+#define UNUSED
+#endif
 #endif
 
 #endif
