@@ -98,4 +98,27 @@
 #endif
 #endif
 
+/**
+ * Attribute for setting a normal variable to be a SIMD vector.
+ * @param N size in bytes. N must be a positive power-of-two multiple of the
+ * base type size.
+ *
+ * Example: int v4si __vector_size(16);
+ * This creates 16 byte 32bit signed integer.
+ * So it's a vector of 4 elements (16/4 (32bit))
+ *
+ * Example Usage:
+ * typedef int v4si __vector_size(16);
+ * v4si a = {1,2,3,4};
+ * v4si b = {1,1,1,1};
+ * v4si c = a + b; // this results in {2, 3, 4, 5}
+ */
+#ifndef __vector_size
+#ifndef __EMSCRIPTEN__
+#define __vector_size(N) __attribute__((vector_size(N)))
+#else
+#define __vector_size
+#endif
+#endif
+
 #endif
