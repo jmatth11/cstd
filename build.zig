@@ -16,15 +16,24 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
         "src/arena.c",
         "src/os.c",
     };
-    const emscripten_flag = if (target.query.cpu_arch != null and target.query.cpu_arch.? == .wasm32) "-D__EMSCRIPTEN__=1" else "";
-    const flags: []const []const u8 = &.{
-        "-Wall",
-        "-O2",
-        "-std=c11",
-        "-lm",
-        "-march=native",
-        emscripten_flag,
-    };
+    var flags: []const []const u8 = undefined;
+    if (target.query.cpu_arch != null and target.query.cpu_arch.? == .wasm64) {
+        flags = &.{
+            "-Wall",
+            "-O2",
+            "-std=c11",
+            "-D__EMSCRIPTEN__=1",
+        };
+    } else {
+        flags = &.{
+            "-Wall",
+            "-O2",
+            "-std=c11",
+            "-lm",
+            "-lpthread",
+            "-march=native",
+        };
+    }
     const module = b.createModule(.{
         .pic = true,
         .target = target,
@@ -44,7 +53,7 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
 
 pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
-    const webTarget = b.resolveTargetQuery(.{ .cpu_arch = .wasm32, .os_tag = .freestanding });
+    const webTarget = b.resolveTargetQuery(.{ .cpu_arch = .wasm64, .os_tag = .freestanding });
     const webLib = b.addLibrary(.{
         .name = "webcustom_std",
         .linkage = .static,
