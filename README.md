@@ -26,3 +26,34 @@ Currently List of Features:
 Other functionality not included in this repo:
 
 WebSockets - https://github.com/jmatth11/websocket-c
+
+## Build
+
+There are two ways to build. A Makefile way or a Zig way.
+
+### Makefile
+
+Build the static and shared library:
+```bash
+make
+```
+
+Build in Release mode add `RELEASE=1` or you can build in debug mode with `DEBUG=1`.
+
+### Zig Build
+
+Build a static library and wasm64 library in debug mode with:
+```bash
+zig build
+```
+
+Build shared library:
+```bash
+zig build -Dlinkage=dynamic
+```
+
+Build in release mode:
+```bash
+zig build -Doptimize=ReleaseSafe
+```
+
