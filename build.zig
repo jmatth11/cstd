@@ -14,6 +14,7 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
         "src/queue.c",
         "src/magic.c",
         "src/arena.c",
+        "src/os.c",
     };
     const emscripten_flag = if (target.query.cpu_arch != null and target.query.cpu_arch.? == .wasm32) "-D__EMSCRIPTEN__=1" else "";
     const flags: []const []const u8 = &.{
@@ -21,6 +22,7 @@ fn createModule(b: *std.Build, optimize: std.builtin.OptimizeMode, target: std.B
         "-O2",
         "-std=c11",
         "-lm",
+        "-march=native",
         emscripten_flag,
     };
     const module = b.createModule(.{

@@ -6,6 +6,8 @@
 
 #include "defs.h"
 
+__BEGIN_DECLS
+
 /**
  * Create a duplicate of the given string up to length.
  * Includes null-terminated value.
@@ -44,5 +46,7 @@ char* to_str_long(long num);
       long : to_str_long, \
       default : to_str_int \
     )(n)
+
+__END_DECLS
 
 #endif

@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+__BEGIN_DECLS
+
 /* constant to multiple capacity by when increasing array size */
 #define array_template_capacity_increase_constant 1.7
 
@@ -136,5 +138,7 @@
       free_array_template(name, type) insert_array_template(name, type)        \
           get_array_template(name, type)                                       \
               fast_remove_array_template(name, type)
+
+__END_DECLS
 
 #endif

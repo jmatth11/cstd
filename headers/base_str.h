@@ -1,7 +1,10 @@
 #ifndef CSTD_BASE_C_STR
 #define CSTD_BASE_C_STR
 
+#include "defs.h"
 #include <stdlib.h>
+
+__BEGIN_DECLS
 
 /**
  * Enums for error base_str error codes.
@@ -102,5 +105,7 @@ base_str_error new_base_str_with_string(struct base_str_t*, const char*, size_t)
  * @param[in] struct base_str* The base_str to free.
  */
 void free_base_str(struct base_str_t*);
+
+__END_DECLS
 
 #endif

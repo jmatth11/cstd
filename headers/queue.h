@@ -6,6 +6,8 @@
 
 #include "defs.h"
 
+__BEGIN_DECLS
+
 /**
  * Simple queue structure.
  */
@@ -58,5 +60,7 @@ size_t simple_queue_len(struct simple_queue_t *queue) __nonnull((1));
  * @param[in] queue The simple queue.
  */
 void simple_queue_destroy(struct simple_queue_t **queue) __nonnull((1));
+
+__END_DECLS
 
 #endif

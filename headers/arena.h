@@ -4,6 +4,8 @@
 #include <stddef.h>
 #include "defs.h"
 
+__BEGIN_DECLS
+
 /**
  * Simple arena allocator
  */
@@ -40,6 +42,6 @@ void* arena_alloc(struct arena_t *ptr, size_t size, size_t alignment) __nonnull(
  */
 void arena_destroy(struct arena_t** ptr);
 
-
+__END_DECLS
 
 #endif

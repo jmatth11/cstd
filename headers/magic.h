@@ -1,6 +1,10 @@
 #ifndef CSTD_MAGIC_H
 #define CSTD_MAGIC_H
 
+#include "defs.h"
+
+__BEGIN_DECLS
+
 #define DEFER(func) __attribute__((__cleanup__(func)))
 
 void cstd_freep_fn(void**);
@@ -14,5 +18,7 @@ void cstd_freef_fn(float**);
 #define AUTO_I DEFER(cstd_freei_fn)
 #define AUTO_D DEFER(cstd_freed_fn)
 #define AUTO_F DEFER(cstd_freef_fn)
+
+__END_DECLS
 
 #endif
