@@ -15,9 +15,9 @@ char *concat(const char *restrict a, const char *restrict b, size_t *output_leng
   if (a == NULL || b == NULL) {
     return NULL;
   }
-  const size_t new_len = snprintf(NULL, 0, "%s%s", a, b) + 1;
+  const size_t new_len = snprintf(NULL, 0, "%s%s", a, b);
   char *buf = (char *)calloc(new_len + 1, sizeof(char));
-  if (snprintf(buf, new_len, "%s%s", a, b) <= 0) {
+  if (snprintf(buf, new_len + 1, "%s%s", a, b) <= 0) {
     free(buf);
     return NULL;
   }
