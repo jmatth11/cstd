@@ -39,7 +39,7 @@ __BEGIN_DECLS
 #define init_array_template(name, type)                                        \
   UNUSED static inline bool name##_array_init(array_template_type(name) * arr, \
                                               size_t N) {                      \
-    if (N < 0)                                                                 \
+    if (N <= 0)                                                                 \
       N = 1;                                                                   \
     arr->array_template_data(name) = (type *)malloc(N * sizeof(type));         \
     if (arr->array_template_data(name) == NULL) {                              \
