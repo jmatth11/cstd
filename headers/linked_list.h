@@ -29,12 +29,20 @@ struct linked_list_t *linked_list_get_pos(struct linked_list_t *ll,
 struct linked_list_t *linked_list_get_end(struct linked_list_t *ll) __THROWNL
     __nonnull((1));
 
+/**
+ * Get the head of the given linked list.
+ *
+ * @param[in] ll A linked list node.
+ * @returns The head linked list.
+ */
+struct linked_list_t *linked_list_head(struct linked_list_t *ll) __THROWNL;
+
 size_t linked_list_get_len(struct linked_list_t *ll) __THROWNL __nonnull((1));
 
-bool linked_list_delete(struct linked_list_t *ll, size_t pos) __THROWNL
+struct linked_list_t* linked_list_delete(struct linked_list_t *ll, size_t pos) __THROWNL
     __nonnull((1));
 
-bool linked_list_delete_node(struct linked_list_t *ll) __THROWNL __nonnull((1));
+struct linked_list_t* linked_list_delete_node(struct linked_list_t *ll) __THROWNL __nonnull((1));
 
 void linked_list_free(struct linked_list_t *ll) __THROWNL;
 

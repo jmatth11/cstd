@@ -5,6 +5,9 @@
 
 struct linked_list_t *linked_list_create(void *value) {
   struct linked_list_t *result = malloc(sizeof(struct linked_list_t));
+  if (result == NULL) {
+    return NULL;
+  }
   linked_list_init(result);
   result->value = value;
   return result;
@@ -46,6 +49,16 @@ static inline struct linked_list_t *find_end(struct linked_list_t *ll) {
   return cur;
 }
 
+struct linked_list_t *linked_list_head(struct linked_list_t *ll) {
+  if (ll == NULL)
+    return NULL;
+  struct linked_list_t *cur = ll;
+  while (cur->prev != NULL) {
+    cur = cur->prev;
+  }
+  return cur;
+}
+
 static inline size_t find_len(struct linked_list_t *ll) {
   struct linked_list_t *cur = ll;
   size_t result = 0;
@@ -57,21 +70,32 @@ static inline size_t find_len(struct linked_list_t *ll) {
 }
 
 bool linked_list_insert(struct linked_list_t *ll, size_t pos, void *value) {
-  struct linked_list_t *obj = find_pos(ll, pos);
-  if (obj == NULL)
-    return false;
+  struct linked_list_t *obj = NULL;
+  // insertion happens at the index so we need the node just before
+  // that index.
+  if (pos > 0) {
+    obj = find_pos(ll, pos - 1);
+    if (obj == NULL) {
+      return false;
+    }
+  }
   struct linked_list_t *tmp =
       (struct linked_list_t *)malloc(sizeof(struct linked_list_t));
   if (tmp == NULL)
     return false;
   linked_list_init(tmp);
-  tmp->prev = obj;
   tmp->value = value;
-  if (obj->next != NULL) {
-    obj->next->prev = tmp;
-    tmp->next = obj->next;
+  tmp->prev = obj;
+  if (obj != NULL) {
+    if (obj->next != NULL) {
+      obj->next->prev = tmp;
+      tmp->next = obj->next;
+    }
+    obj->next = tmp;
+  } else {
+    // if obj is null we are inserting a new head.
+    tmp->next = ll;
   }
-  obj->next = tmp;
   return true;
 }
 
@@ -101,10 +125,15 @@ struct linked_list_t *linked_list_get_end(struct linked_list_t *ll) {
 
 size_t linked_list_get_len(struct linked_list_t *ll) { return find_len(ll); }
 
-bool linked_list_delete(struct linked_list_t *ll, size_t pos) {
+struct linked_list_t* linked_list_delete(struct linked_list_t *ll, size_t pos) {
+  struct linked_list_t *result = ll;
   struct linked_list_t *obj = find_pos(ll, pos);
   if (obj == NULL)
-    return false;
+    return ll;
+  // we are deleting the head.
+  if (pos == 0) {
+    result = obj->next;
+  }
   if (obj->prev != NULL) {
     obj->prev->next = obj->next;
   }
@@ -112,18 +141,23 @@ bool linked_list_delete(struct linked_list_t *ll, size_t pos) {
     obj->next->prev = obj->prev;
   }
   linked_list_free(obj);
-  return true;
+  return result;
 }
 
-bool linked_list_delete_node(struct linked_list_t *ll) {
+struct linked_list_t* linked_list_delete_node(struct linked_list_t *ll) {
+  struct linked_list_t *result = NULL;
   if (ll->prev != NULL) {
+    result = ll->prev;
     ll->prev->next = ll->next;
   }
   if (ll->next != NULL) {
+    if (result == NULL) {
+      result = ll->next;
+    }
     ll->next->prev = ll->prev;
   }
   linked_list_free(ll);
-  return true;
+  return result;
 }
 
 void linked_list_free(struct linked_list_t *ll) {

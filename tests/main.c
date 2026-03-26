@@ -9,6 +9,7 @@
 #include "file_ops_tests.c"
 #include "gap_buffer_tests.c"
 #include "hash_map_tests.c"
+#include "linked_list_tests.c"
 
 int main(void) {
   color_log(LOG_COLOR_CYAN, "starting tests\n");
@@ -40,6 +41,10 @@ int main(void) {
   color_log(LOG_COLOR_CYAN, "starting hash_map tests\n");
   hash_map_tests();
 
+  color_log(LOG_COLOR_CYAN, "starting linked_list tests\n");
+  linked_list_tests();
+
   color_log(LOG_COLOR_GREEN, "end tests\n");
   return 0;
 }
+

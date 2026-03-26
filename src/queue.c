@@ -24,9 +24,9 @@ bool simple_queue_pop(struct simple_queue_t *queue, void **out) {
   if (queue->head == NULL)
     return true;
   struct linked_list_t *node = queue->head;
-  queue->head = node->next;
   *out = node->value;
-  return linked_list_delete_node(node);
+  queue->head = linked_list_delete_node(node);
+  return true;
 }
 
 bool simple_queue_is_empty(struct simple_queue_t *queue) {
