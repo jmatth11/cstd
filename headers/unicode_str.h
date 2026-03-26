@@ -251,6 +251,17 @@ char *unicode_str_to_cstr(struct unicode_str_t *str) __nonnull((1));
  */
 void unicode_str_destroy(struct unicode_str_t **str) __THROWNL __nonnull((1));
 
+/**
+ * Compare two code_point_t arrays like strncmp.
+ * Compares up to n code points.
+ *
+ * @param[in] s1 The first code_point_t array.
+ * @param[in] s2 The second code_point_t array.
+ * @param[in] n The maximum number of code points to compare.
+ * @return 0 if equal, negative if s1 < s2, positive if s1 > s2.
+ */
+int code_point_cmp(const code_point_t *s1, const code_point_t *s2, size_t n);
+
 __END_DECLS
 
 #endif

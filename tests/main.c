@@ -5,6 +5,9 @@
 #include "arena_tests.c"
 #include "array_template_tests.c"
 #include "base_str_tests.c"
+#include "crypt_tests.c"
+#include "file_ops_tests.c"
+#include "gap_buffer_tests.c"
 
 int main(void) {
   color_log(LOG_COLOR_CYAN, "starting tests\n");
@@ -23,6 +26,15 @@ int main(void) {
 
   color_log(LOG_COLOR_CYAN, "starting base_str tests\n");
   base_str_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting crypt tests\n");
+  crypt_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting file_ops tests\n");
+  file_ops_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting gap_buffer tests\n");
+  gap_buffer_tests();
 
   color_log(LOG_COLOR_GREEN, "end tests\n");
   return 0;

@@ -317,6 +317,102 @@ static bool codepoint_idx_from_byte_idx_tests() {
   return true;
 }
 
+static bool test_code_point_cmp_equal() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_equal start\n");
+  code_point_t s1[] = {'h', 'e', 'l', 'l', 'o', 0};
+  code_point_t s2[] = {'h', 'e', 'l', 'l', 'o', 0};
+  int result = code_point_cmp(s1, s2, 5);
+  if (result != 0) {
+    color_log(LOG_COLOR_RED, "%s: equal strings should return 0, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
+static bool test_code_point_cmp_less() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_less start\n");
+  code_point_t s1[] = {'a', 'p', 'p', 'l', 'e', 0};
+  code_point_t s2[] = {'b', 'a', 'n', 'a', 'n', 'a', 0};
+  int result = code_point_cmp(s1, s2, 5);
+  if (result >= 0) {
+    color_log(LOG_COLOR_RED, "%s: \"apple\" < \"banana\" should return negative, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
+static bool test_code_point_cmp_greater() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_greater start\n");
+  code_point_t s1[] = {'z', 'e', 'b', 'r', 'a', 0};
+  code_point_t s2[] = {'a', 'p', 'p', 'l', 'e', 0};
+  int result = code_point_cmp(s1, s2, 5);
+  if (result <= 0) {
+    color_log(LOG_COLOR_RED, "%s: \"zebra\" > \"apple\" should return positive, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
+static bool test_code_point_cmp_n_zero() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_n_zero start\n");
+  code_point_t s1[] = {'h', 'e', 'l', 'l', 'o', 0};
+  code_point_t s2[] = {'a', 'n', 'y', 't', 'h', 'i', 'n', 'g', 0};
+  int result = code_point_cmp(s1, s2, 0);
+  if (result != 0) {
+    color_log(LOG_COLOR_RED, "%s: n=0 should return 0, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
+static bool test_code_point_cmp_partial() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_partial start\n");
+  code_point_t s1[] = {'h', 'e', 'l', 'l', 'o', 0};
+  code_point_t s2[] = {'h', 'e', 'l', 'l', 'x', 0};
+  int result = code_point_cmp(s1, s2, 4);
+  if (result != 0) {
+    color_log(LOG_COLOR_RED, "%s: first 4 chars equal should return 0, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
+static bool test_code_point_cmp_null_pointers() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_null_pointers start\n");
+  code_point_t s1[] = {'t', 'e', 's', 't', 0};
+  int result = code_point_cmp(NULL, s1, 5);
+  if (result != 0) {
+    color_log(LOG_COLOR_RED, "%s: NULL s1 should return 0, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  result = code_point_cmp(s1, NULL, 5);
+  if (result != 0) {
+    color_log(LOG_COLOR_RED, "%s: NULL s2 should return 0, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
+static bool test_code_point_cmp_different_lengths() {
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_different_lengths start\n");
+  code_point_t s1[] = {'h', 'e', 'l', 'l', 0};
+  code_point_t s2[] = {'h', 'e', 'l', 'l', 'o', 0};
+  int result = code_point_cmp(s1, s2, 10);
+  if (result >= 0) {
+    color_log(LOG_COLOR_RED, "%s: \"hell\" < \"hello\" should return negative, got %d\n", 
+              unicode_str_unicode_str_suite_name, result);
+    return false;
+  }
+  return true;
+}
+
 static void unicode_str_tests() {
   int failures = 0;
 
@@ -358,6 +454,34 @@ static void unicode_str_tests() {
   }
   if (!codepoint_idx_from_byte_idx_tests()) {
     color_log(LOG_COLOR_RED, "codepoint_idx_from_byte_idx_tests failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_equal()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_equal failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_less()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_less failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_greater()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_greater failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_n_zero()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_n_zero failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_partial()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_partial failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_null_pointers()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_null_pointers failed.\n");
+    failures++;
+  }
+  if (!test_code_point_cmp_different_lengths()) {
+    color_log(LOG_COLOR_RED, "test_code_point_cmp_different_lengths failed.\n");
     failures++;
   }
 
