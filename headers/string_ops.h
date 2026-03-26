@@ -43,12 +43,36 @@ char *concat(const char *restrict a, const char *restrict b,
              size_t *output_length);
 
 /**
- * Get the length of a string representation of the given value.
+ * Get the length of a string representation of the given integer.
+ *
+ * @param[in] num The integer value.
+ * @return The length of the string representation.
  */
 size_t to_str_length_int(int num);
+
+/**
+ * Get the length of a string representation of the given double.
+ *
+ * @param[in] num The double value.
+ * @return The length of the string representation.
+ */
 size_t to_str_length_double(double num);
+
+/**
+ * Get the length of a string representation of the given long.
+ *
+ * @param[in] num The long value.
+ * @return The length of the string representation.
+ */
 size_t to_str_length_long(long num);
 
+/**
+ * Generic macro to get the length of a string representation of any supported type.
+ * Supports: float, double, long, int.
+ *
+ * @param[in] n The value to get the string length for.
+ * @return The length of the string representation.
+ */
 #define to_str_length(n)                                                       \
   _Generic((n), float                                                          \
            : to_str_length_double, double                                      \
@@ -57,11 +81,30 @@ size_t to_str_length_long(long num);
            : to_str_length_int)(n)
 
 /**
- * Convert the given value to a string.
+ * Convert an integer to a string.
  * The caller is responsible for freeing the memory.
+ *
+ * @param[in] num The integer value.
+ * @return Newly allocated string representation, NULL on error.
  */
 char *to_str_int(int num);
+
+/**
+ * Convert a double to a string.
+ * The caller is responsible for freeing the memory.
+ *
+ * @param[in] num The double value.
+ * @return Newly allocated string representation, NULL on error.
+ */
 char *to_str_double(double num);
+
+/**
+ * Convert a long to a string.
+ * The caller is responsible for freeing the memory.
+ *
+ * @param[in] num The long value.
+ * @return Newly allocated string representation, NULL on error.
+ */
 char *to_str_long(long num);
 
 #define to_str(n)                                                              \

@@ -3,3 +3,5 @@ deps
 obj
 .zig-cache
 zig-out
+docs
+doxygen

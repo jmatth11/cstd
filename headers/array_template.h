@@ -7,11 +7,13 @@
 
 __BEGIN_DECLS
 
-/* constant to multiple capacity by when increasing array size */
+/** Constant to multiply capacity by when increasing array size. */
 #define array_template_capacity_increase_constant 1.7
 
-/* tokens for the struct type and internal data array */
+/** Token to generate the struct type name for an array template. */
 #define array_template_type(name) name##_array
+
+/** Token to generate the internal data array field name. */
 #define array_template_data(name) name##_data
 
 /**

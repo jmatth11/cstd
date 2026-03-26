@@ -7,13 +7,24 @@
 
 __BEGIN_DECLS
 
+/**
+ * Hash map structure.
+ */
 struct hash_map_t;
 
+/**
+ * Entry in the hash map containing a key-value pair.
+ */
 struct hash_map_entry_t {
+  /** The key string. */
   char *key;
+  /** The value associated with the key. */
   void *value;
 };
 
+/**
+ * Iterator for traversing the hash map.
+ */
 struct hash_map_iterator_t;
 
 /**
@@ -28,7 +39,7 @@ struct hash_map_entry_t* hash_map_iterator_next(struct hash_map_iterator_t *it) 
 /**
  * Create a hash map with a given map size.
  *
- * @param[in] n The size of the map.
+ * @param[in] n The initial size of the map.
  * @return The allocated hash map, NULL if error.
  */
 struct hash_map_t * hash_map_create(size_t n) __THROWNL;
