@@ -21,16 +21,17 @@ static bool test_arena_alloc() {
   printf("test_arena_alloc start\n");
   struct arena_t *tmp = arena_create(20);
 
-  char *tmp_str = arena_alloc(tmp, (sizeof(char)*strlen(ARENA_TEST_STR)) + 1, _Alignof(char));
+  const size_t len = strlen(ARENA_TEST_STR);
+  char *tmp_str = arena_alloc(tmp, (sizeof(char)*(len + 1)), _Alignof(char));
 
-  if (strncpy(tmp_str, ARENA_TEST_STR, strlen(ARENA_TEST_STR)) == NULL) {
+  if (strncpy(tmp_str, ARENA_TEST_STR, len) == NULL) {
     fprintf(stderr, "strncpy failed for arena_alloc.\n");
     arena_destroy(&tmp);
     return false;
   }
-  tmp_str[strlen(ARENA_TEST_STR)] = '\0';
+  tmp_str[len] = '\0';
 
-  if (strncmp(tmp_str, ARENA_TEST_STR, strlen(ARENA_TEST_STR)) != 0) {
+  if (strncmp(tmp_str, ARENA_TEST_STR, len) != 0) {
     fprintf(stderr, "string compare against arena_test_str failed.\n");
     arena_destroy(&tmp);
     return false;
@@ -44,14 +45,15 @@ static bool test_arena_alloc_alignment() {
   printf("test_arena_alloc_alignment start\n");
   struct arena_t *tmp = arena_create(20);
 
-  char *tmp_str = arena_alloc(tmp, sizeof(char)*6, _Alignof(char));
+  const size_t len = strlen(ARENA_OFFSET_STR);
+  char *tmp_str = arena_alloc(tmp, sizeof(char)*(len + 1), _Alignof(char));
 
-  if (strncpy(tmp_str, ARENA_OFFSET_STR, strlen(ARENA_OFFSET_STR)) == NULL) {
+  if (strncpy(tmp_str, ARENA_OFFSET_STR, len) == NULL) {
     fprintf(stderr, "strncpy failed for arena_alloc.\n");
     arena_destroy(&tmp);
     return false;
   }
-  tmp_str[strlen(ARENA_OFFSET_STR)] = '\0';
+  tmp_str[len] = '\0';
 
   int *num = arena_alloc(tmp, sizeof(int), _Alignof(int));
   if (num == NULL) {

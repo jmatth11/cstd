@@ -6,7 +6,7 @@
 #include <string.h>
 #include "helpers.c"
 
-const char *suite_name = "unicode_str";
+static const char *unicode_str_unicode_str_suite_name = "unicode_str";
 
 static bool unicode_str_create_test() {
   struct unicode_str_t *local = unicode_str_create();
@@ -22,21 +22,21 @@ static bool unicode_str_set_and_get_test() {
   const size_t result_size = unicode_str_set(local, test_str.byte_data, test_str.len);
   if (result_size != test_str.len) {
     fprintf(stderr, "%s: result_size != test_str.len -- %lu != %lu\n",
-            suite_name, result_size, test_str.len);
+            unicode_str_unicode_str_suite_name, result_size, test_str.len);
     return false;
   }
   const byte_array *out = NULL;
   if (!unicode_str_get(local, &out)) {
-    fprintf(stderr, "%s: unicode string get failed\n", suite_name);
+    fprintf(stderr, "%s: unicode string get failed\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (out == NULL) {
-    fprintf(stderr, "%s: unicode string get returned NULL\n", suite_name);
+    fprintf(stderr, "%s: unicode string get returned NULL\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (!compare_byte_arrays(test_str, *out)) {
     fprintf(stderr, "%s: strings in set_and_get were not the same -- expected:\"%s\" != got:\"%s\"\n",
-            suite_name, test_str.byte_data, out->byte_data);
+            unicode_str_unicode_str_suite_name, test_str.byte_data, out->byte_data);
     return false;
   }
   unicode_str_destroy(&local);
@@ -53,7 +53,7 @@ static bool unicode_str_append_tests() {
   const size_t result_size = unicode_str_set(local, test_str.byte_data, test_str.len);
   if (result_size != test_str.len) {
     fprintf(stderr, "%s: result_size != test_str_len -- %lu != %lu\n",
-            suite_name, result_size, test_str.len);
+            unicode_str_unicode_str_suite_name, result_size, test_str.len);
     return false;
   }
   const size_t postfix_result_len =
@@ -62,21 +62,21 @@ static bool unicode_str_append_tests() {
     fprintf(stderr,
             "%s: unicode str append failed to write the correct number of "
             "bytes -- expected %lu, got %lu\n",
-            suite_name, postfix.len, postfix_result_len);
+            unicode_str_unicode_str_suite_name, postfix.len, postfix_result_len);
     return false;
   }
   const byte_array *out = NULL;
   if (!unicode_str_get(local, &out)) {
-    fprintf(stderr, "%s: unicode string get failed\n", suite_name);
+    fprintf(stderr, "%s: unicode string get failed\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (out == NULL) {
-    fprintf(stderr, "%s: unicode string get returned NULL\n", suite_name);
+    fprintf(stderr, "%s: unicode string get returned NULL\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (!compare_byte_arrays(expected, *out)) {
     fprintf(stderr, "%s: strings in append were not the same -- expected:%s != got:%s\n",
-            suite_name, expected.byte_data, out->byte_data);
+            unicode_str_unicode_str_suite_name, expected.byte_data, out->byte_data);
     return false;
   }
   unicode_str_destroy(&local);
@@ -95,7 +95,7 @@ static bool unicode_str_insert_at_tests() {
   const size_t result_size = unicode_str_set(local, test_str.byte_data, test_str.len);
   if (result_size != test_str.len) {
     fprintf(stderr, "%s: result_size != test_str_len -- %lu != %lu\n",
-            suite_name, result_size, test_str.len);
+            unicode_str_unicode_str_suite_name, result_size, test_str.len);
     return false;
   }
   const size_t infix_result_len =
@@ -104,21 +104,21 @@ static bool unicode_str_insert_at_tests() {
     fprintf(stderr,
             "%s: unicode str insert_at failed to write the correct number of "
             "bytes -- expected %lu, got %lu\n",
-            suite_name, infix.len, infix_result_len);
+            unicode_str_unicode_str_suite_name, infix.len, infix_result_len);
     return false;
   }
   const byte_array *out = NULL;
   if (!unicode_str_get(local, &out)) {
-    fprintf(stderr, "%s: unicode string get failed\n", suite_name);
+    fprintf(stderr, "%s: unicode string get failed\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (out == NULL) {
-    fprintf(stderr, "%s: unicode string get returned NULL\n", suite_name);
+    fprintf(stderr, "%s: unicode string get returned NULL\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (!compare_byte_arrays(expected, *out)) {
     fprintf(stderr, "%s: strings in insert_at were not the same -- expected:%s != got:%s\n",
-            suite_name, expected.byte_data, out->byte_data);
+            unicode_str_unicode_str_suite_name, expected.byte_data, out->byte_data);
     return false;
   }
   unicode_str_destroy(&local);
@@ -137,7 +137,7 @@ static bool unicode_str_remove_range_tests() {
   const size_t result_size = unicode_str_set(local, test_str.byte_data, test_str.len);
   if (result_size != test_str.len) {
     fprintf(stderr, "%s: result_size != test_str_len -- %lu != %lu\n",
-            suite_name, result_size, test_str.len);
+            unicode_str_unicode_str_suite_name, result_size, test_str.len);
     return false;
   }
   const size_t remove_result_len =
@@ -146,21 +146,21 @@ static bool unicode_str_remove_range_tests() {
     fprintf(stderr,
             "%s: unicode str remove_range failed to write the correct number of "
             "bytes -- expected %lu, got %lu\n",
-            suite_name, expected_remove_len, remove_result_len);
+            unicode_str_unicode_str_suite_name, expected_remove_len, remove_result_len);
     return false;
   }
   const byte_array *out = NULL;
   if (!unicode_str_get(local, &out)) {
-    fprintf(stderr, "%s: unicode string get failed\n", suite_name);
+    fprintf(stderr, "%s: unicode string get failed\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (out == NULL) {
-    fprintf(stderr, "%s: unicode string get returned NULL\n", suite_name);
+    fprintf(stderr, "%s: unicode string get returned NULL\n", unicode_str_unicode_str_suite_name);
     return false;
   }
   if (!compare_byte_arrays(expected, *out)) {
     fprintf(stderr, "%s: strings in remove_range were not the same -- expected:%s != got:%s\n",
-            suite_name, expected.byte_data, out->byte_data);
+            unicode_str_unicode_str_suite_name, expected.byte_data, out->byte_data);
     return false;
   }
   unicode_str_destroy(&local);
@@ -177,13 +177,13 @@ static bool unicode_str_len_tests() {
   const size_t result_size = unicode_str_set(local, expected.byte_data, expected.len);
   if (result_size != expected_len) {
     fprintf(stderr, "%s: expected result_size != expected_len -- %lu != %lu\n",
-            suite_name, result_size, expected.len);
+            unicode_str_unicode_str_suite_name, result_size, expected.len);
     return false;
   }
   const size_t len_result = unicode_str_len(local);
   if (len_result != expected_len) {
     fprintf(stderr, "%s: len_result result_size != expected_len -- %lu != %lu\n",
-            suite_name, len_result, expected_len);
+            unicode_str_unicode_str_suite_name, len_result, expected_len);
     return false;
   }
   byte_array expected_unicode = byte_array_from_str("Д");
@@ -192,13 +192,13 @@ static bool unicode_str_len_tests() {
   const size_t unicode_result_size = unicode_str_set(local, expected_unicode.byte_data, expected_unicode.len);
   if (unicode_result_size != expected_byte_len) {
     fprintf(stderr, "%s: expected_byte_len result_size != expected_len -- %lu != %lu\n",
-            suite_name, result_size, expected_byte_len);
+            unicode_str_unicode_str_suite_name, result_size, expected_byte_len);
     return false;
   }
   const size_t codepoint_len_result = unicode_str_len(local);
   if (codepoint_len_result != expected_codepoint_len) {
     fprintf(stderr, "%s: codepoint_len_result result_size != expected_len -- %lu != %lu\n",
-            suite_name, codepoint_len_result, expected_codepoint_len);
+            unicode_str_unicode_str_suite_name, codepoint_len_result, expected_codepoint_len);
     return false;
   }
   unicode_str_destroy(&local);
@@ -214,13 +214,13 @@ static bool unicode_str_byte_len_tests() {
   const size_t result_size = unicode_str_set(local, expected.byte_data, expected.len);
   if (result_size != expected_len) {
     fprintf(stderr, "%s: expected result_size != expected_len -- %lu != %lu\n",
-            suite_name, result_size, expected_len);
+            unicode_str_unicode_str_suite_name, result_size, expected_len);
     return false;
   }
   const size_t len_result = unicode_str_byte_len(local);
   if (len_result != expected_len) {
     fprintf(stderr, "%s: len_result result_size != expected_len -- %lu != %lu\n",
-            suite_name, len_result, expected_len);
+            unicode_str_unicode_str_suite_name, len_result, expected_len);
     return false;
   }
   byte_array expected_unicode = byte_array_from_str("Д");
@@ -228,13 +228,13 @@ static bool unicode_str_byte_len_tests() {
   const size_t unicode_result_size = unicode_str_set(local, expected_unicode.byte_data, expected_unicode.len);
   if (unicode_result_size != expected_unicode_len) {
     fprintf(stderr, "%s: expected_unicode result_size != expected_len -- %lu != %lu\n",
-            suite_name, result_size, expected_unicode_len);
+            unicode_str_unicode_str_suite_name, result_size, expected_unicode_len);
     return false;
   }
   const size_t unicode_len_result = unicode_str_byte_len(local);
   if (unicode_len_result != expected_unicode_len) {
     fprintf(stderr, "%s: unicode_len_result result_size != expected_len -- %lu != %lu\n",
-            suite_name, unicode_len_result, expected_unicode_len);
+            unicode_str_unicode_str_suite_name, unicode_len_result, expected_unicode_len);
     return false;
   }
   unicode_str_destroy(&local);
@@ -249,20 +249,20 @@ static bool unicode_str_codepoint_at_tests() {
   const size_t result_size = unicode_str_set(local, expected.byte_data, expected.len);
   if (result_size != expected.len) {
     fprintf(stderr, "%s: expected result_size != expected_len -- %lu != %lu\n",
-            suite_name, result_size, expected.len);
+            unicode_str_unicode_str_suite_name, result_size, expected.len);
     return false;
   }
   code_point_t out = 0;
   if (!unicode_str_codepoint_at(local, 9, &out)) {
     fprintf(stderr, "%s: getting codepoint failed.\n",
-            suite_name);
+            unicode_str_unicode_str_suite_name);
     return false;
   }
   byte_array single_unicode_codepoint = byte_array_from_str("д");
   struct code_point rune = utf8_next(single_unicode_codepoint.byte_data, single_unicode_codepoint.len, 0);
   if (rune.val != out) {
     fprintf(stderr, "%s: Code points did not match expected:%d got:%d.\n",
-            suite_name, rune.val, out);
+            unicode_str_unicode_str_suite_name, rune.val, out);
     return false;
   }
   unicode_str_destroy(&local);
@@ -281,18 +281,18 @@ static bool unicode_str_get_range_tests() {
   const size_t result_size = unicode_str_set(local, test_str.byte_data, test_str.len);
   if (result_size != test_str.len) {
     fprintf(stderr, "%s: expected result_size != expected_len -- %lu != %lu\n",
-            suite_name, result_size, test_str.len);
+            unicode_str_unicode_str_suite_name, result_size, test_str.len);
     return false;
   }
   uint8_t *out = NULL;
   if (!unicode_str_get_range(local, start_index, expected_codepoint_len, &out)) {
     fprintf(stderr, "%s: getting range failed.\n",
-            suite_name);
+            unicode_str_unicode_str_suite_name);
     return false;
   }
   if (!compare_byte_array_and_uint8(expected, out)) {
     fprintf(stderr, "%s: strings in get_range were not the same -- expected:\"%s\" != got:\"%s\"\n",
-            suite_name, expected.byte_data, out);
+            unicode_str_unicode_str_suite_name, expected.byte_data, out);
     return false;
   }
   free(out);
@@ -309,7 +309,7 @@ static bool codepoint_idx_from_byte_idx_tests() {
   const size_t result_idx = codepoint_idx_from_byte_idx(expected.byte_data, expected.len, test_byte_idx);
   if (result_idx != expected_codepoint_idx) {
     fprintf(stderr, "%s: Code point index was not correct -- expected:%lu got:%lu.\n",
-            suite_name, expected_codepoint_idx, result_idx);
+            unicode_str_unicode_str_suite_name, expected_codepoint_idx, result_idx);
     return false;
   }
   byte_array_free(&expected);

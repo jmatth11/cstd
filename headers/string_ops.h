@@ -39,19 +39,20 @@ char *str_fmt(const char *fmt, ...) __format(1, 2);
  * @param[out] output_length The output's length.
  * @return Newly concated string, NULL on failure.
  */
-char *concat(const char *restrict a, const char *restrict b, size_t *output_length);
+char *concat(const char *restrict a, const char *restrict b,
+             size_t *output_length);
 
 /**
  * Get the length of a string representation of the given value.
  */
 size_t to_str_length_int(int num);
-size_t to_str_length_float(double num);
+size_t to_str_length_double(double num);
 size_t to_str_length_long(long num);
 
 #define to_str_length(n)                                                       \
   _Generic((n), float                                                          \
-           : to_str_length_float, double                                       \
-           : to_str_length_float, long                                         \
+           : to_str_length_double, double                                      \
+           : to_str_length_double, long                                        \
            : to_str_length_long, default                                       \
            : to_str_length_int)(n)
 
@@ -60,13 +61,13 @@ size_t to_str_length_long(long num);
  * The caller is responsible for freeing the memory.
  */
 char *to_str_int(int num);
-char *to_str_float(double num);
+char *to_str_double(double num);
 char *to_str_long(long num);
 
 #define to_str(n)                                                              \
   _Generic((n), float                                                          \
-           : to_str_float, double                                              \
-           : to_str_float, long                                                \
+           : to_str_double, double                                             \
+           : to_str_double, long                                               \
            : to_str_long, default                                              \
            : to_str_int)(n)
 

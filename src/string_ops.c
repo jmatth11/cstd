@@ -13,21 +13,25 @@ char *str_dup(const char *str, size_t len) {
 }
 
 char *str_fmt(const char *fmt, ...) {
-  va_list argp;
+  va_list argp, argp_copy;
   va_start(argp, fmt);
-  size_t n = snprintf(NULL, 0, fmt, argp);
+  va_copy(argp_copy, argp);
+  size_t n = vsnprintf(NULL, 0, fmt, argp);
   if (n == 0) {
     va_end(argp);
+    va_end(argp_copy);
     return NULL;
   }
   char *result = calloc(n + 1, sizeof(char));
   if (result == NULL) {
     va_end(argp);
+    va_end(argp_copy);
     return NULL;
   }
-  (void)snprintf(result, n + 1, fmt, argp);
+  (void)vsnprintf(result, n + 1, fmt, argp_copy);
   result[n] = '\0';
   va_end(argp);
+  va_end(argp_copy);
   return result;
 }
 
@@ -46,7 +50,7 @@ char *concat(const char *restrict a, const char *restrict b, size_t *output_leng
 }
 
 size_t to_str_length_int(int num) { return snprintf(NULL, 0, "%d", num); }
-size_t to_str_length_float(double num) {
+size_t to_str_length_double(double num) {
   return snprintf(NULL, 0, "%f", num);
 }
 size_t to_str_length_long(long num) {

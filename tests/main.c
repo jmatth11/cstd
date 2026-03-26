@@ -1,9 +1,13 @@
 #include <stdio.h>
+#include "string_ops_tests.c"
 #include "unicode_str_tests.c"
 #include "arena_tests.c"
 
 int main(void) {
   printf("starting tests\n");
+
+  printf("starting string_ops tests\n");
+  string_ops_tests();
 
   printf("starting unicode_str tests\n");
   unicode_str_tests();

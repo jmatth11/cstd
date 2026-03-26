@@ -1,3 +1,4 @@
+#include "defs.h"
 #include "unicode_str.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -56,7 +57,7 @@ static bool compare_byte_array_and_uint8(const byte_array arr1,
   return true;
 }
 
-static void debug_byte_array(const byte_array arr) {
+UNUSED static void debug_byte_array(const byte_array arr) {
   printf("arr debug:\n");
   printf("- byte_array[%lu]{\n", arr.len);
   for (size_t i = 0; i < arr.len; ++i) {

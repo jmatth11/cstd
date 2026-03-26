@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall -g
 INCLUDES=-I../headers -I../deps/utf8-zig/headers
-LIBS=-L../lib/ -lcustom_std -lm -lpthread
+LIBS=../lib/libcustom_std.a -L../deps/utf8-zig/zig-out/lib/ -l:libutf8-zig.a -lm -lpthread
 
 .PHONY: all
 all: build
