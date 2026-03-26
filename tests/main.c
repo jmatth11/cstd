@@ -8,6 +8,7 @@
 #include "crypt_tests.c"
 #include "file_ops_tests.c"
 #include "gap_buffer_tests.c"
+#include "hash_map_tests.c"
 
 int main(void) {
   color_log(LOG_COLOR_CYAN, "starting tests\n");
@@ -35,6 +36,9 @@ int main(void) {
 
   color_log(LOG_COLOR_CYAN, "starting gap_buffer tests\n");
   gap_buffer_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting hash_map tests\n");
+  hash_map_tests();
 
   color_log(LOG_COLOR_GREEN, "end tests\n");
   return 0;

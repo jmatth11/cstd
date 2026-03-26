@@ -278,6 +278,7 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
     return false;
   }
   int remove_idx = -1;
+  struct hash_map_entry_t *entry_to_remove = NULL;
   for (size_t i = 0; i < row->len; ++i) {
     struct hash_map_entry_t *existing_entry = NULL;
     map_entry_array_get(row, i, &existing_entry);
@@ -285,11 +286,14 @@ bool hash_map_remove_and_get(struct hash_map_t *hm, const char *key,
         strncmp(existing_entry->key, key, key_len) == 0) {
       remove_idx = i;
       *out = existing_entry->value;
+      entry_to_remove = existing_entry;
       break;
     }
   }
   bool found = remove_idx != -1;
   if (found) {
+    free(entry_to_remove->key);
+    free(entry_to_remove);
     map_entry_array_fast_remove(row, remove_idx);
   } else {
     error_log("hash map remove_value idx not found.\n");
