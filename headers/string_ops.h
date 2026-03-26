@@ -28,7 +28,7 @@ char *str_dup(const char *str, size_t len) __nonnull((1));
  * @param[in] ... The options for format.
  * @return Newly allocated string.
  */
-char *str_fmt(const char *fmt, ...) __format(1, 2);
+char *str_fmt(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 
 /**
  * Concat two strings.
