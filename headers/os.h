@@ -10,7 +10,7 @@ __BEGIN_DECLS
  * Check if system is little endian or big.
  * @return True for little, false for big.
  */
-inline bool is_little_endian();
+bool is_little_endian(void);
 
 __END_DECLS
 

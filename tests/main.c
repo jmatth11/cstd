@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "log.h"
 #include "log_tests.c"
+#include "os_tests.c"
+#include "queue_tests.c"
+#include "magic_tests.c"
 #include "string_ops_tests.c"
 #include "unicode_str_tests.c"
 #include "arena_tests.c"
@@ -17,6 +20,15 @@ int main(void) {
 
   color_log(LOG_COLOR_CYAN, "starting log tests\n");
   log_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting os tests\n");
+  os_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting queue tests\n");
+  queue_tests();
+
+  color_log(LOG_COLOR_CYAN, "starting magic tests\n");
+  magic_tests();
 
   color_log(LOG_COLOR_CYAN, "starting string_ops tests\n");
   string_ops_tests();

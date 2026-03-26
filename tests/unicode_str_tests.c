@@ -413,6 +413,231 @@ static bool test_code_point_cmp_different_lengths() {
   return true;
 }
 
+static bool test_codepoint_idx_from_byte_idx_char() {
+  color_log(LOG_COLOR_CYAN, "test_codepoint_idx_from_byte_idx_char start\n");
+  const char *expected = "Я был когда-то странной";
+  const size_t test_byte_idx = 8;
+  const size_t expected_codepoint_idx = 5;
+  const size_t result_idx = codepoint_idx_from_byte_idx_char(expected, strlen(expected), test_byte_idx);
+  if (result_idx != expected_codepoint_idx) {
+    color_log(LOG_COLOR_RED, "%s: codepoint index was not correct -- expected:%lu got:%lu.\n",
+            unicode_str_unicode_str_suite_name, expected_codepoint_idx, result_idx);
+    return false;
+  }
+  return true;
+}
+
+static bool test_unicode_str_set_char() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_set_char start\n");
+  const char *test_str = "test value";
+  struct unicode_str_t *local = unicode_str_create();
+  const size_t result_size = unicode_str_set_char(local, test_str, strlen(test_str));
+  if (result_size != strlen(test_str)) {
+    color_log(LOG_COLOR_RED, "%s: result_size mismatch -- %lu != %lu\n",
+            unicode_str_unicode_str_suite_name, result_size, strlen(test_str));
+    unicode_str_destroy(&local);
+    return false;
+  }
+  const byte_array *out = NULL;
+  if (!unicode_str_get(local, &out)) {
+    color_log(LOG_COLOR_RED, "%s: unicode_str_get failed\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  if (out == NULL) {
+    color_log(LOG_COLOR_RED, "%s: unicode_str_get returned NULL\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array expected = byte_array_from_str("test value");
+  if (!compare_byte_arrays(expected, *out)) {
+    color_log(LOG_COLOR_RED, "%s: strings do not match\n", unicode_str_unicode_str_suite_name);
+    byte_array_free(&expected);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array_free(&expected);
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_set_codepoint() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_set_codepoint start\n");
+  code_point_t codepoints[] = {'h', 'e', 'l', 'l', 'o'};
+  struct unicode_str_t *local = unicode_str_create();
+  const size_t result_size = unicode_str_set_codepoint(local, codepoints, 5);
+  if (result_size != 5) {
+    color_log(LOG_COLOR_RED, "%s: codepoint count mismatch -- %lu != 5\n",
+            unicode_str_unicode_str_suite_name, result_size);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  size_t len = unicode_str_len(local);
+  if (len != 5) {
+    color_log(LOG_COLOR_RED, "%s: length should be 5, got %lu\n",
+            unicode_str_unicode_str_suite_name, len);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_append_char() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_append_char start\n");
+  const char *test_str = "test value";
+  const char *postfix = " -- addition";
+  struct unicode_str_t *local = unicode_str_create();
+  unicode_str_set_char(local, test_str, strlen(test_str));
+  const size_t postfix_result_len = unicode_str_append_char(local, postfix, strlen(postfix));
+  if (postfix_result_len != strlen(postfix)) {
+    color_log(LOG_COLOR_RED, "%s: append char failed to write correct bytes\n",
+            unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  const byte_array *out = NULL;
+  unicode_str_get(local, &out);
+  byte_array expected = byte_array_from_str("test value -- addition");
+  if (!compare_byte_arrays(expected, *out)) {
+    color_log(LOG_COLOR_RED, "%s: appended string mismatch\n", unicode_str_unicode_str_suite_name);
+    byte_array_free(&expected);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array_free(&expected);
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_insert_at_char() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_insert_at_char start\n");
+  const char *test_str = "test value addition";
+  const char *infix = " --";
+  struct unicode_str_t *local = unicode_str_create();
+  unicode_str_set_char(local, test_str, strlen(test_str));
+  const size_t result_len = unicode_str_insert_at_char(local, infix, strlen(infix), 10);
+  if (result_len != strlen(infix)) {
+    color_log(LOG_COLOR_RED, "%s: insert at char failed\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  const byte_array *out = NULL;
+  unicode_str_get(local, &out);
+  byte_array expected = byte_array_from_str("test value -- addition");
+  if (!compare_byte_arrays(expected, *out)) {
+    color_log(LOG_COLOR_RED, "%s: inserted string mismatch\n", unicode_str_unicode_str_suite_name);
+    byte_array_free(&expected);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array_free(&expected);
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_insert_at_codepoint() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_insert_at_codepoint start\n");
+  const char *test_str = "test value";
+  struct unicode_str_t *local = unicode_str_create();
+  unicode_str_set_char(local, test_str, strlen(test_str));
+  bool result = unicode_str_insert_at_codepoint(local, 'X', 5);
+  if (!result) {
+    color_log(LOG_COLOR_RED, "%s: insert at codepoint failed\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  const byte_array *out = NULL;
+  unicode_str_get(local, &out);
+  byte_array expected = byte_array_from_str("test Xvalue");
+  if (!compare_byte_arrays(expected, *out)) {
+    color_log(LOG_COLOR_RED, "%s: inserted codepoint string mismatch\n", unicode_str_unicode_str_suite_name);
+    byte_array_free(&expected);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array_free(&expected);
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_to_lower() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_lower start\n");
+  const char *test_str = "HELLO World";
+  struct unicode_str_t *local = unicode_str_create();
+  unicode_str_set_char(local, test_str, strlen(test_str));
+  struct unicode_str_t *lower = unicode_str_to_lower(local);
+  if (lower == NULL) {
+    color_log(LOG_COLOR_RED, "%s: to_lower returned NULL\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  const byte_array *out = NULL;
+  unicode_str_get(lower, &out);
+  byte_array expected = byte_array_from_str("hello world");
+  if (!compare_byte_arrays(expected, *out)) {
+    color_log(LOG_COLOR_RED, "%s: lowercase string mismatch\n", unicode_str_unicode_str_suite_name);
+    byte_array_free(&expected);
+    unicode_str_destroy(&lower);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array_free(&expected);
+  unicode_str_destroy(&lower);
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_to_upper() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_upper start\n");
+  const char *test_str = "hello World";
+  struct unicode_str_t *local = unicode_str_create();
+  unicode_str_set_char(local, test_str, strlen(test_str));
+  struct unicode_str_t *upper = unicode_str_to_upper(local);
+  if (upper == NULL) {
+    color_log(LOG_COLOR_RED, "%s: to_upper returned NULL\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  const byte_array *out = NULL;
+  unicode_str_get(upper, &out);
+  byte_array expected = byte_array_from_str("HELLO WORLD");
+  if (!compare_byte_arrays(expected, *out)) {
+    color_log(LOG_COLOR_RED, "%s: uppercase string mismatch\n", unicode_str_unicode_str_suite_name);
+    byte_array_free(&expected);
+    unicode_str_destroy(&upper);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  byte_array_free(&expected);
+  unicode_str_destroy(&upper);
+  unicode_str_destroy(&local);
+  return true;
+}
+
+static bool test_unicode_str_to_cstr() {
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_cstr start\n");
+  const char *test_str = "test value";
+  struct unicode_str_t *local = unicode_str_create();
+  unicode_str_set_char(local, test_str, strlen(test_str));
+  char *cstr = unicode_str_to_cstr(local);
+  if (cstr == NULL) {
+    color_log(LOG_COLOR_RED, "%s: to_cstr returned NULL\n", unicode_str_unicode_str_suite_name);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  if (strcmp(cstr, test_str) != 0) {
+    color_log(LOG_COLOR_RED, "%s: cstr mismatch -- expected:%s got:%s\n",
+            unicode_str_unicode_str_suite_name, test_str, cstr);
+    free(cstr);
+    unicode_str_destroy(&local);
+    return false;
+  }
+  free(cstr);
+  unicode_str_destroy(&local);
+  return true;
+}
+
 static void unicode_str_tests() {
   int failures = 0;
 
@@ -482,6 +707,42 @@ static void unicode_str_tests() {
   }
   if (!test_code_point_cmp_different_lengths()) {
     color_log(LOG_COLOR_RED, "test_code_point_cmp_different_lengths failed.\n");
+    failures++;
+  }
+  if (!test_codepoint_idx_from_byte_idx_char()) {
+    color_log(LOG_COLOR_RED, "test_codepoint_idx_from_byte_idx_char failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_set_char()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_set_char failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_set_codepoint()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_set_codepoint failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_append_char()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_append_char failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_insert_at_char()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_insert_at_char failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_insert_at_codepoint()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_insert_at_codepoint failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_to_lower()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_to_lower failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_to_upper()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_to_upper failed.\n");
+    failures++;
+  }
+  if (!test_unicode_str_to_cstr()) {
+    color_log(LOG_COLOR_RED, "test_unicode_str_to_cstr failed.\n");
     failures++;
   }
 
