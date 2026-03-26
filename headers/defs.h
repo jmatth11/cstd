@@ -121,4 +121,19 @@
 #endif
 #endif
 
+/**
+ * Define a function to inherit printf format compiler helpers.
+ * The two parameters are to tell which arguments are formatter and options.
+ *
+ * Example:
+ * // In this example the format param is 2 and options param is 3.
+ * void custom_print(int level, const char *fmt, ...) __format(2, 3);
+ */
+#ifndef __format
+#ifndef __EMSCRIPTEN__
+#define __format(X, Y) __attribute__((format(printf, X, Y)))
+#else
+#define __format
+#endif
+#endif
 #endif

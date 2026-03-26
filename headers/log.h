@@ -11,21 +11,21 @@ __BEGIN_DECLS
  * @param[in] str The string to print.
  * @param[in] ... Options for the string.
  */
-void info_log(const char *str, ...) __nonnull((1));
+void info_log(const char *str, ...) __nonnull((1)) __format(1, 2);
 /**
  * Log messages as DEBUG.
  *
  * @param[in] str The string to print.
  * @param[in] ... Options for the string.
  */
-void debug_log(const char *str, ...) __nonnull((1));
+void debug_log(const char *str, ...) __nonnull((1)) __format(1, 2);
 /**
  * Log messages as ERROR.
  *
  * @param[in] str The string to print.
  * @param[in] ... Options for the string.
  */
-void error_log(const char *str, ...) __nonnull((1));
+void error_log(const char *str, ...) __nonnull((1)) __format(1, 2);
 
 /**
  * Log messages as INFO with debugging info.

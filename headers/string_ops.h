@@ -19,6 +19,18 @@ __BEGIN_DECLS
 char *str_dup(const char *str, size_t len) __nonnull((1));
 
 /**
+ * Generate formatted string.
+ * This function handles generating the formatted string in a newly
+ * allocated string as the return value.
+ * Caller is responsible for freeing the memory.
+ *
+ * @param[in] fmt The format string.
+ * @param[in] ... The options for format.
+ * @return Newly allocated string.
+ */
+char *str_fmt(const char *fmt, ...) __format(1, 2);
+
+/**
  * Concat two strings.
  * User is responsible for freeing returned string.
  *

@@ -1,4 +1,5 @@
 #include "headers/string_ops.h"
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,25 @@ char *str_dup(const char *str, size_t len) {
   if (strncpy(result, str, len) == NULL)
     return NULL;
   result[len] = '\0';
+  return result;
+}
+
+char *str_fmt(const char *fmt, ...) {
+  va_list argp;
+  va_start(argp, fmt);
+  size_t n = snprintf(NULL, 0, fmt, argp);
+  if (n == 0) {
+    va_end(argp);
+    return NULL;
+  }
+  char *result = calloc(n + 1, sizeof(char));
+  if (result == NULL) {
+    va_end(argp);
+    return NULL;
+  }
+  (void)snprintf(result, n + 1, fmt, argp);
+  result[n] = '\0';
+  va_end(argp);
   return result;
 }
 
@@ -25,12 +45,12 @@ char *concat(const char *restrict a, const char *restrict b, size_t *output_leng
   return buf;
 }
 
-size_t to_str_length_int(int num) { return snprintf(NULL, 0, "%d", num) + 1; }
+size_t to_str_length_int(int num) { return snprintf(NULL, 0, "%d", num); }
 size_t to_str_length_float(double num) {
-  return snprintf(NULL, 0, "%f", num) + 1;
+  return snprintf(NULL, 0, "%f", num);
 }
 size_t to_str_length_long(long num) {
-  return snprintf(NULL, 0, "%ld", num) + 1;
+  return snprintf(NULL, 0, "%ld", num);
 }
 
 char *to_str_int(int num) {
@@ -38,7 +58,7 @@ char *to_str_int(int num) {
   char *result = calloc(n + 1, sizeof(char));
   if (result == NULL)
     return NULL;
-  (void)snprintf(result, n, "%d", num);
+  (void)snprintf(result, n + 1, "%d", num);
   result[n] = '\0';
   return result;
 }
@@ -47,7 +67,7 @@ char *to_str_double(double num) {
   char *result = calloc(n + 1, sizeof(char));
   if (result == NULL)
     return NULL;
-  (void)snprintf(result, n, "%f", num);
+  (void)snprintf(result, n + 1, "%f", num);
   result[n] = '\0';
   return result;
 }
@@ -56,7 +76,7 @@ char *to_str_long(long num) {
   char *result = calloc(n + 1, sizeof(char));
   if (result == NULL)
     return NULL;
-  (void)snprintf(result, n, "%ld", num);
+  (void)snprintf(result, n + 1, "%ld", num);
   result[n] = '\0';
   return result;
 }
