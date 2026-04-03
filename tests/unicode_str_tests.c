@@ -303,7 +303,7 @@ static bool unicode_str_get_range_tests() {
 }
 
 static bool codepoint_idx_from_byte_idx_tests() {
-  printf("codepoint_idx_from_byte_idx_tests start\n");
+  color_log(LOG_COLOR_CYAN, "codepoint_idx_from_byte_idx_tests start\n");
   byte_array expected = byte_array_from_str("Я был когда-то странной");
   const size_t test_byte_idx = 8;
   const size_t expected_codepoint_idx = 5;
@@ -323,7 +323,7 @@ static bool test_code_point_cmp_equal() {
   code_point_t s2[] = {'h', 'e', 'l', 'l', 'o', 0};
   int result = code_point_cmp(s1, s2, 5);
   if (result != 0) {
-    color_log(LOG_COLOR_RED, "%s: equal strings should return 0, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: equal strings should return 0, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
@@ -336,7 +336,7 @@ static bool test_code_point_cmp_less() {
   code_point_t s2[] = {'b', 'a', 'n', 'a', 'n', 'a', 0};
   int result = code_point_cmp(s1, s2, 5);
   if (result >= 0) {
-    color_log(LOG_COLOR_RED, "%s: \"apple\" < \"banana\" should return negative, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: \"apple\" < \"banana\" should return negative, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
@@ -349,7 +349,7 @@ static bool test_code_point_cmp_greater() {
   code_point_t s2[] = {'a', 'p', 'p', 'l', 'e', 0};
   int result = code_point_cmp(s1, s2, 5);
   if (result <= 0) {
-    color_log(LOG_COLOR_RED, "%s: \"zebra\" > \"apple\" should return positive, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: \"zebra\" > \"apple\" should return positive, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
@@ -362,7 +362,7 @@ static bool test_code_point_cmp_n_zero() {
   code_point_t s2[] = {'a', 'n', 'y', 't', 'h', 'i', 'n', 'g', 0};
   int result = code_point_cmp(s1, s2, 0);
   if (result != 0) {
-    color_log(LOG_COLOR_RED, "%s: n=0 should return 0, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: n=0 should return 0, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
@@ -375,7 +375,7 @@ static bool test_code_point_cmp_partial() {
   code_point_t s2[] = {'h', 'e', 'l', 'l', 'x', 0};
   int result = code_point_cmp(s1, s2, 4);
   if (result != 0) {
-    color_log(LOG_COLOR_RED, "%s: first 4 chars equal should return 0, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: first 4 chars equal should return 0, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
@@ -387,13 +387,13 @@ static bool test_code_point_cmp_null_pointers() {
   code_point_t s1[] = {'t', 'e', 's', 't', 0};
   int result = code_point_cmp(NULL, s1, 5);
   if (result != 0) {
-    color_log(LOG_COLOR_RED, "%s: NULL s1 should return 0, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: NULL s1 should return 0, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
   result = code_point_cmp(s1, NULL, 5);
   if (result != 0) {
-    color_log(LOG_COLOR_RED, "%s: NULL s2 should return 0, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: NULL s2 should return 0, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }
@@ -406,7 +406,7 @@ static bool test_code_point_cmp_different_lengths() {
   code_point_t s2[] = {'h', 'e', 'l', 'l', 'o', 0};
   int result = code_point_cmp(s1, s2, 10);
   if (result >= 0) {
-    color_log(LOG_COLOR_RED, "%s: \"hell\" < \"hello\" should return negative, got %d\n", 
+    color_log(LOG_COLOR_RED, "%s: \"hell\" < \"hello\" should return negative, got %d\n",
               unicode_str_unicode_str_suite_name, result);
     return false;
   }

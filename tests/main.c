@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "log.h"
 #include "log_tests.c"
 #include "os_tests.c"
@@ -16,51 +15,51 @@
 #include "linked_list_tests.c"
 
 int main(void) {
-  color_log(LOG_COLOR_CYAN, "starting tests\n");
+  color_log(LOG_COLOR_CYAN, "\n--- starting tests --- \n");
 
-  color_log(LOG_COLOR_CYAN, "starting log tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting log tests ---\n");
   log_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting os tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting os tests ---\n");
   os_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting queue tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting queue tests ---\n");
   queue_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting magic tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting magic tests ---\n");
   magic_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting string_ops tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting string_ops tests ---\n");
   string_ops_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting unicode_str tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting unicode_str tests ---\n");
   unicode_str_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting arena_alloc tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting arena_alloc tests ---\n");
   arena_alloc_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting array_template tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting array_template tests ---\n");
   array_template_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting base_str tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting base_str tests ---\n");
   base_str_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting crypt tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting crypt tests ---\n");
   crypt_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting file_ops tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting file_ops tests ---\n");
   file_ops_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting gap_buffer tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting gap_buffer tests ---\n");
   gap_buffer_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting hash_map tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting hash_map tests ---\n");
   hash_map_tests();
 
-  color_log(LOG_COLOR_CYAN, "starting linked_list tests\n");
+  color_log(LOG_COLOR_CYAN, "\n-- starting linked_list tests ---\n");
   linked_list_tests();
 
-  color_log(LOG_COLOR_GREEN, "end tests\n");
+  color_log(LOG_COLOR_GREEN, "\n-- end tests ---\n");
   return 0;
 }
 
