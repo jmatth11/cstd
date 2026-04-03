@@ -16,7 +16,8 @@ struct internal_base_str {
 static inline void resize(struct internal_base_str *str, size_t len) {
   if (len >= str->cap) {
     size_t new_cap = ((double)len * C_STR_ARRAY_INC_CONSTANT);
-    str->data = realloc(str->data, sizeof(char) * new_cap);
+    char* result = realloc(str->data, sizeof(char) * new_cap);
+    str->data = result;
     str->cap = new_cap;
   }
 }

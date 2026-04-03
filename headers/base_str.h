@@ -1,8 +1,8 @@
 #ifndef CSTD_BASE_C_STR
 #define CSTD_BASE_C_STR
 
-#include "defs.h"
 #include <stdlib.h>
+#include "defs.h"
 
 __BEGIN_DECLS
 
