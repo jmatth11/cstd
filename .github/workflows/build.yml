@@ -18,7 +18,5 @@ jobs:
 
       - name: Run Tests
         run: |
-          cd tests
-          make
-          ./run.sh
+          make test
 
