@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 which zig > /dev/null
 if [ $? -ne 0 ]; then
@@ -12,9 +14,9 @@ if [ $? -ne 0 ]; then
   sudo apt-get install -y libc6-dev-i386
 fi
 
-if [ ! -d ./deps/utf8-zig ]; then
-  git clone https://github.com/jmatth11/utf8-zig.git deps/utf8-zig
-  cd deps/utf8-zig
+if [ ! -d "$SCRIPT_DIR/../deps/utf8-zig" ]; then
+  git clone https://github.com/jmatth11/utf8-zig.git "$SCRIPT_DIR/../deps/utf8-zig"
+  cd "$SCRIPT_DIR/../deps/utf8-zig"
   make
   zig build -Doptimize=ReleaseFast
   cd -

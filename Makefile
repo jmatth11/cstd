@@ -46,3 +46,11 @@ $(OBJ)/%.o: %.c
 clean:
 	@rm -rf $(OBJ)/* 2> /dev/null
 	@rm -f $(BIN)/* 2> /dev/null
+
+.PHONY: build-deps
+build-deps:
+	@bash ./scripts/build_deps.sh
+
+.PHONY: test
+test:
+	@bash ./scripts/run_tests.sh

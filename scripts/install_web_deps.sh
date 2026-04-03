@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # for Makefile use
 
@@ -11,10 +13,10 @@ function link_bin() {
   sudo ln -s $single_arg "/usr/bin/$1"
 }
 
-if [ ! -d ./deps/wasi-libc ]; then
+if [ ! -d "$SCRIPT_DIR/../deps/wasi-libc" ]; then
   # this is to have a wasm compliant libc to link against
-  git clone https://github.com/CraneStation/wasi-libc.git deps/wasi-libc
-  cd deps/wasi-libc
+  git clone https://github.com/CraneStation/wasi-libc.git "$SCRIPT_DIR/../deps/wasi-libc"
+  cd "$SCRIPT_DIR/../deps/wasi-libc"
   # this failed first time I did it
   # I needed to make symlinks to llvm-ar-14 -> llvm-ar and llvm-nm-14 -> llvm-nm
   # then everything was fine
