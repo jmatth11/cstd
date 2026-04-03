@@ -9,7 +9,7 @@ static const char *array_template_suite_name = "array_template";
 generate_array_template(int, int)
 
 static bool test_array_init() {
-  color_log(LOG_COLOR_CYAN, "test_array_init start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_init\n");
   int_array a;
   bool result = int_array_init(&a, 10);
   if (!result) {
@@ -31,7 +31,7 @@ static bool test_array_init() {
 }
 
 static bool test_array_init_zero_size() {
-  color_log(LOG_COLOR_CYAN, "test_array_init_zero_size start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_init_zero_size\n");
   int_array arr;
   bool result = int_array_init(&arr, 0);
   if (!result) {
@@ -48,7 +48,7 @@ static bool test_array_init_zero_size() {
 }
 
 static bool test_array_insert() {
-  color_log(LOG_COLOR_CYAN, "test_array_insert start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_insert\n");
   int_array arr;
   if (!int_array_init(&arr, 2)) {
     color_log(LOG_COLOR_RED, "%s: int_array_init failed\n", array_template_suite_name);
@@ -80,7 +80,7 @@ static bool test_array_insert() {
 }
 
 static bool test_array_get() {
-  color_log(LOG_COLOR_CYAN, "test_array_get start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_get\n");
   int_array arr;
   if (!int_array_init(&arr, 5)) {
     color_log(LOG_COLOR_RED, "%s: int_array_init failed\n", array_template_suite_name);
@@ -106,7 +106,7 @@ static bool test_array_get() {
 }
 
 static bool test_array_fast_remove() {
-  color_log(LOG_COLOR_CYAN, "test_array_fast_remove start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_fast_remove\n");
   int_array arr;
   if (!int_array_init(&arr, 10)) {
     color_log(LOG_COLOR_RED, "%s: int_array_init failed\n", array_template_suite_name);
@@ -137,7 +137,7 @@ static bool test_array_fast_remove() {
 }
 
 static bool test_array_fast_remove_last() {
-  color_log(LOG_COLOR_CYAN, "test_array_fast_remove_last start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_fast_remove_last\n");
   int_array arr;
   if (!int_array_init(&arr, 10)) {
     color_log(LOG_COLOR_RED, "%s: int_array_init failed\n", array_template_suite_name);
@@ -161,7 +161,7 @@ static bool test_array_fast_remove_last() {
 }
 
 static bool test_array_free() {
-  color_log(LOG_COLOR_CYAN, "test_array_free start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_free\n");
   int_array arr;
   if (!int_array_init(&arr, 10)) {
     color_log(LOG_COLOR_RED, "%s: int_array_init failed\n", array_template_suite_name);
@@ -178,7 +178,7 @@ static bool test_array_free() {
 }
 
 static bool test_array_capacity_increase() {
-  color_log(LOG_COLOR_CYAN, "test_array_capacity_increase start\n");
+  color_log(LOG_COLOR_CYAN, "test_array_capacity_increase\n");
   int_array arr;
   if (!int_array_init(&arr, 1)) {
     color_log(LOG_COLOR_RED, "%s: int_array_init failed\n", array_template_suite_name);

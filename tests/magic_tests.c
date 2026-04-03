@@ -7,7 +7,7 @@
 static const char *magic_suite_name = "magic";
 
 static bool test_cstd_freep_fn() {
-  color_log(LOG_COLOR_CYAN, "test_cstd_freep_fn start\n");
+  color_log(LOG_COLOR_CYAN, "test_cstd_freep_fn\n");
   void *ptr = malloc(100);
   if (ptr == NULL) {
     color_log(LOG_COLOR_RED, "%s: malloc failed\n", magic_suite_name);
@@ -24,7 +24,7 @@ static bool test_cstd_freep_fn() {
 }
 
 static bool test_cstd_freep_fn_null() {
-  color_log(LOG_COLOR_CYAN, "test_cstd_freep_fn_null start\n");
+  color_log(LOG_COLOR_CYAN, "test_cstd_freep_fn_null\n");
   void *ptr = NULL;
   cstd_freep_fn(&ptr);
   if (ptr != NULL) {
@@ -35,7 +35,7 @@ static bool test_cstd_freep_fn_null() {
 }
 
 static bool test_cstd_freec_fn() {
-  color_log(LOG_COLOR_CYAN, "test_cstd_freec_fn start\n");
+  color_log(LOG_COLOR_CYAN, "test_cstd_freec_fn\n");
   char *ptr = malloc(100);
   if (ptr == NULL) {
     color_log(LOG_COLOR_RED, "%s: malloc failed\n", magic_suite_name);
@@ -52,7 +52,7 @@ static bool test_cstd_freec_fn() {
 }
 
 static bool test_cstd_freei_fn() {
-  color_log(LOG_COLOR_CYAN, "test_cstd_freei_fn start\n");
+  color_log(LOG_COLOR_CYAN, "test_cstd_freei_fn\n");
   int *ptr = malloc(sizeof(int) * 10);
   if (ptr == NULL) {
     color_log(LOG_COLOR_RED, "%s: malloc failed\n", magic_suite_name);
@@ -69,7 +69,7 @@ static bool test_cstd_freei_fn() {
 }
 
 static bool test_cstd_freed_fn() {
-  color_log(LOG_COLOR_CYAN, "test_cstd_freed_fn start\n");
+  color_log(LOG_COLOR_CYAN, "test_cstd_freed_fn\n");
   double *ptr = malloc(sizeof(double) * 10);
   if (ptr == NULL) {
     color_log(LOG_COLOR_RED, "%s: malloc failed\n", magic_suite_name);
@@ -86,7 +86,7 @@ static bool test_cstd_freed_fn() {
 }
 
 static bool test_cstd_freef_fn() {
-  color_log(LOG_COLOR_CYAN, "test_cstd_freef_fn start\n");
+  color_log(LOG_COLOR_CYAN, "test_cstd_freef_fn\n");
   float *ptr = malloc(sizeof(float) * 10);
   if (ptr == NULL) {
     color_log(LOG_COLOR_RED, "%s: malloc failed\n", magic_suite_name);

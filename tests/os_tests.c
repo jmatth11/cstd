@@ -5,7 +5,7 @@
 static const char *os_suite_name = "os";
 
 static bool test_is_little_endian() {
-  color_log(LOG_COLOR_CYAN, "test_is_little_endian start\n");
+  color_log(LOG_COLOR_CYAN, "test_is_little_endian\n");
   bool result = is_little_endian();
   bool result2 = is_little_endian();
   if (result != result2) {

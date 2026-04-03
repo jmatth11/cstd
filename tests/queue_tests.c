@@ -7,7 +7,7 @@
 static const char *queue_suite_name = "queue";
 
 static bool test_simple_queue_create() {
-  color_log(LOG_COLOR_CYAN, "test_simple_queue_create start\n");
+  color_log(LOG_COLOR_CYAN, "test_simple_queue_create\n");
   struct simple_queue_t *queue = simple_queue_create();
   if (queue == NULL) {
     color_log(LOG_COLOR_RED, "%s: simple_queue_create returned NULL\n", queue_suite_name);
@@ -33,7 +33,7 @@ static bool test_simple_queue_create() {
 }
 
 static bool test_simple_queue_push_pop() {
-  color_log(LOG_COLOR_CYAN, "test_simple_queue_push_pop start\n");
+  color_log(LOG_COLOR_CYAN, "test_simple_queue_push_pop\n");
   struct simple_queue_t *queue = simple_queue_create();
 
   bool success = simple_queue_push(queue, (void*)10);
@@ -76,7 +76,7 @@ static bool test_simple_queue_push_pop() {
 }
 
 static bool test_simple_queue_fifo_order() {
-  color_log(LOG_COLOR_CYAN, "test_simple_queue_fifo_order start\n");
+  color_log(LOG_COLOR_CYAN, "test_simple_queue_fifo_order\n");
   struct simple_queue_t *queue = simple_queue_create();
 
   simple_queue_push(queue, (void*)1);
@@ -124,7 +124,7 @@ static bool test_simple_queue_fifo_order() {
 }
 
 static bool test_simple_queue_destroy_null() {
-  color_log(LOG_COLOR_CYAN, "test_simple_queue_destroy_null start\n");
+  color_log(LOG_COLOR_CYAN, "test_simple_queue_destroy_null\n");
   struct simple_queue_t *queue = NULL;
   simple_queue_destroy(&queue);
   return true;

@@ -8,7 +8,7 @@
 static const char *linked_list_suite_name = "linked_list";
 
 static bool test_linked_list_create() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_create start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_create\n");
   struct linked_list_t *ll = linked_list_create((void*)42);
   if (ll == NULL) {
     color_log(LOG_COLOR_RED, "%s: linked_list_create returned NULL\n", linked_list_suite_name);
@@ -24,7 +24,7 @@ static bool test_linked_list_create() {
 }
 
 static bool test_linked_list_init() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_init start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_init\n");
   struct linked_list_t *ll = malloc(sizeof(struct linked_list_t));
   bool result = linked_list_init(ll);
   if (!result) {
@@ -43,7 +43,7 @@ static bool test_linked_list_init() {
 }
 
 static bool test_linked_list_append() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_append start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_append\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
 
   linked_list_append(ll, (void*)2);
@@ -82,7 +82,7 @@ static bool test_linked_list_append() {
 }
 
 static bool test_linked_list_insert() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_insert start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_insert\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
 
   linked_list_insert(ll, 1, (void*)3);
@@ -121,7 +121,7 @@ static bool test_linked_list_insert() {
 }
 
 static bool test_linked_list_get_pos() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_get_pos start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_get_pos\n");
   struct linked_list_t *ll = linked_list_create((void*)10);
   linked_list_append(ll, (void*)20);
   linked_list_append(ll, (void*)30);
@@ -159,7 +159,7 @@ static bool test_linked_list_get_pos() {
 }
 
 static bool test_linked_list_get_end() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_get_end start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_get_end\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
   linked_list_append(ll, (void*)2);
   linked_list_append(ll, (void*)3);
@@ -176,7 +176,7 @@ static bool test_linked_list_get_end() {
 }
 
 static bool test_linked_list_get_len() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_get_len start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_get_len\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
 
   size_t len = linked_list_get_len(ll);
@@ -202,7 +202,7 @@ static bool test_linked_list_get_len() {
 }
 
 static bool test_linked_list_delete() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_delete start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_delete\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
   linked_list_append(ll, (void*)2);
   linked_list_append(ll, (void*)3);
@@ -235,7 +235,7 @@ static bool test_linked_list_delete() {
 }
 
 static bool test_linked_list_delete_first() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_delete_first start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_delete_first\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
   linked_list_append(ll, (void*)2);
   linked_list_append(ll, (void*)3);
@@ -261,7 +261,7 @@ static bool test_linked_list_delete_first() {
 }
 
 static bool test_linked_list_delete_node() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_delete_node start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_delete_node\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
   linked_list_append(ll, (void*)2);
   linked_list_append(ll, (void*)3);
@@ -281,7 +281,7 @@ static bool test_linked_list_delete_node() {
 }
 
 static bool test_linked_list_delete_invalid_pos() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_delete_invalid_pos start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_delete_invalid_pos\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
 
   struct linked_list_t *result = linked_list_delete(ll, 99);
@@ -296,14 +296,14 @@ static bool test_linked_list_delete_invalid_pos() {
 }
 
 static bool test_linked_list_free_null() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_free_null start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_free_null\n");
   linked_list_free(NULL);
   linked_list_free_all(NULL);
   return true;
 }
 
 static bool test_linked_list_head() {
-  color_log(LOG_COLOR_CYAN, "test_linked_list_head start\n");
+  color_log(LOG_COLOR_CYAN, "test_linked_list_head\n");
   struct linked_list_t *ll = linked_list_create((void*)1);
   linked_list_append(ll, (void*)2);
   linked_list_append(ll, (void*)3);

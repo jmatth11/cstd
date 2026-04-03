@@ -17,7 +17,7 @@ static bool unicode_str_create_test() {
 }
 
 static bool unicode_str_set_and_get_test() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_set_and_get_test start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_set_and_get_test\n");
   byte_array test_str = byte_array_from_str("test value");
   struct unicode_str_t *local = unicode_str_create();
   const size_t result_size = unicode_str_set(local, test_str.byte_data, test_str.len);
@@ -46,7 +46,7 @@ static bool unicode_str_set_and_get_test() {
 }
 
 static bool unicode_str_append_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_append_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_append_tests\n");
   byte_array expected = byte_array_from_str("test value -- addition");
   byte_array postfix = byte_array_from_str(" -- addition");
   byte_array test_str = byte_array_from_str("test value");
@@ -88,7 +88,7 @@ static bool unicode_str_append_tests() {
 }
 
 static bool unicode_str_insert_at_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_insert_at_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_insert_at_tests\n");
   byte_array expected = byte_array_from_str("test value -- addition");
   byte_array infix = byte_array_from_str(" --");
   byte_array test_str = byte_array_from_str("test value addition");
@@ -130,7 +130,7 @@ static bool unicode_str_insert_at_tests() {
 }
 
 static bool unicode_str_remove_range_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_remove_range_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_remove_range_tests\n");
   byte_array expected = byte_array_from_str("123789");
   byte_array test_str = byte_array_from_str("123456789");
   const size_t expected_remove_len = 3;
@@ -171,7 +171,7 @@ static bool unicode_str_remove_range_tests() {
 }
 
 static bool unicode_str_len_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_len_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_len_tests\n");
   byte_array expected = byte_array_from_str("123456");
   const size_t expected_len = 6;
   struct unicode_str_t *local = unicode_str_create();
@@ -208,7 +208,7 @@ static bool unicode_str_len_tests() {
 }
 
 static bool unicode_str_byte_len_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_byte_len_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_byte_len_tests\n");
   byte_array expected = byte_array_from_str("123456");
   const size_t expected_len = 6;
   struct unicode_str_t *local = unicode_str_create();
@@ -244,7 +244,7 @@ static bool unicode_str_byte_len_tests() {
 }
 
 static bool unicode_str_codepoint_at_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_codepoint_at_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_codepoint_at_tests\n");
   byte_array expected = byte_array_from_str("Я был когда-то странной");
   struct unicode_str_t *local = unicode_str_create();
   const size_t result_size = unicode_str_set(local, expected.byte_data, expected.len);
@@ -273,7 +273,7 @@ static bool unicode_str_codepoint_at_tests() {
 }
 
 static bool unicode_str_get_range_tests() {
-  color_log(LOG_COLOR_CYAN, "unicode_str_get_range_tests start\n");
+  color_log(LOG_COLOR_CYAN, "unicode_str_get_range_tests\n");
   byte_array test_str = byte_array_from_str("Я был когда-то странной");
   const size_t start_index = 6;
   byte_array expected = byte_array_from_str("когда-то");
@@ -303,7 +303,7 @@ static bool unicode_str_get_range_tests() {
 }
 
 static bool codepoint_idx_from_byte_idx_tests() {
-  color_log(LOG_COLOR_CYAN, "codepoint_idx_from_byte_idx_tests start\n");
+  color_log(LOG_COLOR_CYAN, "codepoint_idx_from_byte_idx_tests\n");
   byte_array expected = byte_array_from_str("Я был когда-то странной");
   const size_t test_byte_idx = 8;
   const size_t expected_codepoint_idx = 5;
@@ -318,7 +318,7 @@ static bool codepoint_idx_from_byte_idx_tests() {
 }
 
 static bool test_code_point_cmp_equal() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_equal start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_equal\n");
   code_point_t s1[] = {'h', 'e', 'l', 'l', 'o', 0};
   code_point_t s2[] = {'h', 'e', 'l', 'l', 'o', 0};
   int result = code_point_cmp(s1, s2, 5);
@@ -331,7 +331,7 @@ static bool test_code_point_cmp_equal() {
 }
 
 static bool test_code_point_cmp_less() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_less start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_less\n");
   code_point_t s1[] = {'a', 'p', 'p', 'l', 'e', 0};
   code_point_t s2[] = {'b', 'a', 'n', 'a', 'n', 'a', 0};
   int result = code_point_cmp(s1, s2, 5);
@@ -344,7 +344,7 @@ static bool test_code_point_cmp_less() {
 }
 
 static bool test_code_point_cmp_greater() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_greater start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_greater\n");
   code_point_t s1[] = {'z', 'e', 'b', 'r', 'a', 0};
   code_point_t s2[] = {'a', 'p', 'p', 'l', 'e', 0};
   int result = code_point_cmp(s1, s2, 5);
@@ -357,7 +357,7 @@ static bool test_code_point_cmp_greater() {
 }
 
 static bool test_code_point_cmp_n_zero() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_n_zero start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_n_zero\n");
   code_point_t s1[] = {'h', 'e', 'l', 'l', 'o', 0};
   code_point_t s2[] = {'a', 'n', 'y', 't', 'h', 'i', 'n', 'g', 0};
   int result = code_point_cmp(s1, s2, 0);
@@ -370,7 +370,7 @@ static bool test_code_point_cmp_n_zero() {
 }
 
 static bool test_code_point_cmp_partial() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_partial start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_partial\n");
   code_point_t s1[] = {'h', 'e', 'l', 'l', 'o', 0};
   code_point_t s2[] = {'h', 'e', 'l', 'l', 'x', 0};
   int result = code_point_cmp(s1, s2, 4);
@@ -383,7 +383,7 @@ static bool test_code_point_cmp_partial() {
 }
 
 static bool test_code_point_cmp_null_pointers() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_null_pointers start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_null_pointers\n");
   code_point_t s1[] = {'t', 'e', 's', 't', 0};
   int result = code_point_cmp(NULL, s1, 5);
   if (result != 0) {
@@ -401,7 +401,7 @@ static bool test_code_point_cmp_null_pointers() {
 }
 
 static bool test_code_point_cmp_different_lengths() {
-  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_different_lengths start\n");
+  color_log(LOG_COLOR_CYAN, "test_code_point_cmp_different_lengths\n");
   code_point_t s1[] = {'h', 'e', 'l', 'l', 0};
   code_point_t s2[] = {'h', 'e', 'l', 'l', 'o', 0};
   int result = code_point_cmp(s1, s2, 10);
@@ -414,7 +414,7 @@ static bool test_code_point_cmp_different_lengths() {
 }
 
 static bool test_codepoint_idx_from_byte_idx_char() {
-  color_log(LOG_COLOR_CYAN, "test_codepoint_idx_from_byte_idx_char start\n");
+  color_log(LOG_COLOR_CYAN, "test_codepoint_idx_from_byte_idx_char\n");
   const char *expected = "Я был когда-то странной";
   const size_t test_byte_idx = 8;
   const size_t expected_codepoint_idx = 5;
@@ -428,7 +428,7 @@ static bool test_codepoint_idx_from_byte_idx_char() {
 }
 
 static bool test_unicode_str_set_char() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_set_char start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_set_char\n");
   const char *test_str = "test value";
   struct unicode_str_t *local = unicode_str_create();
   const size_t result_size = unicode_str_set_char(local, test_str, strlen(test_str));
@@ -462,7 +462,7 @@ static bool test_unicode_str_set_char() {
 }
 
 static bool test_unicode_str_set_codepoint() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_set_codepoint start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_set_codepoint\n");
   code_point_t codepoints[] = {'h', 'e', 'l', 'l', 'o'};
   struct unicode_str_t *local = unicode_str_create();
   const size_t result_size = unicode_str_set_codepoint(local, codepoints, 5);
@@ -484,7 +484,7 @@ static bool test_unicode_str_set_codepoint() {
 }
 
 static bool test_unicode_str_append_char() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_append_char start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_append_char\n");
   const char *test_str = "test value";
   const char *postfix = " -- addition";
   struct unicode_str_t *local = unicode_str_create();
@@ -511,7 +511,7 @@ static bool test_unicode_str_append_char() {
 }
 
 static bool test_unicode_str_insert_at_char() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_insert_at_char start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_insert_at_char\n");
   const char *test_str = "test value addition";
   const char *infix = " --";
   struct unicode_str_t *local = unicode_str_create();
@@ -537,7 +537,7 @@ static bool test_unicode_str_insert_at_char() {
 }
 
 static bool test_unicode_str_insert_at_codepoint() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_insert_at_codepoint start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_insert_at_codepoint\n");
   const char *test_str = "test value";
   struct unicode_str_t *local = unicode_str_create();
   unicode_str_set_char(local, test_str, strlen(test_str));
@@ -562,7 +562,7 @@ static bool test_unicode_str_insert_at_codepoint() {
 }
 
 static bool test_unicode_str_to_lower() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_lower start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_lower\n");
   const char *test_str = "HELLO World";
   struct unicode_str_t *local = unicode_str_create();
   unicode_str_set_char(local, test_str, strlen(test_str));
@@ -589,7 +589,7 @@ static bool test_unicode_str_to_lower() {
 }
 
 static bool test_unicode_str_to_upper() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_upper start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_upper\n");
   const char *test_str = "hello World";
   struct unicode_str_t *local = unicode_str_create();
   unicode_str_set_char(local, test_str, strlen(test_str));
@@ -616,7 +616,7 @@ static bool test_unicode_str_to_upper() {
 }
 
 static bool test_unicode_str_to_cstr() {
-  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_cstr start\n");
+  color_log(LOG_COLOR_CYAN, "test_unicode_str_to_cstr\n");
   const char *test_str = "test value";
   struct unicode_str_t *local = unicode_str_create();
   unicode_str_set_char(local, test_str, strlen(test_str));

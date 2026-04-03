@@ -8,7 +8,7 @@ static const char *base_str_suite_name = "base_str";
 #include <string.h>
 
 static bool test_new_base_str_basic() {
-  color_log(LOG_COLOR_CYAN, "test_new_base_str_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_new_base_str_basic\n");
   base_str str;
   base_str_error err = new_base_str(&str, 10);
   if (err != C_STR_NO_ERROR) {
@@ -25,7 +25,7 @@ static bool test_new_base_str_basic() {
 }
 
 static bool test_new_base_str_zero_capacity() {
-  color_log(LOG_COLOR_CYAN, "test_new_base_str_zero_capacity start\n");
+  color_log(LOG_COLOR_CYAN, "test_new_base_str_zero_capacity\n");
   base_str str;
   base_str_error err = new_base_str(&str, 0);
   if (err != C_STR_NO_ERROR) {
@@ -37,7 +37,7 @@ static bool test_new_base_str_zero_capacity() {
 }
 
 static bool test_new_base_str_with_string_basic() {
-  color_log(LOG_COLOR_CYAN, "test_new_base_str_with_string_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_new_base_str_with_string_basic\n");
   base_str str;
   const char *input = "hello";
   base_str_error err = new_base_str_with_string(&str, input, 5);
@@ -62,7 +62,7 @@ static bool test_new_base_str_with_string_basic() {
 }
 
 static bool test_new_base_str_with_string_empty() {
-  color_log(LOG_COLOR_CYAN, "test_new_base_str_with_string_empty start\n");
+  color_log(LOG_COLOR_CYAN, "test_new_base_str_with_string_empty\n");
   base_str str;
   base_str_error err = new_base_str_with_string(&str, "", 0);
   if (err != C_STR_NO_ERROR) {
@@ -74,7 +74,7 @@ static bool test_new_base_str_with_string_empty() {
 }
 
 static bool test_append_basic() {
-  color_log(LOG_COLOR_CYAN, "test_append_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_append_basic\n");
   base_str str;
   base_str_error err = new_base_str(&str, 10);
   if (err != C_STR_NO_ERROR) {
@@ -104,7 +104,7 @@ static bool test_append_basic() {
 }
 
 static bool test_append_multiple() {
-  color_log(LOG_COLOR_CYAN, "test_append_multiple start\n");
+  color_log(LOG_COLOR_CYAN, "test_append_multiple\n");
   base_str str;
   new_base_str(&str, 10);
   str.append(&str, "hello", 5);
@@ -126,7 +126,7 @@ static bool test_append_multiple() {
 }
 
 static bool test_set_basic() {
-  color_log(LOG_COLOR_CYAN, "test_set_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_set_basic\n");
   base_str str;
   new_base_str_with_string(&str, "initial", 7);
   base_str_error err = str.set(&str, "updated", 7);
@@ -152,7 +152,7 @@ static bool test_set_basic() {
 }
 
 static bool test_at_valid_index() {
-  color_log(LOG_COLOR_CYAN, "test_at_valid_index start\n");
+  color_log(LOG_COLOR_CYAN, "test_at_valid_index\n");
   base_str str;
   new_base_str_with_string(&str, "hello", 5);
   char out;
@@ -178,7 +178,7 @@ static bool test_at_valid_index() {
 }
 
 static bool test_at_out_of_bounds() {
-  color_log(LOG_COLOR_CYAN, "test_at_out_of_bounds start\n");
+  color_log(LOG_COLOR_CYAN, "test_at_out_of_bounds\n");
   base_str str;
   new_base_str_with_string(&str, "hello", 5);
   char out;
@@ -193,7 +193,7 @@ static bool test_at_out_of_bounds() {
 }
 
 static bool test_copy_basic() {
-  color_log(LOG_COLOR_CYAN, "test_copy_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_copy_basic\n");
   base_str str;
   new_base_str_with_string(&str, "hello", 5);
   char *result;
@@ -215,7 +215,7 @@ static bool test_copy_basic() {
 }
 
 static bool test_get_str_and_get_const_str() {
-  color_log(LOG_COLOR_CYAN, "test_get_str_and_get_const_str start\n");
+  color_log(LOG_COLOR_CYAN, "test_get_str_and_get_const_str\n");
   base_str str;
   new_base_str_with_string(&str, "test", 4);
   char *result;
@@ -242,13 +242,13 @@ static bool test_get_str_and_get_const_str() {
 }
 
 static bool test_free_base_str_null() {
-  color_log(LOG_COLOR_CYAN, "test_free_base_str_null start\n");
+  color_log(LOG_COLOR_CYAN, "test_free_base_str_null\n");
   free_base_str(NULL);
   return true;
 }
 
 static bool test_length() {
-  color_log(LOG_COLOR_CYAN, "test_length start\n");
+  color_log(LOG_COLOR_CYAN, "test_length\n");
   base_str str;
   new_base_str_with_string(&str, "hello world", 11);
   if (str.length(&str) != 11) {

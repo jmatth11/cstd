@@ -9,7 +9,7 @@ static const char *file_ops_suite_name = "file_ops";
 #include <string.h>
 
 static bool test_copy_file_basic() {
-  color_log(LOG_COLOR_CYAN, "test_copy_file_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_copy_file_basic\n");
   
   FILE *src = tmpfile();
   if (src == NULL) {
@@ -52,7 +52,7 @@ static bool test_copy_file_basic() {
 }
 
 static bool test_copy_file_empty() {
-  color_log(LOG_COLOR_CYAN, "test_copy_file_empty start\n");
+  color_log(LOG_COLOR_CYAN, "test_copy_file_empty\n");
   
   FILE *src = tmpfile();
   if (src == NULL) {
@@ -89,7 +89,7 @@ static bool test_copy_file_empty() {
 }
 
 static bool test_copy_file_large() {
-  color_log(LOG_COLOR_CYAN, "test_copy_file_large start\n");
+  color_log(LOG_COLOR_CYAN, "test_copy_file_large\n");
   
   FILE *src = tmpfile();
   if (src == NULL) {
@@ -142,7 +142,7 @@ static bool test_copy_file_large() {
 }
 
 static bool test_copy_file_binary() {
-  color_log(LOG_COLOR_CYAN, "test_copy_file_binary start\n");
+  color_log(LOG_COLOR_CYAN, "test_copy_file_binary\n");
   
   FILE *src = tmpfile();
   if (src == NULL) {
@@ -194,7 +194,7 @@ static bool test_copy_file_binary() {
 }
 
 static bool test_copy_file_multiline() {
-  color_log(LOG_COLOR_CYAN, "test_copy_file_multiline start\n");
+  color_log(LOG_COLOR_CYAN, "test_copy_file_multiline\n");
   
   FILE *src = tmpfile();
   if (src == NULL) {

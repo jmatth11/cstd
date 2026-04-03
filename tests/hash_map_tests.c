@@ -9,7 +9,7 @@ static const char *hash_map_suite_name = "hash_map";
 #include <string.h>
 
 static bool test_hash_map_create() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_create start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_create\n");
   struct hash_map_t *hm = hash_map_create(10);
   if (hm == NULL) {
     color_log(LOG_COLOR_RED, "%s: hash_map_create returned NULL\n", hash_map_suite_name);
@@ -20,7 +20,7 @@ static bool test_hash_map_create() {
 }
 
 static bool test_hash_map_create_zero_size() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_create_zero_size start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_create_zero_size\n");
   struct hash_map_t *hm = hash_map_create(0);
   if (hm == NULL) {
     color_log(LOG_COLOR_RED, "%s: hash_map_create(0) returned NULL\n", hash_map_suite_name);
@@ -31,7 +31,7 @@ static bool test_hash_map_create_zero_size() {
 }
 
 static bool test_hash_map_set_and_get() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_set_and_get start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_set_and_get\n");
   struct hash_map_t *hm = hash_map_create(10);
   if (hm == NULL) {
     color_log(LOG_COLOR_RED, "%s: hash_map_create failed\n", hash_map_suite_name);
@@ -66,7 +66,7 @@ static bool test_hash_map_set_and_get() {
 }
 
 static bool test_hash_map_get_nonexistent() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_get_nonexistent start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_get_nonexistent\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   void *out = NULL;
@@ -88,7 +88,7 @@ static bool test_hash_map_get_nonexistent() {
 }
 
 static bool test_hash_map_set_multiple() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_set_multiple start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_set_multiple\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   hash_map_set(hm, "key1", (void*)1);
@@ -122,7 +122,7 @@ static bool test_hash_map_set_multiple() {
 }
 
 static bool test_hash_map_update_existing_key() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_update_existing_key start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_update_existing_key\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   hash_map_set(hm, "key", (void*)100);
@@ -142,7 +142,7 @@ static bool test_hash_map_update_existing_key() {
 }
 
 static bool test_hash_map_remove() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_remove start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_remove\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   hash_map_set(hm, "key1", (void*)1);
@@ -175,7 +175,7 @@ static bool test_hash_map_remove() {
 }
 
 static bool test_hash_map_remove_nonexistent() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_remove_nonexistent start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_remove_nonexistent\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   bool result = hash_map_remove(hm, "nonexistent");
@@ -190,7 +190,7 @@ static bool test_hash_map_remove_nonexistent() {
 }
 
 static bool test_hash_map_remove_and_get() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_remove_and_get start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_remove_and_get\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   hash_map_set(hm, "key1", (void*)42);
@@ -223,7 +223,7 @@ static bool test_hash_map_remove_and_get() {
 }
 
 static bool test_hash_map_iterator() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_iterator start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_iterator\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   hash_map_set(hm, "key1", (void*)1);
@@ -255,7 +255,7 @@ static bool test_hash_map_iterator() {
 }
 
 static bool test_hash_map_iterator_empty() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_iterator_empty start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_iterator_empty\n");
   struct hash_map_t *hm = hash_map_create(10);
 
   struct hash_map_iterator_t *it = hash_map_iterator(hm);
@@ -274,7 +274,7 @@ static bool test_hash_map_iterator_empty() {
 }
 
 static bool test_hash_map_destroy_null() {
-  color_log(LOG_COLOR_CYAN, "test_hash_map_destroy_null start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_map_destroy_null\n");
   struct hash_map_t *hm = NULL;
   hash_map_destroy(&hm, false);
   return true;

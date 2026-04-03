@@ -8,7 +8,7 @@
 #define ARENA_OFFSET_STR "test!"
 
 static bool test_arena_create() {
-  color_log(LOG_COLOR_CYAN, "test_arena_create start\n");
+  color_log(LOG_COLOR_CYAN, "test_arena_create\n");
   struct arena_t *tmp = arena_create(5);
   if (tmp == NULL) {
     color_log(LOG_COLOR_RED, "arena_create returned NULL.\n");
@@ -19,7 +19,7 @@ static bool test_arena_create() {
 }
 
 static bool test_arena_alloc() {
-  color_log(LOG_COLOR_CYAN, "test_arena_alloc start\n");
+  color_log(LOG_COLOR_CYAN, "test_arena_alloc\n");
   struct arena_t *tmp = arena_create(20);
 
   const size_t len = strlen(ARENA_TEST_STR);
@@ -43,7 +43,7 @@ static bool test_arena_alloc() {
 }
 
 static bool test_arena_alloc_alignment() {
-  color_log(LOG_COLOR_CYAN, "test_arena_alloc_alignment start\n");
+  color_log(LOG_COLOR_CYAN, "test_arena_alloc_alignment\n");
   struct arena_t *tmp = arena_create(20);
 
   const size_t len = strlen(ARENA_OFFSET_STR);

@@ -10,7 +10,7 @@ static const char *gap_buffer_suite_name = "gap_buffer";
 #include <string.h>
 
 static bool test_gap_buffer_init_basic() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_init_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_init_basic\n");
   struct gap_buffer_t gb;
   bool result = gap_buffer_init(&gb, 16);
   if (!result) {
@@ -27,7 +27,7 @@ static bool test_gap_buffer_init_basic() {
 }
 
 static bool test_gap_buffer_init_zero_size() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_init_zero_size start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_init_zero_size\n");
   struct gap_buffer_t gb;
   bool result = gap_buffer_init(&gb, 0);
   if (!result) {
@@ -39,7 +39,7 @@ static bool test_gap_buffer_init_zero_size() {
 }
 
 static bool test_gap_buffer_insert_basic() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_basic\n");
   struct gap_buffer_t gb;
   if (!gap_buffer_init(&gb, 16)) {
     color_log(LOG_COLOR_RED, "%s: init failed\n", gap_buffer_suite_name);
@@ -74,7 +74,7 @@ static bool test_gap_buffer_insert_basic() {
 }
 
 static bool test_gap_buffer_insert_multiple() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_multiple start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_multiple\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -113,7 +113,7 @@ static bool test_gap_buffer_insert_multiple() {
 }
 
 static bool test_gap_buffer_move_cursor() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_move_cursor start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_move_cursor\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -152,7 +152,7 @@ static bool test_gap_buffer_move_cursor() {
 }
 
 static bool test_gap_buffer_delete() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_delete start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_delete\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -181,7 +181,7 @@ static bool test_gap_buffer_delete() {
 }
 
 static bool test_gap_buffer_delete_seq() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_delete_seq start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_delete_seq\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -210,7 +210,7 @@ static bool test_gap_buffer_delete_seq() {
 }
 
 static bool test_gap_buffer_get_str() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_get_str start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_get_str\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -241,7 +241,7 @@ static bool test_gap_buffer_get_str() {
 }
 
 static bool test_gap_buffer_get_str_empty() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_get_str_empty start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_get_str_empty\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -258,7 +258,7 @@ static bool test_gap_buffer_get_str_empty() {
 }
 
 static bool test_gap_buffer_get_len_empty() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_get_len_empty start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_get_len_empty\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 16);
   
@@ -274,7 +274,7 @@ static bool test_gap_buffer_get_len_empty() {
 }
 
 static bool test_gap_buffer_insert_word() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_word start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_word\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 32);
   
@@ -309,7 +309,7 @@ static bool test_gap_buffer_insert_word() {
 }
 
 static bool test_gap_buffer_insert_word_at_position() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_word_at_position start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_insert_word_at_position\n");
   struct gap_buffer_t gb;
   gap_buffer_init(&gb, 32);
   
@@ -351,7 +351,7 @@ static bool test_gap_buffer_insert_word_at_position() {
 }
 
 static bool test_gap_buffer_free_null() {
-  color_log(LOG_COLOR_CYAN, "test_gap_buffer_free_null start\n");
+  color_log(LOG_COLOR_CYAN, "test_gap_buffer_free_null\n");
   gap_buffer_free(NULL);
   return true;
 }

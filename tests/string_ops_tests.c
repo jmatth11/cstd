@@ -8,7 +8,7 @@ static const char *string_ops_suite_name = "string_ops";
 #include <string.h>
 
 static bool test_str_dup_basic() {
-  color_log(LOG_COLOR_CYAN, "test_str_dup_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_str_dup_basic\n");
   const char *input = "hello world";
   char *result = str_dup(input, 5);
   if (result == NULL) {
@@ -25,7 +25,7 @@ static bool test_str_dup_basic() {
 }
 
 static bool test_str_dup_full() {
-  color_log(LOG_COLOR_CYAN, "test_str_dup_full start\n");
+  color_log(LOG_COLOR_CYAN, "test_str_dup_full\n");
   const char *input = "test";
   char *result = str_dup(input, 4);
   if (result == NULL) {
@@ -42,7 +42,7 @@ static bool test_str_dup_full() {
 }
 
 static bool test_str_dup_zero_length() {
-  color_log(LOG_COLOR_CYAN, "test_str_dup_zero_length start\n");
+  color_log(LOG_COLOR_CYAN, "test_str_dup_zero_length\n");
   const char *input = "hello";
   char *result = str_dup(input, 0);
   if (result == NULL) {
@@ -59,7 +59,7 @@ static bool test_str_dup_zero_length() {
 }
 
 static bool test_str_fmt_int() {
-  color_log(LOG_COLOR_CYAN, "test_str_fmt_int start\n");
+  color_log(LOG_COLOR_CYAN, "test_str_fmt_int\n");
   char *result = str_fmt("value: %d", 42);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: str_fmt returned NULL\n", string_ops_suite_name);
@@ -75,7 +75,7 @@ static bool test_str_fmt_int() {
 }
 
 static bool test_str_fmt_string() {
-  color_log(LOG_COLOR_CYAN, "test_str_fmt_string start\n");
+  color_log(LOG_COLOR_CYAN, "test_str_fmt_string\n");
   char *result = str_fmt("hello %s", "world");
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: str_fmt string returned NULL\n", string_ops_suite_name);
@@ -91,7 +91,7 @@ static bool test_str_fmt_string() {
 }
 
 static bool test_concat_basic() {
-  color_log(LOG_COLOR_CYAN, "test_concat_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_concat_basic\n");
   size_t len = 0;
   char *result = concat("hello", " world", &len);
   if (result == NULL) {
@@ -113,7 +113,7 @@ static bool test_concat_basic() {
 }
 
 static bool test_concat_empty_strings() {
-  color_log(LOG_COLOR_CYAN, "test_concat_empty_strings start\n");
+  color_log(LOG_COLOR_CYAN, "test_concat_empty_strings\n");
   size_t len = 0;
   char *result = concat("", "", &len);
   if (result == NULL) {
@@ -130,7 +130,7 @@ static bool test_concat_empty_strings() {
 }
 
 static bool test_concat_null_inputs() {
-  color_log(LOG_COLOR_CYAN, "test_concat_null_inputs start\n");
+  color_log(LOG_COLOR_CYAN, "test_concat_null_inputs\n");
   size_t len = 0;
   char *result = concat(NULL, "test", &len);
   if (result != NULL) {
@@ -148,7 +148,7 @@ static bool test_concat_null_inputs() {
 }
 
 static bool test_to_str_length_int() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_length_int start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_length_int\n");
   size_t len = to_str_length_int(123);
   if (len != 3) {
     color_log(LOG_COLOR_RED, "%s: to_str_length_int(123) expected 3, got %lu\n", string_ops_suite_name, len);
@@ -163,7 +163,7 @@ static bool test_to_str_length_int() {
 }
 
 static bool test_to_str_length_double() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_length_double start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_length_double\n");
   size_t len = to_str_length_double(1.5);
   if (len == 0) {
     color_log(LOG_COLOR_RED, "%s: to_str_length_double(1.5) returned 0\n", string_ops_suite_name);
@@ -173,7 +173,7 @@ static bool test_to_str_length_double() {
 }
 
 static bool test_to_str_length_long() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_length_long start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_length_long\n");
   size_t len = to_str_length_long(1234567890123);
   if (len != 13) {
     color_log(LOG_COLOR_RED, "%s: to_str_length_long expected 13, got %lu\n", string_ops_suite_name, len);
@@ -183,7 +183,7 @@ static bool test_to_str_length_long() {
 }
 
 static bool test_to_str_int() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_int start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_int\n");
   char *result = to_str_int(42);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: to_str_int returned NULL\n", string_ops_suite_name);
@@ -211,7 +211,7 @@ static bool test_to_str_int() {
 }
 
 static bool test_to_str_double() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_double start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_double\n");
   char *result = to_str_double(3.14);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: to_str_double returned NULL\n", string_ops_suite_name);
@@ -227,7 +227,7 @@ static bool test_to_str_double() {
 }
 
 static bool test_to_str_long() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_long start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_long\n");
   char *result = to_str_long(9876543210);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: to_str_long returned NULL\n", string_ops_suite_name);
@@ -243,7 +243,7 @@ static bool test_to_str_long() {
 }
 
 static bool test_to_str_macro_int() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_macro_int start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_macro_int\n");
   char *result = to_str(42);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: to_str(int) returned NULL\n", string_ops_suite_name);
@@ -259,7 +259,7 @@ static bool test_to_str_macro_int() {
 }
 
 static bool test_to_str_macro_double() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_macro_double start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_macro_double\n");
   char *result = to_str(2.5);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: to_str(double) returned NULL\n", string_ops_suite_name);
@@ -275,7 +275,7 @@ static bool test_to_str_macro_double() {
 }
 
 static bool test_to_str_macro_long() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_macro_long start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_macro_long\n");
   char *result = to_str(123456789L);
   if (result == NULL) {
     color_log(LOG_COLOR_RED, "%s: to_str(long) returned NULL\n", string_ops_suite_name);
@@ -291,7 +291,7 @@ static bool test_to_str_macro_long() {
 }
 
 static bool test_to_str_length_macro_int() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_length_macro_int start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_length_macro_int\n");
   size_t len = to_str_length(42);
   if (len != 2) {
     color_log(LOG_COLOR_RED, "%s: to_str_length(42) expected 2, got %lu\n", string_ops_suite_name, len);
@@ -301,7 +301,7 @@ static bool test_to_str_length_macro_int() {
 }
 
 static bool test_to_str_length_macro_double() {
-  color_log(LOG_COLOR_CYAN, "test_to_str_length_macro_double start\n");
+  color_log(LOG_COLOR_CYAN, "test_to_str_length_macro_double\n");
   size_t len = to_str_length(1.5);
   if (len == 0) {
     color_log(LOG_COLOR_RED, "%s: to_str_length(double) returned 0\n", string_ops_suite_name);

@@ -8,7 +8,7 @@ static const char *crypt_suite_name = "crypt";
 #include <string.h>
 
 static bool test_hash_from_str_basic() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_basic start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_basic\n");
   unsigned long hash = hash_from_str("hello");
   if (hash == 0) {
     color_log(LOG_COLOR_RED, "%s: hash returned 0\n", crypt_suite_name);
@@ -18,7 +18,7 @@ static bool test_hash_from_str_basic() {
 }
 
 static bool test_hash_from_str_empty() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_empty start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_empty\n");
   unsigned long hash = hash_from_str("");
   if (hash != 5381) {
     color_log(LOG_COLOR_RED, "%s: empty string hash should be 5381, got %lu\n", crypt_suite_name, hash);
@@ -28,7 +28,7 @@ static bool test_hash_from_str_empty() {
 }
 
 static bool test_hash_from_str_known_values() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_known_values start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_known_values\n");
   unsigned long hash = hash_from_str("hello");
   unsigned long expected = 210714636441;
   if (hash != expected) {
@@ -61,7 +61,7 @@ static bool test_hash_from_str_known_values() {
 }
 
 static bool test_hash_from_str_different_strings() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_different_strings start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_different_strings\n");
   unsigned long hash1 = hash_from_str("abc");
   unsigned long hash2 = hash_from_str("def");
   if (hash1 == hash2) {
@@ -72,7 +72,7 @@ static bool test_hash_from_str_different_strings() {
 }
 
 static bool test_hash_from_str_special_chars() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_special_chars start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_special_chars\n");
   unsigned long hash = hash_from_str("hello world");
   if (hash == 0) {
     color_log(LOG_COLOR_RED, "%s: hash with space returned 0\n", crypt_suite_name);
@@ -95,7 +95,7 @@ static bool test_hash_from_str_special_chars() {
 }
 
 static bool test_hash_from_str_repeatable() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_repeatable start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_repeatable\n");
   unsigned long hash1 = hash_from_str("repeatable_test_string");
   unsigned long hash2 = hash_from_str("repeatable_test_string");
   if (hash1 != hash2) {
@@ -106,7 +106,7 @@ static bool test_hash_from_str_repeatable() {
 }
 
 static bool test_hash_from_str_numbers() {
-  color_log(LOG_COLOR_CYAN, "test_hash_from_str_numbers start\n");
+  color_log(LOG_COLOR_CYAN, "test_hash_from_str_numbers\n");
   unsigned long hash = hash_from_str("123456789");
   if (hash == 0) {
     color_log(LOG_COLOR_RED, "%s: hash with numbers returned 0\n", crypt_suite_name);
