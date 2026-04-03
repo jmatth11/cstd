@@ -27,6 +27,14 @@ Other functionality not included in this repo:
 
 WebSockets - https://github.com/jmatth11/websocket-c
 
+## Install Deps
+
+Run this script to install the necessary dependencies.
+
+```bash
+./scripts/install_deps.sh
+```
+
 ## Build
 
 There are two ways to build. A Makefile way or a Zig way.
@@ -57,3 +65,28 @@ Build in release mode:
 zig build -Doptimize=ReleaseSafe
 ```
 
+## Test
+
+You must [install deps](#install-deps) and [build](#build) the project first.
+Then run this command to build and run the unit tests.
+
+```bash
+make test
+```
+
+## Docs
+
+Install doxygen CLI tool.
+
+```bash
+sudo apt-get install -y doxygen
+```
+
+Then run this script to generate doxygen docs for this project.
+
+```bash
+./scripts/generate_docs.sh
+```
+
+Next you should be able to open the `doxygen/html/index.html` file to view the
+docs.
