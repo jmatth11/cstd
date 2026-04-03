@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-Wall -std=c11 -march=native
+CFLAGS=-Wall -Wextra -std=c11 -march=native
 WEB_FLAGS=-D__EMSCRIPTEN__=1
 LIBS=-L./deps/utf8-zig/zig-out/lib/ -l:libutf8-zig.a -lm -lpthread
 WEB_LIBS=-L./deps/utf8-zig/zig-out/lib/ -lwebutf8-zig
@@ -22,7 +22,7 @@ endif
 ifeq ($(RELEASE), 1)
 	CFLAGS += -O2
 else
-	CFLAGS += -fsanitize=undefined
+	CFLAGS += -fsanitize=address,undefined,leak
 endif
 
 .PHONY: all
