@@ -15,7 +15,9 @@ typedef enum base_str_error {
     /* malloc error */
     C_STR_MALLOC_ERROR,
     /* out of bounds */
-    C_STR_OUT_OF_BOUNDS
+    C_STR_OUT_OF_BOUNDS,
+    /* NULL param */
+    C_STR_NULL_PARAM
 } base_str_error;
 
 /**

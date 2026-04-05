@@ -14,8 +14,11 @@ struct internal_base_str {
 };
 
 static inline void resize(struct internal_base_str *str, size_t len) {
+  if (str == NULL || len == 0) {
+    return;
+  }
   if (len >= str->cap) {
-    size_t new_cap = ((double)len * C_STR_ARRAY_INC_CONSTANT);
+    const size_t new_cap = ((double)len * C_STR_ARRAY_INC_CONSTANT);
     char* result = realloc(str->data, sizeof(char) * new_cap);
     str->data = result;
     str->cap = new_cap;
@@ -23,8 +26,14 @@ static inline void resize(struct internal_base_str *str, size_t len) {
 }
 
 base_str_error append(struct base_str_t *data, const char *str, size_t len) {
-  size_t d_len = data->_internal->len;
-  size_t new_len = d_len + len;
+  if (data == NULL || str == NULL) {
+    return C_STR_NULL_PARAM;
+  }
+  if (len == 0) {
+    return C_STR_NO_ERROR;
+  }
+  const size_t d_len = data->_internal->len;
+  const size_t new_len = d_len + len;
   resize(data->_internal, new_len);
   if (data->_internal->data == NULL) {
     return C_STR_MALLOC_ERROR;
@@ -35,21 +44,35 @@ base_str_error append(struct base_str_t *data, const char *str, size_t len) {
   return C_STR_NO_ERROR;
 }
 
-int length(const struct base_str_t *data) { return data->_internal->len; }
+int length(const struct base_str_t *data) {
+  if (data == NULL) {
+    return 0;
+  }
+  return data->_internal->len;
+}
 
 base_str_error get_str(const struct base_str_t *data, char **out) {
+  if (data == NULL) {
+    return C_STR_NULL_PARAM;
+  }
   *out = data->_internal->data;
   return C_STR_NO_ERROR;
 }
 
 base_str_error get_const_str(const struct base_str_t *data, const char **out) {
+  if (data == NULL) {
+    return C_STR_NULL_PARAM;
+  }
   *out = data->_internal->data;
   return C_STR_NO_ERROR;
 }
 
 base_str_error copy(const struct base_str_t *data, char **out) {
+  if (data == NULL) {
+    return C_STR_NULL_PARAM;
+  }
   const size_t len = data->_internal->len;
-  char *result = malloc((sizeof(char) * len) + 1);
+  char *result = (char *)malloc(sizeof(char) * (len + 1));
   if (result == NULL) {
     return C_STR_MALLOC_ERROR;
   }
@@ -63,6 +86,12 @@ base_str_error copy(const struct base_str_t *data, char **out) {
 }
 
 base_str_error set(struct base_str_t *data, const char *str, size_t len) {
+  if (data == NULL || str == NULL) {
+    return C_STR_NULL_PARAM;
+  }
+  if (len == 0) {
+    return C_STR_NO_ERROR;
+  }
   resize(data->_internal, len);
   if (data->_internal->data == NULL) {
     return C_STR_MALLOC_ERROR;
@@ -74,8 +103,11 @@ base_str_error set(struct base_str_t *data, const char *str, size_t len) {
 }
 
 base_str_error at(const struct base_str_t *data, size_t idx, char *out) {
+  if (data == NULL) {
+    return C_STR_NULL_PARAM;
+  }
   const size_t len = data->_internal->len;
-  if (idx > len || idx < 0) {
+  if (idx > len) {
     return C_STR_OUT_OF_BOUNDS;
   }
   *out = data->_internal->data[idx];
@@ -83,8 +115,8 @@ base_str_error at(const struct base_str_t *data, size_t idx, char *out) {
 }
 
 base_str_error new_base_str(struct base_str_t *data, size_t cap) {
-  if (cap < 0) {
-    cap = 0;
+  if (data == NULL) {
+    return C_STR_NULL_PARAM;
   }
   // add for null-terminator
   ++cap;
@@ -113,6 +145,9 @@ base_str_error new_base_str(struct base_str_t *data, size_t cap) {
 
 base_str_error new_base_str_with_string(struct base_str_t *data,
                                         const char *str, size_t len) {
+  if (data == NULL || str == NULL) {
+    return C_STR_NULL_PARAM;
+  }
   if (len <= 0) {
     len = 1;
   }
@@ -129,7 +164,9 @@ void free_base_str(struct base_str_t *data) {
   if (data == NULL) {
     return;
   }
-  free(data->_internal->data);
-  free(data->_internal);
+  if (data->_internal != NULL) {
+    free(data->_internal->data);
+    free(data->_internal);
+  }
   data->_internal = NULL;
 }
