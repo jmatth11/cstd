@@ -93,6 +93,7 @@ size_t linked_list_get_len(struct linked_list_t *ll) __THROWNL __nonnull((1));
 
 /**
  * Delete the node at the specified position in the linked list.
+ * This function does not free the value it holds.
  *
  * @param[in] ll The linked list node (head of list).
  * @param[in] pos The position of the node to delete.
@@ -101,6 +102,16 @@ size_t linked_list_get_len(struct linked_list_t *ll) __THROWNL __nonnull((1));
 struct linked_list_t* linked_list_delete(struct linked_list_t *ll, size_t pos) __THROWNL
     __nonnull((1));
 
+/**
+ * Delete the node at the specified position in the linked list.
+ * This function frees the value it holds.
+ *
+ * @param[in] ll The linked list node (head of list).
+ * @param[in] pos The position of the node to delete.
+ * @return The new head of the list (may change if first node is deleted).
+ */
+struct linked_list_t *linked_list_delete_and_free(struct linked_list_t *ll,
+                                                  size_t pos) __THROWNL __nonnull((1));
 /**
  * Delete the specified node from the linked list.
  *
