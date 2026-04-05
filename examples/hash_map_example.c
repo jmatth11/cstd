@@ -17,8 +17,6 @@ int main(void) {
   // ============================================================
   // Set values with string keys
   // ============================================================
-  // Note: Values must be heap-allocated if free_value=true is used
-  // when destroying the hash map
   int *num1 = malloc(sizeof(int));
   *num1 = 42;
   int *num2 = malloc(sizeof(int));

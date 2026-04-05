@@ -10,6 +10,9 @@ int main(void) {
   size_t num_strings = sizeof(strings) / sizeof(strings[0]);
 
   for (size_t i = 0; i < num_strings; i++) {
+    // ============================================================
+    // Grab Hash of string.
+    // ============================================================
     unsigned long hash = hash_from_str(strings[i]);
     printf("hash_from_str(\"%s\") = %lu\n", strings[i], hash);
   }
