@@ -90,3 +90,19 @@ Then run this script to generate doxygen docs for this project.
 
 Next you should be able to open the `doxygen/html/index.html` file to view the
 docs.
+
+## Examples
+
+Examples live under the `examples/` directory.
+To build examples you must [install deps](#install-deps) and [build](#build)
+the project first.
+
+Then you can navigate to the examples directory and run the Makefile.
+```bash
+make
+```
+
+To run the example follow this pattern:
+```bash
+LD_LIBRARY_PATH=../lib <example>
+```
