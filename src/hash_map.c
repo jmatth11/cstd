@@ -100,16 +100,11 @@ void hash_map_destroy(struct hash_map_t **hm, bool free_value) {
     return;
   }
   for (size_t i = 0; i < (*hm)->entries.len; ++i) {
-    map_entry_array map_entry = {
-        .len = 0,
-        .cap = 0,
-        .map_entry_data = NULL,
-    };
-    map_array_get(&(*hm)->entries, i, &map_entry);
-    if (map_entry.len > 0) {
-      for (size_t entry_idx = 0; entry_idx < map_entry.len; ++entry_idx) {
+    map_entry_array *row = &(*hm)->entries.map_data[i];
+    if (row->map_entry_data != NULL) {
+      for (size_t entry_idx = 0; entry_idx < row->len; ++entry_idx) {
         struct hash_map_entry_t *entry = NULL;
-        map_entry_array_get(&map_entry, entry_idx, &entry);
+        map_entry_array_get(row, entry_idx, &entry);
         if (entry != NULL) {
           if (entry->key != NULL) {
             free(entry->key);
@@ -120,7 +115,7 @@ void hash_map_destroy(struct hash_map_t **hm, bool free_value) {
           free(entry);
         }
       }
-      map_entry_array_free(&map_entry);
+      map_entry_array_free(row);
     }
   }
   map_array_free(&(*hm)->entries);
@@ -166,6 +161,15 @@ bool hash_map_get(struct hash_map_t *hm, const char *key, void **out) {
   pthread_mutex_unlock(&hm->mutex);
 #endif
   return true;
+}
+
+bool hash_map_set_and_free(struct hash_map_t *hm, const char *key, void *value) {
+  void *tmp = NULL;
+  if (!hash_map_get(hm, key, &tmp)) {
+    return false;
+  }
+  free(tmp);
+  return hash_map_set(hm, key, value);
 }
 
 bool hash_map_set(struct hash_map_t *hm, const char *key, void *value) {

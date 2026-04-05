@@ -9,6 +9,7 @@ ARENA_SRC=$(SRCS)/arena.c
 BASE_STR_SRC=$(SRCS)/base_str.c
 CRYPT_SRC=$(SRCS)/crypt.c
 GAP_BUFFER_SRC=$(SRCS)/gap_buffer.c
+HASH_MAP_SRC=$(SRCS)/hash_map.c
 
 .PHONY: all clean
 
@@ -28,6 +29,9 @@ crypt_example: crypt_example.c $(CRYPT_SRC)
 
 gap_buffer_example: gap_buffer_example.c $(GAP_BUFFER_SRC)
 	$(CC) $(CFLAGS) -o $@ $< $(GAP_BUFFER_SRC)
+
+hash_map_example: hash_map_example.c $(HASH_MAP_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(HASH_MAP_SRC)
 
 clean:
 	rm -f $(BINARIES)
