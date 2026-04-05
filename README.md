@@ -1,32 +1,90 @@
 # Custom Standard (CSTD) C Library
 
-This is my collection of C functions and data structures I commonly use in my
-projects.
+A collection of reusable C utilities, data structures, and algorithms for
+everyday programming.
 
-I do not guarantee that they are implemented the most efficient way but they
-meet the needs I have and are useful in the ways I like.
+## Features
 
-Currently List of Features:
+### Memory
+- **Arena allocator** - Fast bump allocator for temporary memory (`arena.h`)
 
-- Arena allocator `arena.h`
-- Type safe Dynamic array `array_template.h`
-- Basic String structure `base_str.h`
-- Unicode string structure `unicode_str.h`
-- Crypto functionality (not much currently) `crypto`
-- Preprocessor defines `defs.h`
-- File operations `file_ops.h`
-- Gap buffer implementation `gap_buffer.h`
-- Hash map `hash_map.h`
-- Linked List `linked_list.h`
-- Simple Logging functions `log.h`
-- Magic preprocessor functions (like DEFER) `magic.h`
-- OS functions `os.h`
-- Simple queue implementation `queue.h`
-- String operations `string.h`
+### Data Structures
+- **Dynamic array** - Type-safe resizable array (`array_template.h`)
+- **Hash map** - Key-value dictionary (`hash_map.h`)
+- **Linked list** - Doubly-linked list (`linked_list.h`)
+- **Queue** - Simple FIFO queue (`queue.h`)
+- **Gap buffer** - Text editor buffer (`gap_buffer.h`)
 
-Other functionality not included in this repo:
+### Strings
+- **Basic string** - Simple string type (`base_str.h`)
+- **Unicode string** - UTF-8 string handling (`unicode_str.h`)
+- **String operations** - Common string utilities (`string.h`)
 
-WebSockets - https://github.com/jmatth11/websocket-c
+### System
+- **File operations** - File I/O helpers (`file_ops.h`)
+- **OS functions** - Platform abstractions (`os.h`)
+
+### Utilities
+- **Logging** - Simple logging functions (`log.h`)
+- **Preprocessor defines** - Common macros (`defs.h`)
+- **Magic preprocessor** - DEFER and similar macros (`magic.h`)
+
+### Crypto
+- **Crypto** - Basic cryptographic utilities (`crypto/`)
+
+## Other Libraries
+
+Other useful libraries I've built out.
+- [WebSockets](https://github.com/jmatth11/websocket-c) - WebSocket client
+  implementation.
+
+## Quick Start
+
+Clone the repository to your dependency folder.
+
+Build the project.
+```bash
+make RELEASE=1
+```
+
+Update your Makefile to include these flags
+```bash
+# link path to header files
+-I<path to dependencies>/cstd/headers
+
+# link path to library shared object
+# Built with Makefile
+-L<path to dependencies/cstd/lib
+# Built with Zig Build
+-L<path to dependencies/cstd/zig-out/lib
+
+# include shared object
+-lcustom_std
+```
+
+You should be able to import and use the library now.
+```c
+#include "hash_map.h"
+
+int main(void) {
+  struct hash_map_t *hm = hash_map_create(16);
+
+  int *num1 = malloc(sizeof(int));
+  *num1 = 42;
+
+  (void)hash_map_set(hm, "number_one", num1);
+
+  void *val = NULL;
+  if (hash_map_get(hm, "number_one", &val)) {
+    printf("number_one = %d\n", *(int *)val);
+  }
+
+  hash_map_destroy(&hm, true);
+  return 0;
+}
+```
+
+## Table of Contents
 
 - [Install Deps](#install-deps)
 - [Build](#build)
