@@ -1,5 +1,5 @@
 CC=clang
-CFLAGS=-Wall -Wextra -std=c11 -fsanitize=address,undefined,leak -I../ -L../lib -lcustom_std
+CFLAGS=-Wall -Wextra -std=c11 -fsanitize=address,undefined,leak -I../ -I../deps/utf8-zig/headers -L../lib -lcustom_std
 
 EXAMPLES=$(wildcard *.c)
 BINARIES=$(EXAMPLES:.c=)
@@ -8,6 +8,7 @@ SRCS=../src
 ARENA_SRC=$(SRCS)/arena.c
 BASE_STR_SRC=$(SRCS)/base_str.c
 CRYPT_SRC=$(SRCS)/crypt.c
+GAP_BUFFER_SRC=$(SRCS)/gap_buffer.c
 
 .PHONY: all clean
 
@@ -24,6 +25,9 @@ base_str_example: base_str_example.c $(BASE_STR_SRC)
 
 crypt_example: crypt_example.c $(CRYPT_SRC)
 	$(CC) $(CFLAGS) -o $@ $< $(CRYPT_SRC)
+
+gap_buffer_example: gap_buffer_example.c $(GAP_BUFFER_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(GAP_BUFFER_SRC)
 
 clean:
 	rm -f $(BINARIES)
