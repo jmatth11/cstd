@@ -168,7 +168,9 @@ bool hash_map_set_and_free(struct hash_map_t *hm, const char *key, void *value) 
   if (!hash_map_get(hm, key, &tmp)) {
     return false;
   }
-  free(tmp);
+  if (tmp != NULL) {
+    free(tmp);
+  }
   return hash_map_set(hm, key, value);
 }
 
