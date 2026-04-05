@@ -204,6 +204,7 @@ static bool unicode_str_len_tests() {
   }
   unicode_str_destroy(&local);
   byte_array_free(&expected);
+  byte_array_free(&expected_unicode);
   return true;
 }
 
@@ -240,6 +241,7 @@ static bool unicode_str_byte_len_tests() {
   }
   unicode_str_destroy(&local);
   byte_array_free(&expected);
+  byte_array_free(&expected_unicode);
   return true;
 }
 
@@ -299,6 +301,7 @@ static bool unicode_str_get_range_tests() {
   free(out);
   unicode_str_destroy(&local);
   byte_array_free(&test_str);
+  byte_array_free(&expected);
   return true;
 }
 
