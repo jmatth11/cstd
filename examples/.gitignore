@@ -5,4 +5,9 @@ crypt_example
 gap_buffer_example
 hash_map_example
 linked_list_example
+log_example
+magic_example
+queue_example
+string_ops_example
+unicode_str_example
 

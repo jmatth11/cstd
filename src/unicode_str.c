@@ -95,12 +95,16 @@ static inline bool insert_range(const uint8_t *data, byte_array *arr,
 }
 
 static inline bool insert_range_at(const uint8_t *data, byte_array *arr,
-                                   size_t offset, size_t len, size_t at) {
+                                   size_t data_offset, size_t data_len,
+                                   size_t arr_at) {
   size_t at_offset = 0;
-  for (size_t i = offset; i < (offset + len); ++i) {
-    if ((at + at_offset) > arr->len)
+  for (size_t i = data_offset; i < (data_offset + data_len); ++i) {
+    if ((arr_at + at_offset) > arr->cap) {
       return false;
-    arr->byte_data[at + at_offset] = data[i];
+    } else {
+      // insert at existing location
+      arr->byte_data[arr_at + at_offset] = data[i];
+    }
     ++at_offset;
   }
   return true;
@@ -155,11 +159,11 @@ size_t unicode_str_set_char(struct unicode_str_t *str, const char *other,
   return result;
 }
 
-size_t unicode_str_set_codepoint(struct unicode_str_t *str, const code_point_t *other,
-                            size_t len) {
+size_t unicode_str_set_codepoint(struct unicode_str_t *str,
+                                 const code_point_t *other, size_t len) {
   str->bytes.len = 0;
-  for (size_t i = 0; i<len; ++i) {
-    uint8_t buf[4] = {0,0,0,0};
+  for (size_t i = 0; i < len; ++i) {
+    uint8_t buf[4] = {0, 0, 0, 0};
     uint8_t n = utf8_write_code_point(buf, 4, 0, other[i]);
     if (unicode_str_append(str, buf, n) != n) {
       return i;

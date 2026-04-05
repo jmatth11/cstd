@@ -11,6 +11,11 @@ CRYPT_SRC=$(SRCS)/crypt.c
 GAP_BUFFER_SRC=$(SRCS)/gap_buffer.c
 HASH_MAP_SRC=$(SRCS)/hash_map.c
 LINKED_LIST_SRC=$(SRCS)/linked_list.c
+LOG_SRC=$(SRCS)/log.c
+MAGIC_SRC=$(SRCS)/magic.c
+QUEUE_SRC=$(SRCS)/queue.c
+STRING_OPS_SRC=$(SRCS)/string_ops.c
+UNICODE_STR_SRC=$(SRCS)/unicode_str.c
 
 .PHONY: all clean
 
@@ -36,6 +41,21 @@ hash_map_example: hash_map_example.c $(HASH_MAP_SRC)
 
 linked_list_example: linked_list_example.c $(LINKED_LIST_SRC)
 	$(CC) $(CFLAGS) -o $@ $< $(LINKED_LIST_SRC)
+
+log_example: log_example.c $(LOG_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(LOG_SRC)
+
+magic_example: magic_example.c $(MAGIC_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(MAGIC_SRC)
+
+queue_example: queue_example.c $(QUEUE_SRC) $(LINKED_LIST_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(QUEUE_SRC) $(LINKED_LIST_SRC)
+
+string_ops_example: string_ops_example.c $(STRING_OPS_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(STRING_OPS_SRC)
+
+unicode_str_example: unicode_str_example.c $(UNICODE_STR_SRC) $(HASH_MAP_SRC)
+	$(CC) $(CFLAGS) -o $@ $< $(UNICODE_STR_SRC) $(HASH_MAP_SRC)
 
 clean:
 	rm -f $(BINARIES)
