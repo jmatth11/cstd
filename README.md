@@ -54,9 +54,9 @@ Update your Makefile to include these flags
 
 # link path to library shared object
 # Built with Makefile
--L<path to dependencies/cstd/lib
+-L<path to dependencies>/cstd/lib
 # Built with Zig Build
--L<path to dependencies/cstd/zig-out/lib
+-L<path to dependencies>/cstd/zig-out/lib
 
 # include shared object
 -lcustom_std
