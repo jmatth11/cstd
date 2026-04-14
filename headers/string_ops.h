@@ -19,6 +19,19 @@ __BEGIN_DECLS
 char *str_dup(const char *str, size_t len) __nonnull((1));
 
 /**
+ * @brief Copy up-to min(dest_len, src_len) of src into dest.
+ * Properly applies null-terminator at the end of the copy for dest.
+ *
+ * @param[out] dest The destination string.
+ * @param[in] dest_len The length of destination string.
+ * @param[in] src The source string.
+ * @param[in] src_len The length of the source string.
+ * @return The dest pointer if successful, NULL on failure.
+ */
+char *str_cpy(char *restrict dest, size_t dest_len, const char *restrict src,
+              size_t src_len);
+
+/**
  * Generate formatted string.
  * This function handles generating the formatted string in a newly
  * allocated string as the return value.
@@ -67,18 +80,18 @@ size_t to_str_length_double(double num);
 size_t to_str_length_long(long num);
 
 /**
- * Generic macro to get the length of a string representation of any supported type.
- * Supports: float, double, long, int.
+ * Generic macro to get the length of a string representation of any supported
+ * type. Supports: float, double, long, int.
  *
  * @param[in] n The value to get the string length for.
  * @return The length of the string representation.
  */
 #define to_str_length(n)                                                       \
-  _Generic((n), float                                                          \
-           : to_str_length_double, double                                      \
-           : to_str_length_double, long                                        \
-           : to_str_length_long, default                                       \
-           : to_str_length_int)(n)
+  _Generic((n),                                                                \
+      float: to_str_length_double,                                             \
+      double: to_str_length_double,                                            \
+      long: to_str_length_long,                                                \
+      default: to_str_length_int)(n)
 
 /**
  * Convert an integer to a string.
@@ -108,11 +121,11 @@ char *to_str_double(double num);
 char *to_str_long(long num);
 
 #define to_str(n)                                                              \
-  _Generic((n), float                                                          \
-           : to_str_double, double                                             \
-           : to_str_double, long                                               \
-           : to_str_long, default                                              \
-           : to_str_int)(n)
+  _Generic((n),                                                                \
+      float: to_str_double,                                                    \
+      double: to_str_double,                                                   \
+      long: to_str_long,                                                       \
+      default: to_str_int)(n)
 
 __END_DECLS
 

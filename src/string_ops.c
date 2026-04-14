@@ -5,11 +5,24 @@
 #include <string.h>
 
 char *str_dup(const char *str, size_t len) {
-  char *result = malloc((sizeof(char) * len) + 1);
-  if (strncpy(result, str, len) == NULL)
+  size_t result_len = len;
+  char *result = malloc(sizeof(char) * (result_len + 1));
+  return str_cpy(result, result_len, str, len);
+}
+
+char *str_cpy(char *restrict dest, size_t dest_len, const char *restrict src,
+              size_t src_len) {
+  // take shortest length
+  size_t len = src_len;
+  if (dest_len < len) {
+    len = dest_len;
+  }
+  if (strncpy(dest, src, len) == NULL) {
     return NULL;
-  result[len] = '\0';
-  return result;
+  }
+  // ensure null-termination
+  dest[len] = '\0';
+  return dest;
 }
 
 char *str_fmt(const char *fmt, ...) {
@@ -35,7 +48,8 @@ char *str_fmt(const char *fmt, ...) {
   return result;
 }
 
-char *concat(const char *restrict a, const char *restrict b, size_t *output_length) {
+char *concat(const char *restrict a, const char *restrict b,
+             size_t *output_length) {
   if (a == NULL || b == NULL) {
     return NULL;
   }
@@ -50,12 +64,8 @@ char *concat(const char *restrict a, const char *restrict b, size_t *output_leng
 }
 
 size_t to_str_length_int(int num) { return snprintf(NULL, 0, "%d", num); }
-size_t to_str_length_double(double num) {
-  return snprintf(NULL, 0, "%f", num);
-}
-size_t to_str_length_long(long num) {
-  return snprintf(NULL, 0, "%ld", num);
-}
+size_t to_str_length_double(double num) { return snprintf(NULL, 0, "%f", num); }
+size_t to_str_length_long(long num) { return snprintf(NULL, 0, "%ld", num); }
 
 char *to_str_int(int num) {
   size_t n = to_str_length(num);
